@@ -21,7 +21,7 @@ char get_icon();
 int get_moveSpeed();
 int get_dmg();
 int get_cost();
-virtual void resetInitialStats();
+//virtual void resetInitialStats();
 ~unit();
 };
 

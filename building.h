@@ -17,7 +17,7 @@ public:
   int get_AC();
   char get_icon();
   int get_cost();
-  virtual void resetInitialStats();
+  //virtual void resetInitialStats();
   ~building();
 };
 

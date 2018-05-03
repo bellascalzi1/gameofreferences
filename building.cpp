@@ -1,4 +1,5 @@
 #include "headers.h"
+#include "building.h"
 
 building::building(){
 
@@ -17,7 +18,7 @@ int building::get_AC(){
 }
 
 char building::get_icon(){
-  return icon;
+  return _icon;
 }
 
 int building::get_cost(){

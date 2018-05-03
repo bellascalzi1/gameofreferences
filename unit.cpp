@@ -1,7 +1,8 @@
 #include "headers.h"
+#include "unit.h"
 
 unit::unit(){
-
+  _health=0;
 }
 
 void unit::set_health(int health){
@@ -17,10 +18,10 @@ int unit::get_AC(){
 }
 
 char unit::get_icon(){
-  return icon;
+  return _icon;
 }
 
-int init::get_moveSpeed(){
+int unit::get_moveSpeed(){
   return _moveSpeed;
 }
 
@@ -33,5 +34,5 @@ int unit::get_cost(){
 }
 
 unit::~unit(){
-
+  //why?
 }

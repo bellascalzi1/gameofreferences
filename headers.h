@@ -1,5 +1,4 @@
 #include <iostream>
-#include "tile.h"
-#include "unit.h"
-#include "building.h"
+#include <string>
+#include <vector>
 using namespace std;
