@@ -3,6 +3,16 @@
 #include "building.h"
 #include "tile.h"
 
+void moveUnit(int x, int y, int x1, int y1){
+  map[x1][y1].set_unit()=map[x][y].get_unit();
+
+}
+
+void createUnit(int x, int y){
+  unit temp;
+  map[x][y].set_unit(temp);
+}
+
 int main(){
   int width=10;
   int height=10;

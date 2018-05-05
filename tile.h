@@ -12,9 +12,11 @@ protected:
   bool _hasUnit;
   bool _hasbuilding;
   building _building;
-  //unit _unit;
+  unit _unit;
 public:
   tile();
+  void set_unit(unit newUnit);
+  unit get_unit();
   ~tile();
 };
 
