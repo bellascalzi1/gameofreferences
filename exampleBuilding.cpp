@@ -1,7 +1,7 @@
 #include "headers.h"
-#include "exampleUnit.h"
+#include "exampleBuilding.h"
 
-exampleUnit::exampleUnit(){
+exampleBuilding::exampleBuilding(){
   _health=100;
   _AC=4;
   _icon='A';
@@ -10,7 +10,7 @@ exampleUnit::exampleUnit(){
   _cost=25;
 }
 
-void exampleUnit::resetInitialStats(){
+void exampleBuilding::resetInitialStats(){
   _health=100;
   _AC=4;
   _icon='A';
@@ -19,6 +19,6 @@ void exampleUnit::resetInitialStats(){
   _cost=25;
 }
 
-exampleUnit::~exampleUnit(){
+exampleBuilding::~exampleBuilding(){
 
 }
