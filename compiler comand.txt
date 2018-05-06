@@ -1,0 +1,1 @@
+g++ main.cpp tile.cpp tile.h building.cpp building.h unit.cpp unit.h exampleUnit.cpp exampleUnit.h exampleBuilding.cpp exampleBuilding.h -o output

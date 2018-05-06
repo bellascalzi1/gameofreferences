@@ -17,6 +17,10 @@ public:
   tile();
   void set_unit(unit newUnit);
   unit get_unit();
+  void set_hasUnit(bool hasUnit);
+  bool get_hasUnit();
+  char get_icon();
+  int getUnits_moveSpeed();
   ~tile();
 };
 

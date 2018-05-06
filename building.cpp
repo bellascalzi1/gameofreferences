@@ -25,6 +25,10 @@ int building::get_cost(){
   return _cost;
 }
 
+/*void exampleBuilding::resetInitialStats(){
+
+}*/
+
 building::~building(){
 
 }

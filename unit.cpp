@@ -33,6 +33,11 @@ int unit::get_cost(){
   return _cost;
 }
 
+/*void unit::resetInitialStats(){
+
+}*/
+
+
 unit::~unit(){
   //why?
 }
