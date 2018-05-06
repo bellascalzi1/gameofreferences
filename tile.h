@@ -20,7 +20,14 @@ public:
   void set_hasUnit(bool hasUnit);
   bool get_hasUnit();
   char get_icon();
-  int getUnits_moveSpeed();
+  int unit_moveSpeed();
+  bool unit_AI();
+  void unitSet_health(int health);
+  int unitGet_health();
+  void unitSet_dmg(int dmg);
+  int unitGet_dmg();
+  void unitSet_AC(int AC);
+  int unitSet_AC();
   ~tile();
 };
 
