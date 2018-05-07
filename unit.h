@@ -6,6 +6,7 @@
 class unit
 {
 protected:
+string _name;
 int _health;
 int _AC;
 char _icon;
@@ -15,6 +16,7 @@ int _cost;
 bool _AI;
 public:
 unit();
+string get_name();
 void set_health(int health);
 int get_health();
 void set_AC(int AC);

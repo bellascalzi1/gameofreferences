@@ -3,6 +3,7 @@
 #include "building.h"
 #include "tile.h"
 #include "exampleUnit.h"
+#include "exampleBuilding.h"
 
 bool moveUnit(int Sx, int Sy, int Fx, int Fy, vector<vector<tile> >*map){
   int dist=abs(Fx-Sx)+abs(Fy-Sy);
@@ -31,11 +32,47 @@ bool attackUnit(int Ax, int Ay, int Dx, int Dy, vector<vector<tile> >*map){
     return false;
   }*/
   else{
-    int dmgDef=map[0][Ax][Ay].unitGet_dmg()-map[0][Dx][Dy].unitSet_AC();      //damage delt to defender
-    int dmgAtk=round((0.75*map[0][Dx][Dy].unitGet_dmg())-map[0][Dx][Dy].unitSet_AC());      //damage delt to attacker
+    int dmgDef=map[0][Ax][Ay].unitGet_dmg()-map[0][Dx][Dy].unitGet_AC();      //damage delt to defender
+    int dmgAtk=round((0.75*map[0][Dx][Dy].unitGet_dmg())-map[0][Dx][Dy].unitGet_AC());      //damage delt to attacker
     map[0][Dx][Dy].unitSet_health(map[0][Dx][Dy].unitGet_health()-dmgDef);
     map[0][Ax][Ay].unitSet_health(map[0][Ax][Ay].unitGet_health()-dmgAtk);
     return true;
+  }
+}
+
+void printTileInfo(int x, int y, vector<vector<tile> >*map){
+  cout<<"TILE INFO:"<<endl;
+  char temp=65+x;
+  cout<<"Tile: "<<temp<<y<<endl;
+  if(map[0][x][y].get_hasBuilding()==true){
+    cout<<"Building present: yes"<<endl;
+    cout<<"-Building name: "<<map[0][x][y].buildingGet_name()<<endl;
+    cout<<"-Building health: "<<map[0][x][y].buildingGet_health()<<endl;
+    cout<<"-Building AC: "<<map[0][x][y].buildingGet_AC()<<endl;
+    if(map[0][x][y].building_AI()==true){
+      cout<<"-Building owner: AI"<<endl;
+    }
+    else{
+      cout<<"-Building owner: player"<<endl;
+    }
+  }
+  else{
+    cout<<"Building present: no"<<endl;
+  }
+  if(map[0][x][y].get_hasUnit()==true){
+    cout<<"Unit present: yes"<<endl;
+    cout<<"-Unit name: "<<map[0][x][y].unitGet_name()<<endl;
+    cout<<"-Unit health: "<<map[0][x][y].unitGet_health()<<endl;
+    cout<<"-Unit AC: "<<map[0][x][y].unitGet_AC()<<endl;
+    if(map[0][x][y].unit_AI()==true){
+      cout<<"-Unit owner: AI"<<endl;
+    }
+    else{
+      cout<<"-Unit owner: player"<<endl;
+    }
+  }
+  else{
+    cout<<"Unit present: no"<<endl;
   }
 }
 
@@ -56,6 +93,8 @@ int main(){
   map[1][1].set_hasUnit(true);
   map[1][0].set_unit(exampleUnit());
   map[1][0].set_hasUnit(true);
+  map[1][0].set_building(exampleBuilding());
+  map[1][0].set_hasBuilding(true);
   if(moveUnit(1,1,0,0,&map)==false){
     cout<<"unable to move here"<<endl;
   }
@@ -69,6 +108,7 @@ int main(){
       cout<<map[1][0].unitGet_health()<<endl;
       cout<<map[0][0].unitGet_health()<<endl;
   }
+  printTileInfo(1,0,&map);
   cout<<"done"<<endl;
   return 0;
 }

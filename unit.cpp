@@ -5,6 +5,10 @@ unit::unit(){
   _health=0;
 }
 
+string unit::get_name(){
+  return _name;
+}
+
 void unit::set_health(int health){
   _health=health;
 }

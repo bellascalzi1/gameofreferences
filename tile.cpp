@@ -13,12 +13,28 @@ unit tile::get_unit(){
   return _unit;
 }
 
+void tile::set_building(building newBuilding){
+  _building=newBuilding;
+}
+
+building tile::get_building(){
+  return _building;
+}
+
 void tile::set_hasUnit(bool hasUnit){
   _hasUnit=hasUnit;
 }
 
 bool tile::get_hasUnit(){
   return _hasUnit;
+}
+
+void tile::set_hasBuilding(bool hasBuilding){
+  _hasBuilding=hasBuilding;
+}
+
+bool tile::get_hasBuilding(){
+  return _hasBuilding;
 }
 
 char tile::get_icon(){
@@ -53,8 +69,36 @@ void tile::unitSet_AC(int AC){
   _unit.set_AC(AC);
 }
 
-int tile::unitSet_AC(){
+int tile::unitGet_AC(){
     return _unit.get_AC();
+}
+
+string tile::unitGet_name(){
+  return _unit.get_name();
+}
+
+bool tile::building_AI(){
+  return _building.get_AI();
+}
+
+void tile::buildingSet_health(int health){
+  _building.set_health(health);
+}
+
+int tile::buildingGet_health(){
+  return _building.get_health();
+}
+
+void tile::buildingSet_AC(int AC){
+  _building.set_AC(AC);
+}
+
+int tile::buildingGet_AC(){
+    return _building.get_AC();
+}
+
+string tile::buildingGet_name(){
+  return _building.get_name();
 }
 
 tile::~tile(){
