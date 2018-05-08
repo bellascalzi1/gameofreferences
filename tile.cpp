@@ -3,6 +3,7 @@
 
 tile::tile(){
   _hasUnit=false;
+  _hasBuilding=false;
 }
 
 void tile::set_unit(unit newUnit){
@@ -38,7 +39,16 @@ bool tile::get_hasBuilding(){
 }
 
 char tile::get_icon(){
-  return _unit.get_icon();
+  if(_hasBuilding==true){
+    return _building.get_icon();
+  }
+  else if (_hasUnit==true){
+    return _unit.get_icon();
+  }
+  else{
+    char temp = 'O'; //32; space
+    return temp;
+  }
 }
 
 int tile::unit_moveSpeed(){

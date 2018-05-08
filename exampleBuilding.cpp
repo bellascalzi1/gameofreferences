@@ -6,6 +6,7 @@ exampleBuilding::exampleBuilding(){
   _AC=4;
   _icon='B';
   _cost=25;
+  _name="example";
 }
 
 /*void exampleBuilding::resetInitialStats(){

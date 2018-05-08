@@ -5,14 +5,48 @@
 #include "exampleUnit.h"
 #include "exampleBuilding.h"
 
+void consoleRenderGrid(int sWidth, int sHight) {
+	char temp = '+';
+	char temp2 = 32;
+	for (int j = 0; j < sWidth * 2 + 1; j++) {
+		if (j % 2 == 0) {
+			cout << setw(2) << temp;
+		}
+		else {
+			cout << setw(2) << temp2;
+		}
+	}
+	cout << "" << endl;
+}
+
+void consoleRenderFrame(int sWidth, int sHight, vector<vector<tile> >map) {
+  for (int i = 0; i < 4*sHight+2; i++) {
+    cout<<"-";
+  }
+  cout << "" << endl;
+	consoleRenderGrid(sWidth, sHight);
+	for (int i = 0; i < sHight; i++) {
+		char temp = 32;
+		cout<<temp;
+		for (int j = 0; j < sWidth; j++) {
+			cout << setw(3)<< map[j][i].get_icon()<<temp;
+		}
+		cout << "" << endl;
+		consoleRenderGrid(sWidth, sHight);
+	}
+  for (int i = 0; i < 4*sHight+2; i++) {
+    cout<<"-";
+  }
+  cout << "" << endl;
+  cout << "" << endl;
+}
+
 bool moveUnit(int Sx, int Sy, int Fx, int Fy, vector<vector<tile> >*map){
   int dist=abs(Fx-Sx)+abs(Fy-Sy);
   if(map[0][Fx][Fy].get_hasUnit()==true or map[0][Sx][Sy].get_hasUnit()==false){
-    cout<<"code: 1"<<endl;
     return false;
   }
   else if(map[0][Sx][Sy].unit_moveSpeed()<dist){
-    cout<<"code: 2"<<endl;
     return false;
   }
   else{
@@ -95,18 +129,18 @@ int main(){
   map[1][0].set_hasUnit(true);
   map[1][0].set_building(exampleBuilding());
   map[1][0].set_hasBuilding(true);
+  consoleRenderFrame(width, height, map);
   if(moveUnit(1,1,0,0,&map)==false){
     cout<<"unable to move here"<<endl;
   }
   else{
-      cout<<map[0][0].get_icon()<<endl;
+      consoleRenderFrame(width, height, map);
   }
   if(attackUnit(1,0,0,0,&map)==false){
     cout<<"unable to attack"<<endl;
   }
   else{
-      cout<<map[1][0].unitGet_health()<<endl;
-      cout<<map[0][0].unitGet_health()<<endl;
+    cout<<"attack compleate"<<endl;
   }
   printTileInfo(1,0,&map);
   cout<<"done"<<endl;

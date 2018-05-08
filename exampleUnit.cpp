@@ -8,6 +8,7 @@ exampleUnit::exampleUnit(){
   _moveSpeed=2;
   _dmg=20;
   _cost=25;
+  _name="example";
 }
 
 /*void exampleUnit::resetInitialStats(){
