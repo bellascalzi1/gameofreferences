@@ -12,7 +12,8 @@ protected:
 
 public:
   buildingBarrack();
-  unit spawnUnit();
+  buildingBarrack(bool AI);
+  unit spawnUnit(string uType);
   ~buildingBarrack();
 };
 

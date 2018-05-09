@@ -4,7 +4,7 @@
 exampleBuilding::exampleBuilding(){
   _health=100;
   _AC=4;
-  _icon='B';
+  _icon='E';
   _cost=25;
   _name="example";
   _AI=false;
