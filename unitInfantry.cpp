@@ -1,7 +1,8 @@
+//impliments infantry unit type
 #include "headers.h"
 #include "unitInfantry.h"
 
-unitIfantry::unitIfantry(){
+unitIfantry::unitIfantry(){  //defult constructor
   _health=100;
   _AC=4;
   _icon='I';
@@ -11,7 +12,7 @@ unitIfantry::unitIfantry(){
   _name="infantry";
 }
 
-unitIfantry::unitIfantry(bool AI){
+unitIfantry::unitIfantry(bool AI){   //constructor with input to set AI ownership
   _health=100;
   _AC=3;
   _icon='I';
@@ -22,6 +23,6 @@ unitIfantry::unitIfantry(bool AI){
   _AI=AI;
 }
 
-unitIfantry::~unitIfantry(){
+unitIfantry::~unitIfantry(){  //defult deconstructor
 
 }

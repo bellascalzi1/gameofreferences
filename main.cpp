@@ -8,7 +8,7 @@
 int width=10;
 int height=10;
 
-void consoleRenderGrid(int sWidth, int sHight) {
+void consoleRenderGrid(int sWidth, int sHight) { //renders the grid around the map in console
 	char temp = '+';
 	char temp2 = 32;
 	for (int j = 0; j < sWidth * 2 + 1; j++) {
@@ -22,7 +22,7 @@ void consoleRenderGrid(int sWidth, int sHight) {
 	cout << "" << endl;
 }
 
-void consoleRenderFrame(int sWidth, int sHight, vector<vector<tile> >map) {
+void consoleRenderFrame(int sWidth, int sHight, vector<vector<tile> >map) { //renders the map to the console
   for (int i = 0; i < 4*sHight+2; i++) {
     cout<<"-";
   }
@@ -44,7 +44,7 @@ void consoleRenderFrame(int sWidth, int sHight, vector<vector<tile> >map) {
   cout << "" << endl;
 }
 
-bool moveUnit(int Sx, int Sy, int Fx, int Fy, vector<vector<tile> >*map){
+bool moveUnit(int Sx, int Sy, int Fx, int Fy, vector<vector<tile> >*map){ //moves unit from one place to another if posible
   int dist=abs(Fx-Sx)+abs(Fy-Sy);
   if(map[0][Fx][Fy].get_hasUnit()==true){
 		cout<<"There is already a unit here"<<endl;
@@ -67,7 +67,7 @@ bool moveUnit(int Sx, int Sy, int Fx, int Fy, vector<vector<tile> >*map){
   }
 }
 
-bool attackUnit(int Ax, int Ay, int Dx, int Dy, vector<vector<tile> >*map){
+bool attackUnit(int Ax, int Ay, int Dx, int Dy, vector<vector<tile> >*map){  //attacks unit with another if posible
   int dist=abs(Dx-Ax)+abs(Dy-Ay);
   if(dist>1){
 		cout<<"Unit out of range"<<endl;
@@ -86,7 +86,7 @@ bool attackUnit(int Ax, int Ay, int Dx, int Dy, vector<vector<tile> >*map){
   }
 }
 
-void printTileInfo(int x, int y, vector<vector<tile> >*map){
+void printTileInfo(int x, int y, vector<vector<tile> >*map){  //prints the details of a tile to the console
   cout<<"TILE INFO:"<<endl;
   char temp=65+x;
   cout<<"Tile: "<<temp<<y<<endl;
@@ -122,7 +122,7 @@ void printTileInfo(int x, int y, vector<vector<tile> >*map){
   }
 }
 
-bool buildBuilding(int x, int y, vector<vector<tile> >*map, string bType){
+bool buildBuilding(int x, int y, vector<vector<tile> >*map, string bType){   //creates a new building if posible
 	if(map[0][x+1][y].get_hasBuilding()==true or map[0][x-1][y].get_hasBuilding() or map[0][x][y+1].get_hasBuilding() or map[0][x][y-1].get_hasBuilding()){
 		if(bType=="example"){
 				map[0][x][y].set_hasBuilding(true);
@@ -147,7 +147,7 @@ bool buildBuilding(int x, int y, vector<vector<tile> >*map, string bType){
 	}
 }
 
-int convertToASCII(string input_coords) {
+int convertToASCII(string input_coords) {   //convers a character into int coord
 
 	int number;
 
@@ -158,7 +158,7 @@ int convertToASCII(string input_coords) {
 
 }
 
-void commandLine(vector<vector<tile> >*map) {
+void commandLine(vector<vector<tile> >*map) {  //takes and interperates players input commands
 
 	string input;
 
@@ -235,7 +235,7 @@ void commandLine(vector<vector<tile> >*map) {
 }
 
 int main(){
-  vector<vector<tile> >map;
+  vector<vector<tile> >map;  //creates the map
   map.resize(width);
   for(int i=0;i<width;i++){
     map[i].resize(height);
@@ -245,14 +245,14 @@ int main(){
       map[j][i]=tile();
     }
   }
-  map[1][1].set_unit(exampleUnit());
+  map[1][1].set_unit(exampleUnit());  //testing units and building
   map[1][1].set_hasUnit(true);
   map[1][0].set_unit(exampleUnit());
   map[1][0].set_hasUnit(true);
   map[1][0].set_building(exampleBuilding());
   map[1][0].set_hasBuilding(true);
-  consoleRenderFrame(width, height, map);
-	commandLine(&map);
-  cout<<"done"<<endl;
+  consoleRenderFrame(width, height, map);  //renders initial screen
+	commandLine(&map);   //runs console
+  cout<<"done"<<endl;   //testing output to see that game has finished with no errors
   return 0;
 }

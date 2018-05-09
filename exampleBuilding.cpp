@@ -1,7 +1,8 @@
+//impliments example building for testing purposes
 #include "headers.h"
 #include "exampleBuilding.h"
 
-exampleBuilding::exampleBuilding(){
+exampleBuilding::exampleBuilding(){  //defult constructor
   _health=100;
   _AC=4;
   _icon='E';
@@ -10,7 +11,7 @@ exampleBuilding::exampleBuilding(){
   _AI=false;
 }
 
-exampleBuilding::exampleBuilding(bool AI){
+exampleBuilding::exampleBuilding(bool AI){  //constructor with input for AI ownership
   _health=100;
   _AC=4;
   _icon='B';
@@ -19,13 +20,6 @@ exampleBuilding::exampleBuilding(bool AI){
   _AI=AI;
 }
 
-/*void exampleBuilding::resetInitialStats(){
-  _health=100;
-  _AC=4;
-  _icon='B';
-  _cost=25;
-}*/
-
-exampleBuilding::~exampleBuilding(){
+exampleBuilding::~exampleBuilding(){  //defult deconstructor
 
 }

@@ -1,11 +1,13 @@
+//impliments tile class
 #include "headers.h"
 #include "tile.h"
 
-tile::tile(){
+tile::tile(){ //defult constructor
   _hasUnit=false;
   _hasBuilding=false;
 }
 
+//get/set tile variables
 void tile::set_unit(unit newUnit){
   _unit=newUnit;
 }
@@ -51,6 +53,7 @@ char tile::get_icon(){
   }
 }
 
+//call get/set functions of unit
 int tile::unit_moveSpeed(){
   return _unit.get_moveSpeed();
 }
@@ -87,6 +90,7 @@ string tile::unitGet_name(){
   return _unit.get_name();
 }
 
+//call get/set functions of building
 bool tile::building_AI(){
   return _building.get_AI();
 }

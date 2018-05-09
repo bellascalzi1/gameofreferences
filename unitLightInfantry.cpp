@@ -1,7 +1,8 @@
+//impliments light infantry unit
 #include "headers.h"
 #include "unitLightInfantry.h"
 
-unitLightInfantry::unitLightInfantry(){
+unitLightInfantry::unitLightInfantry(){  //defult constructor
   _health=50;
   _AC=1;
   _icon='L';
@@ -11,7 +12,7 @@ unitLightInfantry::unitLightInfantry(){
   _name="light infantry";
 }
 
-unitLightInfantry::unitLightInfantry(bool AI){
+unitLightInfantry::unitLightInfantry(bool AI){  //constructor wih input to set AI ownership
   _health=50;
   _AC=1;
   _icon='L';
@@ -22,6 +23,6 @@ unitLightInfantry::unitLightInfantry(bool AI){
   _AI=AI;
 }
 
-unitLightInfantry::~unitLightInfantry(){
+unitLightInfantry::~unitLightInfantry(){  //defult deconstructor
 
 }

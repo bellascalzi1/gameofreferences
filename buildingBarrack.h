@@ -1,3 +1,4 @@
+//defines barracks
 #ifndef BUILDINGBARRACK_H
 #define BUILDINGBARRACK_H
 

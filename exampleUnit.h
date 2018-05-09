@@ -1,3 +1,4 @@
+//defins example unit for testing
 #ifndef EXAMPLEUNIT_H
 #define EXAMPLEUNIT_H
 

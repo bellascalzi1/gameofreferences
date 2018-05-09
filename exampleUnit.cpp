@@ -1,7 +1,8 @@
+//impliments example unit for testing
 #include "headers.h"
 #include "exampleUnit.h"
 
-exampleUnit::exampleUnit(){
+exampleUnit::exampleUnit(){  //defult constructor
   _health=100;
   _AC=4;
   _icon='A';
@@ -11,7 +12,7 @@ exampleUnit::exampleUnit(){
   _name="example";
 }
 
-exampleUnit::exampleUnit(bool AI){
+exampleUnit::exampleUnit(bool AI){ //constructor with input for AI ownership
   _health=100;
   _AC=4;
   _icon='A';
@@ -22,6 +23,6 @@ exampleUnit::exampleUnit(bool AI){
   _AI=AI;
 }
 
-exampleUnit::~exampleUnit(){
+exampleUnit::~exampleUnit(){  //defult deconstructor
 
 }

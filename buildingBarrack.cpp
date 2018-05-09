@@ -1,7 +1,8 @@
+//implements barracks
 #include "headers.h"
 #include "buildingBarrack.h"
 
-buildingBarrack::buildingBarrack(){
+buildingBarrack::buildingBarrack(){  //defult constructor
   _health=100;
   _AC=2;
   _icon='B';
@@ -10,7 +11,7 @@ buildingBarrack::buildingBarrack(){
   _AI=false;
 }
 
-buildingBarrack::buildingBarrack(bool AI){
+buildingBarrack::buildingBarrack(bool AI){  //constructor with input to set AI ownership
   _health=100;
   _AC=2;
   _icon='B';
@@ -19,7 +20,7 @@ buildingBarrack::buildingBarrack(bool AI){
   _AI=AI;
 }
 
-unit buildingBarrack::spawnUnit(string uType){
+unit buildingBarrack::spawnUnit(string uType){    //spawns a new unit
   if(uType=="infantry"){
     _hasSpawned=true;
     return unitInfantry();
@@ -42,6 +43,6 @@ unit buildingBarrack::spawnUnit(string uType){
   }
 }
 
-buildingBarrack::~buildingBarrack(){
+buildingBarrack::~buildingBarrack(){    //defult deconstructor
 
 }

@@ -1,3 +1,4 @@
+//defiens example building for testing purposes
 #ifndef EXAMPLEBUILDING_H
 #define EXAMPLEBUILDING_H
 

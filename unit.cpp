@@ -1,10 +1,12 @@
+//impliments unit base class
 #include "headers.h"
 #include "unit.h"
 
-unit::unit(){
+unit::unit(){ //defult constructor
   _health=0;
 }
 
+//get/set functions
 string unit::get_name(){
   return _name;
 }
@@ -57,11 +59,6 @@ bool unit::get_AI(){
   return _AI;
 }
 
-/*void unit::resetInitialStats(){
+unit::~unit(){//defult deconstructor
 
-}*/
-
-
-unit::~unit(){
-  //why?
 }

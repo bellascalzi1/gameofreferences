@@ -1,10 +1,11 @@
+//implements spawner building type
 #include "headers.h"
 #include "buildingSpawner.h"
 
-buildingSpawner::buildingSpawner(){
+buildingSpawner::buildingSpawner(){ //defult constructor
 
 }
 
-buildingSpawner::~buildingSpawner(){
+buildingSpawner::~buildingSpawner(){ //defult deconstructor
 
 }

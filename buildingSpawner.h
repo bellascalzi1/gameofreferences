@@ -1,3 +1,4 @@
+//defines spawner building type as abstract class
 #ifndef BUILDINGSPAWNER_H
 #define BUILDINGSPAWNER_H
 

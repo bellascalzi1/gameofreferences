@@ -1,10 +1,12 @@
+//implements building base class
 #include "headers.h"
 #include "building.h"
 
-building::building(){
+building::building(){ //defult building constructer
 
 }
 
+//get/set functions
 string building::get_name(){
   return _name;
 }
@@ -41,10 +43,6 @@ bool building::get_AI(){
   return _AI;
 }
 
-/*void exampleBuilding::resetInitialStats(){
-
-}*/
-
-building::~building(){
+building::~building(){//defult building deconstrucer
 
 }

@@ -1,3 +1,4 @@
+//defines tile class which stores the unit and building at each grid reffernce on the map
 #ifndef TILE_H
 #define TILE_H
 

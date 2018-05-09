@@ -1,3 +1,4 @@
+//defines light infantry unit
 #ifndef UNITLIGHTINFANTRY_H
 #define UNITLIGHTINFANTRY_H
 

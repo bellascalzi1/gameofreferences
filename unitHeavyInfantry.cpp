@@ -1,7 +1,8 @@
+//implements heavy infantry unit
 #include "headers.h"
 #include "unitHeavyInfantry.h"
 
-unitHeavyInfantry::unitHeavyInfantry(){
+unitHeavyInfantry::unitHeavyInfantry(){  //defult constructor
   _health=200;
   _AC=6;
   _icon='H';
@@ -11,7 +12,7 @@ unitHeavyInfantry::unitHeavyInfantry(){
   _name="heavy infantry";
 }
 
-unitHeavyInfantry::unitHeavyInfantry(bool AI){
+unitHeavyInfantry::unitHeavyInfantry(bool AI){  //constructor with input to set ai ownwership
   _health=200;
   _AC=6;
   _icon='H';

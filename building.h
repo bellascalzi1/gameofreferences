@@ -1,3 +1,4 @@
+//defines building base class
 #ifndef BUILDING_H
 #define BUILDING_H
 
