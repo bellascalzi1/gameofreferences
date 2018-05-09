@@ -11,6 +11,7 @@ int height=11;
 void consoleRenderGrid(int sWidth, int sHight) { //renders the grid around the map in console
 	char temp = '+';
 	char temp2 = 32;
+	cout << setw(2) << temp2;
 	for (int j = 0; j < sWidth * 2 + 1; j++) {
 		if (j % 2 == 0) {
 			cout << setw(2) << temp;
@@ -22,14 +23,31 @@ void consoleRenderGrid(int sWidth, int sHight) { //renders the grid around the m
 	cout << "" << endl;
 }
 
+void consoleRenderAlphCoord(int sWidth, int sHight) { //renders the top coords around the map in console
+	char temp = 'A';
+	char temp2 = 32;
+	for (int j = 0; j < sWidth * 2 + 1; j++) {
+		if (j % 2 == 0) {
+			cout << setw(2) << temp2;
+		}
+		else {
+			char temp3=temp+(j/2);
+			cout << setw(2) << temp3;
+		}
+	}
+	cout << "" << endl;
+}
+
 void consoleRenderFrame(int sWidth, int sHight, vector<vector<tile> >map) { //renders the map to the console
-  for (int i = 0; i < 4*sHight+2; i++) {
+  for (int i = 0; i < 4*sWidth+4; i++) {
     cout<<"-";
   }
   cout << "" << endl;
+	consoleRenderAlphCoord(sWidth, sHight);
 	consoleRenderGrid(sWidth, sHight);
 	for (int i = 0; i < sHight; i++) {
 		char temp = 32;
+		cout<<i;
 		cout<<temp;
 		for (int j = 0; j < sWidth; j++) {
 			cout << setw(3)<< map[j][i].get_icon()<<temp;
@@ -37,7 +55,7 @@ void consoleRenderFrame(int sWidth, int sHight, vector<vector<tile> >map) { //re
 		cout << "" << endl;
 		consoleRenderGrid(sWidth, sHight);
 	}
-  for (int i = 0; i < 4*sHight+2; i++) {
+  for (int i = 0; i < 4*sWidth+4; i++) {
     cout<<"-";
   }
   cout << "" << endl;
