@@ -10,6 +10,7 @@ protected:
 
 public:
 exampleBuilding();
+exampleBuilding(bool AI);
 ~exampleBuilding();
 };
 

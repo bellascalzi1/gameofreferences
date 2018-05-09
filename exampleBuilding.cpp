@@ -7,6 +7,16 @@ exampleBuilding::exampleBuilding(){
   _icon='B';
   _cost=25;
   _name="example";
+  _AI=false;
+}
+
+exampleBuilding::exampleBuilding(bool AI){
+  _health=100;
+  _AC=4;
+  _icon='B';
+  _cost=25;
+  _name="example";
+  _AI=AI;
 }
 
 /*void exampleBuilding::resetInitialStats(){

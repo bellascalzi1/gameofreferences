@@ -4,6 +4,10 @@
 #include "tile.h"
 #include "exampleUnit.h"
 #include "exampleBuilding.h"
+#include "buildingBarrack.h"
+
+int width=10;
+int height=10;
 
 void consoleRenderGrid(int sWidth, int sHight) {
 	char temp = '+';
@@ -43,16 +47,23 @@ void consoleRenderFrame(int sWidth, int sHight, vector<vector<tile> >map) {
 
 bool moveUnit(int Sx, int Sy, int Fx, int Fy, vector<vector<tile> >*map){
   int dist=abs(Fx-Sx)+abs(Fy-Sy);
-  if(map[0][Fx][Fy].get_hasUnit()==true or map[0][Sx][Sy].get_hasUnit()==false){
+  if(map[0][Fx][Fy].get_hasUnit()==true){
+		cout<<"There is already a unit here"<<endl;
     return false;
   }
+	else if(map[0][Sx][Sy].get_hasUnit()==false){
+		cout<<"No unit selected"<<endl;
+		return false;
+	}
   else if(map[0][Sx][Sy].unit_moveSpeed()<dist){
+		cout<<"Out of movement range"<<endl;
     return false;
   }
   else{
     map[0][Fx][Fy].set_unit(map[0][Sx][Sy].get_unit());
     map[0][Sx][Sy].set_hasUnit(false);
     map[0][Fx][Fy].set_hasUnit(true);
+		consoleRenderFrame(width, height, *map);
     return true;
   }
 }
@@ -60,9 +71,11 @@ bool moveUnit(int Sx, int Sy, int Fx, int Fy, vector<vector<tile> >*map){
 bool attackUnit(int Ax, int Ay, int Dx, int Dy, vector<vector<tile> >*map){
   int dist=abs(Dx-Ax)+abs(Dy-Ay);
   if(dist>1){
+		cout<<"Unit out of range"<<endl;
     return false;
   }
   /*else if(map[0][Dx][Dy].unit_AI()==map[0][Ax][Ay].unit_AI()){
+		cout<<"This unit is friendly"<<endl;
     return false;
   }*/
   else{
@@ -110,55 +123,66 @@ void printTileInfo(int x, int y, vector<vector<tile> >*map){
   }
 }
 
-bool buildBuilding(int x, int y, vector<vector<tile> >*map, int bType){
+bool buildBuilding(int x, int y, vector<vector<tile> >*map, string bType){
 	if(map[0][x+1][y].get_hasBuilding()==true or map[0][x-1][y].get_hasBuilding() or map[0][x][y+1].get_hasBuilding() or map[0][x][y-1].get_hasBuilding()){
-		switch(bType){
-			case 1:
+		if(bType=="example"){
 				map[0][x][y].set_hasBuilding(true);
 				map[0][x][y].set_building(exampleBuilding());
+				consoleRenderFrame(width, height, *map);
 				return true;
+		}
+		else if(bType=="barracks"){
+			map[0][x][y].set_hasBuilding(true);
+			map[0][x][y].set_building(buildingBarrack());
+			consoleRenderFrame(width, height, *map);
+			return true;
+		}
+		else{
+			cout<<"Invalid building type"<<endl;
+			return false;
 		}
 	}
 	else{
+		cout<<"Unable to build here"<<endl;
 		return false;
 	}
 }
 
-int convertToASCII(std::string input_coords) {
+int convertToASCII(string input_coords) {
 
 	int number;
 
-	std::string input = input_coords;
+	string input = input_coords;
 	number = int(input[0])-65;
 
 	return number;
 
 }
 
-int commandLine(vector<vector<tile> >*map) {
+void commandLine(vector<vector<tile> >*map) {
 
-	std::string input;
+	string input;
 
 	while(input != "end" or "endturn") {
 
-		std::cout << "Enter Command: (type end to quit or endturn to end your turn) ";
-		std::cin >> input;
+		cout << "Enter Command: (type end to quit or endturn to end your turn) ";
+		cin >> input;
 
 		if(input == "end") {
 
-			std::cout << "You have ended the game" << std::endl;
-			std::cin.ignore();
+			cout << "You have ended the game" << std::endl;
+			cin.ignore();
 			break;
 		}
 		else if(input == "attack") {
 
-			std::string attacker, attacked;
+			string attacker, attacked;
 
-			std::cout << "Which Unit would you like to attack with? ";
-			std::cin >> attacker;
+			cout << "Which Unit would you like to attack with? ";
+			cin >> attacker;
 
-			std::cout << "What Unit would you like to attack? ";
-			std::cin >> attacked;
+			cout << "What Unit would you like to attack? ";
+			cin >> attacked;
 
 
 			attackUnit(convertToASCII(attacker), attacker[1]-'0', convertToASCII(attacked), attacked[1]-'0', map);
@@ -166,27 +190,42 @@ int commandLine(vector<vector<tile> >*map) {
 		}
 		else if(input == "move") {
 
-			std::string unit_to_be_moved, new_pos;
+			string unit_to_be_moved, new_pos;
 
 
-			std::cout << "Which Unit would you like to move?";
-			std::cin >> unit_to_be_moved;
+			cout << "Which Unit would you like to move?";
+			cin >> unit_to_be_moved;
 
-			std::cout << "Where would you like to move it to?";
-			std::cin >> new_pos;
+			cout << "Where would you like to move it to?";
+			cin >> new_pos;
 
 			moveUnit(convertToASCII(unit_to_be_moved), unit_to_be_moved[1]-'0', convertToASCII(new_pos), new_pos[1]-'0', map);
 
 		}
 		else if(input == "look") {
 
-			std::string tile;
+			string tile;
 
 
-			std::cout << "Where would you like to look?";
-			std::cin >> tile;
+			cout << "Where would you like to look?";
+			cin >> tile;
 
 			printTileInfo(convertToASCII(tile), tile[1]-'0',map);
+
+		}
+		else if(input == "buildBuilding") {
+
+			string tile;
+			string bType;
+
+
+			cout << "Where would you like to build?";
+			cin >> tile;
+
+			cout << "What would you like to build?";
+			cin >> bType;
+
+			buildBuilding(convertToASCII(tile), tile[1]-'0',map,bType);
 
 		}
 		else{
@@ -194,16 +233,9 @@ int commandLine(vector<vector<tile> >*map) {
 			std::cout << "That is not a valid command" << std::endl;
 		}
 	}
-
-	return 0;
-
-
-
 }
 
 int main(){
-  int width=10;
-  int height=10;
   vector<vector<tile> >map;
   map.resize(width);
   for(int i=0;i<width;i++){
@@ -222,25 +254,6 @@ int main(){
   map[1][0].set_hasBuilding(true);
   consoleRenderFrame(width, height, map);
 	commandLine(&map);
-  /*if(moveUnit(1,1,0,0,&map)==false){
-    cout<<"unable to move here"<<endl;
-  }
-  else{
-      consoleRenderFrame(width, height, map);
-  }
-  if(attackUnit(1,0,0,0,&map)==false){
-    cout<<"unable to attack"<<endl;
-  }
-  else{
-    cout<<"attack compleate"<<endl;
-  }
-	if(buildBuilding(1,1,&map,1)==false){
-    cout<<"unable to build here"<<endl;
-  }
-  else{
-      consoleRenderFrame(width, height, map);
-  }
-  printTileInfo(1,0,&map);*/
   cout<<"done"<<endl;
   return 0;
 }

@@ -10,6 +10,7 @@ protected:
 
 public:
 exampleUnit();
+exampleUnit(bool AI);
 ~exampleUnit();
 };
 
