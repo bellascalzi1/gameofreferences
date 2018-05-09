@@ -110,6 +110,20 @@ void printTileInfo(int x, int y, vector<vector<tile> >*map){
   }
 }
 
+bool buildBuilding(int x, int y, vector<vector<tile> >*map, int bType){
+	if(map[0][x+1][y].get_hasBuilding()==true or map[0][x-1][y].get_hasBuilding() or map[0][x][y+1].get_hasBuilding() or map[0][x][y-1].get_hasBuilding()){
+		switch(bType){
+			case 1:
+				map[0][x][y].set_hasBuilding(true);
+				map[0][x][y].set_building(exampleBuilding());
+				return true;
+		}
+	}
+	else{
+		return false;
+	}
+}
+
 int main(){
   int width=10;
   int height=10;
@@ -141,6 +155,12 @@ int main(){
   }
   else{
     cout<<"attack compleate"<<endl;
+  }
+	if(buildBuilding(1,1,&map,1)==false){
+    cout<<"unable to build here"<<endl;
+  }
+  else{
+      consoleRenderFrame(width, height, map);
   }
   printTileInfo(1,0,&map);
   cout<<"done"<<endl;
