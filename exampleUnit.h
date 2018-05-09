@@ -10,9 +10,9 @@ class exampleUnit: public unit
 protected:
 
 public:
-exampleUnit();
-exampleUnit(bool AI);
-~exampleUnit();
+  exampleUnit();
+  exampleUnit(bool AI);
+  ~exampleUnit();
 };
 
 #endif //EXAMPLEUNIT_H

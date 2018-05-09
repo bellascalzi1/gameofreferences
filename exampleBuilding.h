@@ -10,9 +10,9 @@ class exampleBuilding: public building
 protected:
 
 public:
-exampleBuilding();
-exampleBuilding(bool AI);
-~exampleBuilding();
+  exampleBuilding();
+  exampleBuilding(bool AI);
+  ~exampleBuilding();
 };
 
 #endif //EXAMPLEBUILDING_H
