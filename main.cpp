@@ -5,8 +5,8 @@
 #include "buildingTypes.h"
 #include "unitTypes.h"
 
-int width=10;
-int height=10;
+int width=11;
+int height=11;
 
 void consoleRenderGrid(int sWidth, int sHight) { //renders the grid around the map in console
 	char temp = '+';
@@ -235,7 +235,7 @@ void commandLine(vector<vector<tile> >*map) {  //takes and interperates players 
 }
 
 int main(){
-  vector<vector<tile> >map;  //creates the map
+  vector<vector<tile> >map;  //sets up the map
   map.resize(width);
   for(int i=0;i<width;i++){
     map[i].resize(height);
@@ -245,12 +245,14 @@ int main(){
       map[j][i]=tile();
     }
   }
-  map[1][1].set_unit(exampleUnit());  //testing units and building
+	map[width/2][0].set_building(buildingBase(true));
+	map[width/2][0].set_hasBuilding(true);
+	map[width/2][height-1].set_building(buildingBase());
+	map[width/2][height-1].set_hasBuilding(true);
+  map[1][1].set_unit(exampleUnit(true));  //testing units and building
   map[1][1].set_hasUnit(true);
   map[1][0].set_unit(exampleUnit());
   map[1][0].set_hasUnit(true);
-  map[1][0].set_building(exampleBuilding());
-  map[1][0].set_hasBuilding(true);
   consoleRenderFrame(width, height, map);  //renders initial screen
 	commandLine(&map);   //runs console
   cout<<"done"<<endl;   //testing output to see that game has finished with no errors

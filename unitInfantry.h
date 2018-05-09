@@ -5,14 +5,14 @@
 #include "headers.h"
 #include "unit.h"
 
-class unitIfantry: public unit
+class unitInfantry: public unit
 {
 protected:
 
 public:
-  unitIfantry();
-  unitIfantry(bool AI);
-  ~unitIfantry();
+  unitInfantry();
+  unitInfantry(bool AI);
+  ~unitInfantry();
 };
 
 #endif //UNITINFANTRY_H
