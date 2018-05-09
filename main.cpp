@@ -5,84 +5,6 @@
 #include "exampleUnit.h"
 #include "exampleBuilding.h"
 
-int convertToASCII(std::string input_coords) {
-
-	int number;
-
-	std::string input = input_coords;
-	number = int(input[0])-65;
-
-	return number;
-
-}
-
-int commandLine() {
-
-	std::string input;
-
-	while(input != "end" or "endturn") {
-
-		std::cout << "Enter Command: (type end to quit or endturn to end your turn) ";
-		std::cin >> input;
-
-		if(input == "end") {
-
-			std::cout << "You have ended the game" << std::endl;
-			std::cin.ignore();
-			break;
-		}
-		else if(input == "attack") {
-
-			std::string attacker, attacked;
-
-			std::cout << "Which Unit would you like to attack with? ";
-			std::cin >> attacker;
-
-			std::cout << "What Unit would you like to attack? ";
-			std::cin >> attacked;
-
-
-			attackUnit(convertToASCII(attacker), attacker[1]-'0', convertToASCII(attacked), attacked[1]-'0');
-
-		}
-		else if(input == "move") {
-
-			std::string unit_to_be_moved, new_pos;
-
-
-			std::cout << "Which Unit would you like to move?";
-			std::cin >> unit_to_be_moved;
-
-			std::cout << "Where would you like to move it to?";
-			std::cin >> new_pos;
-
-			moveUnit(convertToASCII(unit_to_be_moved), unit_to_be_moved[1]-'0', convertToASCII(new_pos), new_pos[1]-'0');
-
-
-		}
-		else if(input == "look") {
-
-			std::string tile;
-
-
-			std::cout << "Where would you like to look?";
-			std::cin >> tile;
-
-			printTileInfo(convertToASCII(tile), tile[1]-'0');
-
-		}
-		else{
-
-			std::cout << "That is not a valid command" << std::endl;
-		}
-	}
-
-	return 0;
-
-
-
-}
-
 void consoleRenderGrid(int sWidth, int sHight) {
 	char temp = '+';
 	char temp2 = 32;
@@ -202,6 +124,83 @@ bool buildBuilding(int x, int y, vector<vector<tile> >*map, int bType){
 	}
 }
 
+int convertToASCII(std::string input_coords) {
+
+	int number;
+
+	std::string input = input_coords;
+	number = int(input[0])-65;
+
+	return number;
+
+}
+
+int commandLine(vector<vector<tile> >*map) {
+
+	std::string input;
+
+	while(input != "end" or "endturn") {
+
+		std::cout << "Enter Command: (type end to quit or endturn to end your turn) ";
+		std::cin >> input;
+
+		if(input == "end") {
+
+			std::cout << "You have ended the game" << std::endl;
+			std::cin.ignore();
+			break;
+		}
+		else if(input == "attack") {
+
+			std::string attacker, attacked;
+
+			std::cout << "Which Unit would you like to attack with? ";
+			std::cin >> attacker;
+
+			std::cout << "What Unit would you like to attack? ";
+			std::cin >> attacked;
+
+
+			attackUnit(convertToASCII(attacker), attacker[1]-'0', convertToASCII(attacked), attacked[1]-'0', map);
+
+		}
+		else if(input == "move") {
+
+			std::string unit_to_be_moved, new_pos;
+
+
+			std::cout << "Which Unit would you like to move?";
+			std::cin >> unit_to_be_moved;
+
+			std::cout << "Where would you like to move it to?";
+			std::cin >> new_pos;
+
+			moveUnit(convertToASCII(unit_to_be_moved), unit_to_be_moved[1]-'0', convertToASCII(new_pos), new_pos[1]-'0', map);
+
+		}
+		else if(input == "look") {
+
+			std::string tile;
+
+
+			std::cout << "Where would you like to look?";
+			std::cin >> tile;
+
+			printTileInfo(convertToASCII(tile), tile[1]-'0',map);
+
+		}
+		else{
+
+			std::cout << "That is not a valid command" << std::endl;
+		}
+	}
+
+	return 0;
+
+
+
+}
+
 int main(){
   int width=10;
   int height=10;
@@ -222,7 +221,8 @@ int main(){
   map[1][0].set_building(exampleBuilding());
   map[1][0].set_hasBuilding(true);
   consoleRenderFrame(width, height, map);
-  if(moveUnit(1,1,0,0,&map)==false){
+	commandLine(&map);
+  /*if(moveUnit(1,1,0,0,&map)==false){
     cout<<"unable to move here"<<endl;
   }
   else{
@@ -240,7 +240,7 @@ int main(){
   else{
       consoleRenderFrame(width, height, map);
   }
-  printTileInfo(1,0,&map);
+  printTileInfo(1,0,&map);*/
   cout<<"done"<<endl;
   return 0;
 }
