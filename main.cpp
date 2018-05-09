@@ -2,9 +2,8 @@
 #include "unit.h"
 #include "building.h"
 #include "tile.h"
-#include "exampleUnit.h"
-#include "exampleBuilding.h"
-#include "buildingBarrack.h"
+#include "buildingTypes.h"
+#include "unitTypes.h"
 
 int width=10;
 int height=10;

@@ -4,7 +4,7 @@
 #include "headers.h"
 #include "buildingSpawner.h"
 #include "unit.h"
-#include "exampleUnit.h"
+#include "unitTypes.h"
 
 class buildingBarrack: public buildingSpawner
 {

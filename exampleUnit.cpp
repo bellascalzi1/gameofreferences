@@ -22,15 +22,6 @@ exampleUnit::exampleUnit(bool AI){
   _AI=AI;
 }
 
-/*void exampleUnit::resetInitialStats(){
-  _health=100;
-  _AC=4;
-  _icon='A';
-  _moveSpeed=1;
-  _dmg=20;
-  _cost=25;
-}*/
-
 exampleUnit::~exampleUnit(){
 
 }
