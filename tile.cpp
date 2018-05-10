@@ -1,10 +1,13 @@
 //impliments tile class
 #include "headers.h"
 #include "tile.h"
+#include "buildingTypes.h"
+#include "unitTypes.h"
 
 tile::tile(){ //defult constructor
   _hasUnit=false;
   _hasBuilding=false;
+  _isSpawner=false;
 }
 
 //get/set tile variables
@@ -38,6 +41,14 @@ void tile::set_hasBuilding(bool hasBuilding){
 
 bool tile::get_hasBuilding(){
   return _hasBuilding;
+}
+
+void tile::set_isSpawner(bool isSpawner){
+  _isSpawner=isSpawner;
+}
+
+bool tile::get_isSpawner(){
+  return _isSpawner;
 }
 
 char tile::get_icon(){
@@ -113,6 +124,14 @@ int tile::buildingGet_AC(){
 
 string tile::buildingGet_name(){
   return _building.get_name();
+}
+
+void tile::building_spawnUnit(string uType){
+  cout<<"test2"<<endl;
+  building *temp = new buildingBarrack();
+  _unit=temp->spawnUnit(uType);
+  cout<<_unit.get_name()<<endl;
+  _hasUnit=true;
 }
 
 tile::~tile(){

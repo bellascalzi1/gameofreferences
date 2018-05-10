@@ -19,6 +19,10 @@ int building::get_health(){
   return _health;
 }
 
+unit building::spawnUnit(string uType){
+  return unit();
+}
+
 int building::get_AC(){
   return _AC;
 }

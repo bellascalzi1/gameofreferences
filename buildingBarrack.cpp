@@ -1,6 +1,8 @@
 //implements barracks
 #include "headers.h"
 #include "buildingBarrack.h"
+#include "buildingTypes.h"
+#include "unitTypes.h"
 
 buildingBarrack::buildingBarrack(){  //defult constructor
   _health=100;
@@ -21,9 +23,12 @@ buildingBarrack::buildingBarrack(bool AI){  //constructor with input to set AI o
 }
 
 unit buildingBarrack::spawnUnit(string uType){    //spawns a new unit
+  cout<<"testx"<<endl;
   if(uType=="infantry"){
     _hasSpawned=true;
-    return unitInfantry();
+    cout<<"hi this is a test"<<endl;
+    unit temp = unitInfantry();
+    return temp;
   }
   else if(uType=="heavy"){
     _hasSpawned=true;

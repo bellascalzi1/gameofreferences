@@ -26,6 +26,8 @@ void consoleRenderGrid(int sWidth, int sHight) { //renders the grid around the m
 void consoleRenderAlphCoord(int sWidth, int sHight) { //renders the top coords around the map in console
 	char temp = 'A';
 	char temp2 = 32;
+	cout << setw(2) << temp2;
+	cout << setw(2) << temp2;
 	for (int j = 0; j < sWidth * 2 + 1; j++) {
 		if (j % 2 == 0) {
 			cout << setw(2) << temp2;
@@ -48,6 +50,7 @@ void consoleRenderFrame(int sWidth, int sHight, vector<vector<tile> >map) { //re
 	for (int i = 0; i < sHight; i++) {
 		char temp = 32;
 		cout<<i;
+		cout<<temp;
 		cout<<temp;
 		for (int j = 0; j < sWidth; j++) {
 			cout << setw(3)<< map[j][i].get_icon()<<temp;
@@ -152,6 +155,7 @@ bool buildBuilding(int x, int y, vector<vector<tile> >*map, string bType){   //c
 			map[0][x][y].set_hasBuilding(true);
 			map[0][x][y].set_building(buildingBarrack());
 			consoleRenderFrame(width, height, *map);
+			map[0][x][y].set_isSpawner(true);
 			return true;
 		}
 		else{
@@ -174,6 +178,20 @@ int convertToASCII(string input_coords) {   //convers a character into int coord
 
 	return number;
 
+}
+
+void spawnUnit(int x, int y, vector<vector<tile> >*map, string uType){
+	cout<<x<<y<<endl;
+	if(map[0][x][y].get_hasUnit()==true){
+		cout<<"This tile already has a unit in it"<<endl;
+	}
+	else if(map[0][x][y].get_isSpawner()==false){
+		cout<<"This tile cannot spawn units"<<endl;
+	}
+	else{
+		cout<<"test1"<<endl;
+		map[0][x][y].building_spawnUnit(uType);
+	}
 }
 
 void commandLine(vector<vector<tile> >*map) {  //takes and interperates players input commands
@@ -230,7 +248,7 @@ void commandLine(vector<vector<tile> >*map) {  //takes and interperates players 
 			printTileInfo(convertToASCII(tile), tile[1]-'0',map);
 
 		}
-		else if(input == "buildBuilding") {
+		else if(input == "build") {
 
 			string tile;
 			string bType;
@@ -245,6 +263,20 @@ void commandLine(vector<vector<tile> >*map) {  //takes and interperates players 
 			buildBuilding(convertToASCII(tile), tile[1]-'0',map,bType);
 
 		}
+		else if(input == "spawn") {
+
+			string tile;
+			string uType;
+
+
+			cout << "Which building would you like to spawn unit at?";
+			cin >> tile;
+
+			cout << "What unit you like to spawn?";
+			cin >> uType;
+
+			spawnUnit(convertToASCII(tile), tile[1]-'0',map,uType);
+			}
 		else{
 
 			std::cout << "That is not a valid command" << std::endl;

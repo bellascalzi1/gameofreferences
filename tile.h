@@ -5,6 +5,9 @@
 #include "headers.h"
 #include "unit.h"
 #include "building.h"
+#include "buildingTypes.h"
+#include "unitTypes.h"
+
 
 class tile
 {
@@ -12,6 +15,7 @@ protected:
   string _pos;
   bool _hasUnit;
   bool _hasBuilding;
+  bool _isSpawner;
   building _building;
   unit _unit;
 public:
@@ -24,6 +28,8 @@ public:
   bool get_hasUnit();
   void set_hasBuilding(bool hasBuilding);
   bool get_hasBuilding();
+  void set_isSpawner(bool isSpawner);
+  bool get_isSpawner();
   char get_icon();
   int unit_moveSpeed();
   bool unit_AI();
@@ -40,6 +46,7 @@ public:
   void buildingSet_AC(int AC);
   int buildingGet_AC();
   string buildingGet_name();
+  void building_spawnUnit(string uType);
   ~tile();
 };
 

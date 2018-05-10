@@ -3,6 +3,7 @@
 #define BUILDING_H
 
 #include "headers.h"
+#include "unit.h"
 
 class building
 {
@@ -18,6 +19,7 @@ public:
   string get_name();
   void set_health(int nHealth);
   int get_health();
+  virtual unit spawnUnit(string uType);
   int get_AC();
   void set_AC(int AC);
   char get_icon();
