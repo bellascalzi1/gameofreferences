@@ -47,6 +47,10 @@ bool building::get_AI(){
   return _AI;
 }
 
+int building::get_buildingIncome(){
+  return _buildingIncome;
+}
+
 building::~building(){//defult building deconstrucer
 
 }

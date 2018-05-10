@@ -7,6 +7,8 @@
 
 int width=11;
 int height=11;
+int playerRec=0;
+int AIRec=0;
 
 void consoleRenderGrid(int sWidth, int sHight) { //renders the grid around the map in console
 	char temp = '+';
@@ -147,13 +149,13 @@ bool buildBuilding(int x, int y, vector<vector<tile> >*map, string bType){   //c
 	if(map[0][x+1][y].get_hasBuilding()==true or map[0][x-1][y].get_hasBuilding() or map[0][x][y+1].get_hasBuilding() or map[0][x][y-1].get_hasBuilding()){
 		if(bType=="example"){
 				map[0][x][y].set_hasBuilding(true);
-				map[0][x][y].set_building(exampleBuilding());
+				map[0][x][y].set_building(new exampleBuilding());
 				consoleRenderFrame(width, height, *map);
 				return true;
 		}
 		else if(bType=="barracks"){
 			map[0][x][y].set_hasBuilding(true);
-			map[0][x][y].set_building(buildingBarrack());
+			map[0][x][y].set_building(new buildingBarrack());
 			consoleRenderFrame(width, height, *map);
 			map[0][x][y].set_isSpawner(true);
 			return true;
@@ -181,7 +183,6 @@ int convertToASCII(string input_coords) {   //convers a character into int coord
 }
 
 void spawnUnit(int x, int y, vector<vector<tile> >*map, string uType){
-	cout<<x<<y<<endl;
 	if(map[0][x][y].get_hasUnit()==true){
 		cout<<"This tile already has a unit in it"<<endl;
 	}
@@ -189,12 +190,42 @@ void spawnUnit(int x, int y, vector<vector<tile> >*map, string uType){
 		cout<<"This tile cannot spawn units"<<endl;
 	}
 	else{
-		cout<<"test1"<<endl;
 		map[0][x][y].building_spawnUnit(uType);
 	}
 }
 
-void commandLine(vector<vector<tile> >*map) {  //takes and interperates players input commands
+void income(tile map){
+	if(map.get_hasUnit()==true){
+		if(map.unit_AI()==true){
+			AIRec+=map.getTileIncome();
+		}
+		else{
+			playerRec+=map.getTileIncome();
+		}
+	}
+	else if(map.get_hasUnit()==true){
+		if(map.building_AI()==true){
+			AIRec+=map.getTileIncome();
+		}
+		else{
+			playerRec+=map.getTileIncome();
+		}
+	}
+	else{
+
+	}
+}
+
+void endTurn(vector<vector<tile> >*map){
+	for(int i=0;i<height;i++){
+    for(int j=0;j<width;j++){
+			income(map[0][j][i]);
+      map[0][j][i].turnTick();
+    }
+  }
+}
+
+void commandLine(vector<vector<tile> >*map, bool *gameRunning) {  //takes and interperates players input commands
 
 	string input;
 
@@ -203,10 +234,15 @@ void commandLine(vector<vector<tile> >*map) {  //takes and interperates players 
 		cout << "Enter Command: (type end to quit or endturn to end your turn) ";
 		cin >> input;
 
-		if(input == "end") {
-
+		if(input == "endTurn") {
+			//cout << "You have ended the turn" << std::endl;
+			//cin.ignore();
+			break;
+		}
+		else if(input == "end") {
 			cout << "You have ended the game" << std::endl;
 			cin.ignore();
+			*gameRunning=false;
 			break;
 		}
 		else if(input == "attack") {
@@ -295,16 +331,18 @@ int main(){
       map[j][i]=tile();
     }
   }
-	map[width/2][0].set_building(buildingBase(true));
+	map[width/2][0].set_building(new buildingBase(true));
 	map[width/2][0].set_hasBuilding(true);
-	map[width/2][height-1].set_building(buildingBase());
+	map[width/2][height-1].set_building(new buildingBase());
 	map[width/2][height-1].set_hasBuilding(true);
-  map[1][1].set_unit(exampleUnit(true));  //testing units and building
-  map[1][1].set_hasUnit(true);
-  map[1][0].set_unit(exampleUnit());
-  map[1][0].set_hasUnit(true);
   consoleRenderFrame(width, height, map);  //renders initial screen
-	commandLine(&map);   //runs console
+	bool gameRunning=true;
+	while(gameRunning==true){
+		commandLine(&map,&gameRunning);   //runs console
+		endTurn(&map);
+		cout<<"Turn over"<<endl;
+	}
+	cout<<playerRec<<":"<<AIRec<<endl;
   cout<<"done"<<endl;   //testing output to see that game has finished with no errors
   return 0;
 }

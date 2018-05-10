@@ -14,6 +14,7 @@ protected:
   char _icon;
   int _cost;
   bool _AI;
+  int _buildingIncome;
 public:
   building();
   string get_name();
@@ -26,7 +27,7 @@ public:
   int get_cost();
   void set_AI(bool AI);
   bool get_AI();
-  //virtual void resetInitialStats();
+  int get_buildingIncome();
   ~building();
 };
 

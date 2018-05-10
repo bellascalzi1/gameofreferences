@@ -16,13 +16,13 @@ protected:
   bool _hasUnit;
   bool _hasBuilding;
   bool _isSpawner;
-  building _building;
+  building *_building;
   unit _unit;
 public:
   tile();
   void set_unit(unit newUnit);
   unit get_unit();
-  void set_building(building newBuilding);
+  void set_building(building *newBuilding);
   building get_building();
   void set_hasUnit(bool hasUnit);
   bool get_hasUnit();
@@ -47,6 +47,8 @@ public:
   int buildingGet_AC();
   string buildingGet_name();
   void building_spawnUnit(string uType);
+  void turnTick();
+  int getTileIncome();
   ~tile();
 };
 

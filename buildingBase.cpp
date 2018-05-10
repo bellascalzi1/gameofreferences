@@ -8,6 +8,7 @@ buildingBase::buildingBase(){  //defult constructor
   _icon='B';
   _cost=0;
   _name="Main base";
+  _buildingIncome=100;
   _AI=false;
 }
 
@@ -17,6 +18,7 @@ buildingBase::buildingBase(bool AI){  //constructor with input for AI ownership
   _icon='B';
   _cost=0;
   _name="Main base";
+  _buildingIncome=100;
   _AI=AI;
 }
 

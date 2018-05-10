@@ -8,6 +8,7 @@ buildingVehicleBay::buildingVehicleBay(){  //defult constructor
   _icon='V';
   _cost=300;
   _name="Vehicle Bay";
+  _buildingIncome=-15;
   _AI=false;
 }
 
@@ -17,6 +18,7 @@ buildingVehicleBay::buildingVehicleBay(bool AI){  //constructor with input to se
   _icon='V';
   _cost=300;
   _name="Vehicle Bay";
+  _buildingIncome=-15;
   _AI=AI;
 }
 
@@ -35,6 +37,6 @@ unit buildingVehicleBay::spawnUnit(string uType){    //spawns a new vehicle
   }
 }
 
-buildingBarrack::~buildingBarrack(){    //defult deconstructor
+buildingVehicleBay::~buildingVehicleBay(){    //defult deconstructor
 
 }

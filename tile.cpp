@@ -19,12 +19,12 @@ unit tile::get_unit(){
   return _unit;
 }
 
-void tile::set_building(building newBuilding){
+void tile::set_building(building *newBuilding){
   _building=newBuilding;
 }
 
 building tile::get_building(){
-  return _building;
+  return *_building;
 }
 
 void tile::set_hasUnit(bool hasUnit){
@@ -53,7 +53,7 @@ bool tile::get_isSpawner(){
 
 char tile::get_icon(){
   if(_hasBuilding==true){
-    return _building.get_icon();
+    return _building->get_icon();
   }
   else if (_hasUnit==true){
     return _unit.get_icon();
@@ -103,35 +103,49 @@ string tile::unitGet_name(){
 
 //call get/set functions of building
 bool tile::building_AI(){
-  return _building.get_AI();
+  return _building->get_AI();
 }
 
 void tile::buildingSet_health(int health){
-  _building.set_health(health);
+  _building->set_health(health);
 }
 
 int tile::buildingGet_health(){
-  return _building.get_health();
+  return _building->get_health();
 }
 
 void tile::buildingSet_AC(int AC){
-  _building.set_AC(AC);
+  _building->set_AC(AC);
 }
 
 int tile::buildingGet_AC(){
-    return _building.get_AC();
+    return _building->get_AC();
 }
 
 string tile::buildingGet_name(){
-  return _building.get_name();
+  return _building->get_name();
 }
 
 void tile::building_spawnUnit(string uType){
-  cout<<"test2"<<endl;
-  building *temp = new buildingBarrack();
-  _unit=temp->spawnUnit(uType);
+  _unit=_building->spawnUnit(uType);
   cout<<_unit.get_name()<<endl;
   _hasUnit=true;
+}
+
+void tile::turnTick(){
+  //_unit.tickTurn();
+  //_building->tickTurn();
+}
+
+int tile::getTileIncome(){
+  int income;
+  if(_hasUnit==true){
+    //income+=_unit.get_income();
+  }
+  if(_hasBuilding==true){
+    income+=_building->get_buildingIncome();
+  }
+  return income;
 }
 
 tile::~tile(){
