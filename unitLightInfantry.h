@@ -12,6 +12,7 @@ protected:
 public:
 unitLightInfantry();
 unitLightInfantry(bool AI);
+void tickTurn();
 ~unitLightInfantry();
 };
 

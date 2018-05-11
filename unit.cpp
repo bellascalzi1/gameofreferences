@@ -39,12 +39,28 @@ int unit::get_moveSpeed(){
   return _moveSpeed;
 }
 
+void unit::set_movesLeft(int movesLeft){
+  _movesLeft=movesLeft;
+}
+
+int unit::get_movesLeft(){
+  return _movesLeft;
+}
+
 void unit::set_dmg(int dmg){
   _dmg=dmg;
 }
 
 int unit::get_dmg(){
   return _dmg;
+}
+
+void unit::set_attacksLeft(int attacksLeft){
+  _attacksLeft=attacksLeft;
+}
+
+int unit::get_attacksLeft(){
+  return _attacksLeft;
 }
 
 int unit::get_cost(){
@@ -57,6 +73,10 @@ void unit::set_AI(bool AI){
 
 bool unit::get_AI(){
   return _AI;
+}
+
+void unit::tickTurn(){
+
 }
 
 unit::~unit(){//defult deconstructor

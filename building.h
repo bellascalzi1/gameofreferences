@@ -10,6 +10,7 @@ class building
 protected:
   string _name;
   int _health;
+  int _baseHealth;
   int _AC;
   char _icon;
   int _cost;
@@ -28,6 +29,7 @@ public:
   void set_AI(bool AI);
   bool get_AI();
   int get_buildingIncome();
+  virtual void tickTurn();
   ~building();
 };
 

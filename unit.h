@@ -9,10 +9,13 @@ class unit
 protected:
   string _name;
   int _health;
+  int _baseHealth;
   int _AC;
   char _icon;
   int _moveSpeed;
+  int _movesLeft;
   int _dmg;
+  int _attacksLeft;
   int _cost;
   bool _AI;
 public:
@@ -30,6 +33,11 @@ public:
   int get_cost();
   void set_AI(bool AI);
   bool get_AI();
+  int get_movesLeft();
+  void set_movesLeft(int movesLeft);
+  int get_attacksLeft();
+  void set_attacksLeft(int attacksLeft);
+  void tickTurn();
   ~unit();
 };
 

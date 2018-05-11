@@ -4,6 +4,7 @@
 
 buildingVehicleBay::buildingVehicleBay(){  //defult constructor
   _health=80;
+  _baseHealth=80;
   _AC=2;
   _icon='V';
   _cost=300;
@@ -14,6 +15,7 @@ buildingVehicleBay::buildingVehicleBay(){  //defult constructor
 
 buildingVehicleBay::buildingVehicleBay(bool AI){  //constructor with input to set AI ownership
   _health=80;
+  _baseHealth=80;
   _AC=2;
   _icon='V';
   _cost=300;
@@ -34,6 +36,16 @@ unit buildingVehicleBay::spawnUnit(string uType){    //spawns a new vehicle
   else if(uType=="shocklauncher"){
     _hasSpawned=true;
     return shocklauncher();
+  }
+}
+
+void buildingVehicleBay::tickTurn(){
+  _hasSpawned=false;
+  if(_health<_baseHealth){
+    _health=round(_baseHealth*1.1);
+    if(_health>_baseHealth){
+      _health=_baseHealth;
+    }
   }
 }
 

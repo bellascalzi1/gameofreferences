@@ -15,6 +15,7 @@ public:
   buildingBarrack();
   buildingBarrack(bool AI);
   unit spawnUnit(string uType);
+  void tickTurn();
   ~buildingBarrack();
 };
 

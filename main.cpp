@@ -53,7 +53,9 @@ void consoleRenderFrame(int sWidth, int sHight, vector<vector<tile> >map) { //re
 		char temp = 32;
 		cout<<i;
 		cout<<temp;
+		if(i<10){
 		cout<<temp;
+		}
 		for (int j = 0; j < sWidth; j++) {
 			cout << setw(3)<< map[j][i].get_icon()<<temp;
 		}
@@ -63,7 +65,8 @@ void consoleRenderFrame(int sWidth, int sHight, vector<vector<tile> >map) { //re
   for (int i = 0; i < 4*sWidth+4; i++) {
     cout<<"-";
   }
-  cout << "" << endl;
+	cout << "" << endl;
+  cout <<"Recources: "<<playerRec<< endl;
   cout << "" << endl;
 }
 
@@ -77,7 +80,7 @@ bool moveUnit(int Sx, int Sy, int Fx, int Fy, vector<vector<tile> >*map){ //move
 		cout<<"No unit selected"<<endl;
 		return false;
 	}
-  else if(map[0][Sx][Sy].unit_moveSpeed()<dist){
+  else if(map[0][Fx][Fy].unitGet_movesLeft()<dist){
 		cout<<"Out of movement range"<<endl;
     return false;
   }
@@ -85,6 +88,7 @@ bool moveUnit(int Sx, int Sy, int Fx, int Fy, vector<vector<tile> >*map){ //move
     map[0][Fx][Fy].set_unit(map[0][Sx][Sy].get_unit());
     map[0][Sx][Sy].set_hasUnit(false);
     map[0][Fx][Fy].set_hasUnit(true);
+		map[0][Fx][Fy].unitSet_movesLeft(map[0][Fx][Fy].unitGet_movesLeft()-dist);
 		consoleRenderFrame(width, height, *map);
     return true;
   }
@@ -194,39 +198,35 @@ void spawnUnit(int x, int y, vector<vector<tile> >*map, string uType){
 	}
 }
 
-void income(tile map){
-	if(map.get_hasUnit()==true){
-		if(map.unit_AI()==true){
-			AIRec+=map.getTileIncome();
-		}
-		else{
-			playerRec+=map.getTileIncome();
-		}
-	}
-	else if(map.get_hasUnit()==true){
-		if(map.building_AI()==true){
-			AIRec+=map.getTileIncome();
-		}
-		else{
-			playerRec+=map.getTileIncome();
-		}
-	}
-	else{
-
-	}
-}
-
 void endTurn(vector<vector<tile> >*map){
 	for(int i=0;i<height;i++){
     for(int j=0;j<width;j++){
-			income(map[0][j][i]);
+			if(map[0][j][i].get_hasUnit()==true){
+				if(map[0][j][i].unit_AI()==true){
+					AIRec+=map[0][j][i].getTileIncome();
+				}
+				else{
+					playerRec+=map[0][j][i].getTileIncome();
+				}
+			}
+			else if(map[0][j][i].get_hasBuilding()==true){
+				if(map[0][j][i].building_AI()==true){
+					AIRec+=map[0][j][i].getTileIncome();
+				}
+				else{
+					playerRec+=map[0][j][i].getTileIncome();
+				}
+			}
+			else{
+
+			}
       map[0][j][i].turnTick();
     }
   }
+	consoleRenderFrame(width, height, *map);
 }
 
 void commandLine(vector<vector<tile> >*map, bool *gameRunning) {  //takes and interperates players input commands
-
 	string input;
 
 	while(input != "end" or "endturn") {

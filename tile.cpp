@@ -97,6 +97,14 @@ int tile::unitGet_AC(){
     return _unit.get_AC();
 }
 
+void tile::unitSet_movesLeft(int movesLeft){
+  _unit.set_movesLeft(movesLeft);
+}
+
+int tile::unitGet_movesLeft(){
+  return _unit.get_movesLeft();
+}
+
 string tile::unitGet_name(){
   return _unit.get_name();
 }
@@ -133,8 +141,8 @@ void tile::building_spawnUnit(string uType){
 }
 
 void tile::turnTick(){
-  //_unit.tickTurn();
-  //_building->tickTurn();
+  _unit.tickTurn();
+  _building->tickTurn();
 }
 
 int tile::getTileIncome(){

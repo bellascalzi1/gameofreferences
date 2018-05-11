@@ -12,6 +12,7 @@ protected:
 public:
   buildingBase();
   buildingBase(bool AI);
+  void tickTurn();
   ~buildingBase();
 };
 

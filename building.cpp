@@ -51,6 +51,10 @@ int building::get_buildingIncome(){
   return _buildingIncome;
 }
 
+void building::tickTurn(){
+
+}
+
 building::~building(){//defult building deconstrucer
 
 }
