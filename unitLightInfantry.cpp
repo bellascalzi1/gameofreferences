@@ -11,6 +11,7 @@ unitLightInfantry::unitLightInfantry(){  //defult constructor
   _dmg=10;
   _cost=40;
   _attacksLeft=0;
+  _movesLeft=0;
   _name="light infantry";
 }
 
@@ -23,6 +24,7 @@ unitLightInfantry::unitLightInfantry(bool AI){  //constructor wih input to set A
   _dmg=10;
   _cost=40;
   _attacksLeft=0;
+  _movesLeft=0;
   _name="light infantry";
   _AI=AI;
 }
@@ -35,6 +37,7 @@ void unitLightInfantry::tickTurn(){
     }
   }
   _movesLeft=_moveSpeed;
+  cout<<_movesLeft<<"::"<<_moveSpeed<<endl;
   _attacksLeft=1;
 }
 

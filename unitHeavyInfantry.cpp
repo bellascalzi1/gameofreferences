@@ -11,6 +11,7 @@ unitHeavyInfantry::unitHeavyInfantry(){  //defult constructor
   _dmg=40;
   _cost=200;
   _attacksLeft=0;
+  _movesLeft=0;
   _name="heavy infantry";
 }
 

@@ -141,8 +141,12 @@ void tile::building_spawnUnit(string uType){
 }
 
 void tile::turnTick(){
+  if(_hasUnit==true){
   _unit.tickTurn();
+  }
+  if(_hasBuilding==true){
   _building->tickTurn();
+  }
 }
 
 int tile::getTileIncome(){

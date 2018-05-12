@@ -94,23 +94,61 @@ bool moveUnit(int Sx, int Sy, int Fx, int Fy, vector<vector<tile> >*map){ //move
   }
 }
 
-bool attackUnit(int Ax, int Ay, int Dx, int Dy, vector<vector<tile> >*map){  //attacks unit with another if posible
+bool attack(int Ax, int Ay, int Dx, int Dy, vector<vector<tile> >*map){  //attacks unit with another if posible
   int dist=abs(Dx-Ax)+abs(Dy-Ay);
-  if(dist>1){
+	if(map[0][Ax][Ay].get_hasUnit()==false){
+		cout<<"No unit selected"<<endl;
+    return false;
+	}
+	else if(map[0][Dx][Dy].get_hasUnit()==false or map[0][Dx][Dy].get_hasBuilding()==false){
+		cout<<"No target selected"<<endl;
+		return false;
+	}
+  else if(dist>1){
 		cout<<"Unit out of range"<<endl;
     return false;
   }
-  /*else if(map[0][Dx][Dy].unit_AI()==map[0][Ax][Ay].unit_AI()){
-		cout<<"This unit is friendly"<<endl;
-    return false;
-  }*/
-  else{
-    int dmgDef=map[0][Ax][Ay].unitGet_dmg()-map[0][Dx][Dy].unitGet_AC();      //damage delt to defender
-    int dmgAtk=round((0.75*map[0][Dx][Dy].unitGet_dmg())-map[0][Dx][Dy].unitGet_AC());      //damage delt to attacker
-    map[0][Dx][Dy].unitSet_health(map[0][Dx][Dy].unitGet_health()-dmgDef);
-    map[0][Ax][Ay].unitSet_health(map[0][Ax][Ay].unitGet_health()-dmgAtk);
-    return true;
-  }
+	else{
+		if(map[0][Dx][Dy].get_hasUnit()==true and map[0][Dx][Dy].get_hasBuilding()==true){
+			if(map[0][Dx][Dy].building_AI()==map[0][Ax][Ay].unit_AI()){
+				cout<<"This building is friendly"<<endl;
+				return false;
+			}
+			else{
+				int dmgDef=map[0][Ax][Ay].unitGet_dmg()-map[0][Dx][Dy].buildingGet_AC();      //damage delt to defender
+				int dmgAtk=round((0.75*map[0][Dx][Dy].unitGet_dmg())-map[0][Ax][Ay].unitGet_AC());      //damage delt to attacker
+				map[0][Dx][Dy].buildingSet_health(map[0][Dx][Dy].buildingGet_health()-dmgDef);
+				map[0][Ax][Ay].unitSet_health(map[0][Ax][Ay].unitGet_health()-dmgAtk);
+				return true;
+			}
+		}
+		else if(map[0][Dx][Dy].get_hasBuilding()==true){
+			if(map[0][Dx][Dy].building_AI()==map[0][Ax][Ay].unit_AI()){
+				cout<<"This building is friendly"<<endl;
+				return false;
+			}
+			else{
+				int dmgDef=map[0][Ax][Ay].unitGet_dmg()-map[0][Dx][Dy].buildingGet_AC();      //damage delt to defender
+				//int dmgAtk=round((0.75*map[0][Dx][Dy].unitGet_dmg())-map[0][Ax][Ay].unitGet_AC());      //damage delt to attacker
+				map[0][Dx][Dy].buildingSet_health(map[0][Dx][Dy].buildingGet_health()-dmgDef);
+				//map[0][Ax][Ay].unitSet_health(map[0][Ax][Ay].unitGet_health()-dmgAtk);
+				return true;
+			}
+		}
+		else{
+			if(map[0][Dx][Dy].unit_AI()==map[0][Ax][Ay].unit_AI()){
+				cout<<"This unit is friendly"<<endl;
+				return false;
+			}
+			else{
+				int dmgDef=map[0][Ax][Ay].unitGet_dmg()-map[0][Dx][Dy].unitGet_AC();      //damage delt to defender
+				int dmgAtk=round((0.75*map[0][Dx][Dy].unitGet_dmg())-map[0][Ax][Ay].unitGet_AC());      //damage delt to attacker
+				map[0][Dx][Dy].unitSet_health(map[0][Dx][Dy].unitGet_health()-dmgDef);
+				map[0][Ax][Ay].unitSet_health(map[0][Ax][Ay].unitGet_health()-dmgAtk);
+				return true;
+			}
+		}
+	}
 }
 
 void printTileInfo(int x, int y, vector<vector<tile> >*map){  //prints the details of a tile to the console
@@ -137,6 +175,8 @@ void printTileInfo(int x, int y, vector<vector<tile> >*map){  //prints the detai
     cout<<"-Unit name: "<<map[0][x][y].unitGet_name()<<endl;
     cout<<"-Unit health: "<<map[0][x][y].unitGet_health()<<endl;
     cout<<"-Unit AC: "<<map[0][x][y].unitGet_AC()<<endl;
+		cout<<"-Unit moves left: "<<map[0][x][y].unitGet_movesLeft()<<endl;
+		cout<<"-Unit damage: "<<map[0][x][y].unitGet_dmg()<<endl;
     if(map[0][x][y].unit_AI()==true){
       cout<<"-Unit owner: AI"<<endl;
     }
@@ -256,7 +296,7 @@ void commandLine(vector<vector<tile> >*map, bool *gameRunning) {  //takes and in
 			cin >> attacked;
 
 
-			attackUnit(convertToASCII(attacker), attacker[1]-'0', convertToASCII(attacked), attacked[1]-'0', map);
+			attack(convertToASCII(attacker), attacker[1]-'0', convertToASCII(attacked), attacked[1]-'0', map);
 
 		}
 		else if(input == "move") {
