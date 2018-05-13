@@ -24,18 +24,18 @@ buildingVehicleBay::buildingVehicleBay(bool AI){  //constructor with input to se
   _AI=AI;
 }
 
-unit buildingVehicleBay::spawnUnit(string uType){    //spawns a new vehicle
+unit* buildingVehicleBay::spawnUnit(string uType){    //spawns a new vehicle
   if(uType=="destroyer"){
     _hasSpawned=true;
-    return destroyer();
+    return new destroyer();
   }
   else if(uType=="cruiser"){
     _hasSpawned=true;
-    return cruiser();
+    return new cruiser();
   }
   else if(uType=="shocklauncher"){
     _hasSpawned=true;
-    return shocklauncher();
+    return new shocklauncher();
   }
 }
 

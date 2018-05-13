@@ -19,8 +19,8 @@ int building::get_health(){
   return _health;
 }
 
-unit building::spawnUnit(string uType){
-  return unit();
+unit* building::spawnUnit(string uType){
+  return new unit();
 }
 
 int building::get_AC(){

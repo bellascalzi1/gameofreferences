@@ -14,7 +14,7 @@ protected:
 public:
   buildingVehicleBay();
   buildingVehicleBay(bool AI);
-  unit spawnUnit(string uType);
+  unit* spawnUnit(string uType);
   void tickTurn();
   ~buildingVehicleBay();
 };

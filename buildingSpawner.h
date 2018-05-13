@@ -12,7 +12,7 @@ protected:
   bool _hasSpawned;
 public:
   buildingSpawner();
-  virtual unit spawnUnit(string uType)=0;
+  virtual unit* spawnUnit(string uType)=0;
   ~buildingSpawner();
 };
 

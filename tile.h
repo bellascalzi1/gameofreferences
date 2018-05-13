@@ -17,11 +17,11 @@ protected:
   bool _hasBuilding;
   bool _isSpawner;
   building *_building;
-  unit _unit;
+  unit *_unit;
 public:
   tile();
-  void set_unit(unit newUnit);
-  unit get_unit();
+  void set_unit(unit *newUnit);
+  unit* get_unit();
   void set_building(building *newBuilding);
   building get_building();
   void set_hasUnit(bool hasUnit);

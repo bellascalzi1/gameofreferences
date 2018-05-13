@@ -80,7 +80,7 @@ bool moveUnit(int Sx, int Sy, int Fx, int Fy, vector<vector<tile> >*map){ //move
 		cout<<"No unit selected"<<endl;
 		return false;
 	}
-  else if(map[0][Fx][Fy].unitGet_movesLeft()<dist){
+  else if(map[0][Sx][Sy].unitGet_movesLeft()<dist){
 		cout<<"Out of movement range"<<endl;
     return false;
   }

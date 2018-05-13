@@ -11,11 +11,11 @@ tile::tile(){ //defult constructor
 }
 
 //get/set tile variables
-void tile::set_unit(unit newUnit){
+void tile::set_unit(unit *newUnit){
   _unit=newUnit;
 }
 
-unit tile::get_unit(){
+unit* tile::get_unit(){
   return _unit;
 }
 
@@ -56,7 +56,7 @@ char tile::get_icon(){
     return _building->get_icon();
   }
   else if (_hasUnit==true){
-    return _unit.get_icon();
+    return _unit->get_icon();
   }
   else{
     char temp = 'O'; //32; space
@@ -66,47 +66,47 @@ char tile::get_icon(){
 
 //call get/set functions of unit
 int tile::unit_moveSpeed(){
-  return _unit.get_moveSpeed();
+  return _unit->get_moveSpeed();
 }
 
 bool tile::unit_AI(){
-  return _unit.get_AI();
+  return _unit->get_AI();
 }
 
 void tile::unitSet_health(int health){
-  _unit.set_health(health);
+  _unit->set_health(health);
 }
 
 int tile::unitGet_health(){
-  return _unit.get_health();
+  return _unit->get_health();
 }
 
 void tile::unitSet_dmg(int dmg){
-  _unit.set_dmg(dmg);
+  _unit->set_dmg(dmg);
 }
 
 int tile::unitGet_dmg(){
-    return _unit.get_dmg();
+    return _unit->get_dmg();
 }
 
 void tile::unitSet_AC(int AC){
-  _unit.set_AC(AC);
+  _unit->set_AC(AC);
 }
 
 int tile::unitGet_AC(){
-    return _unit.get_AC();
+    return _unit->get_AC();
 }
 
 void tile::unitSet_movesLeft(int movesLeft){
-  _unit.set_movesLeft(movesLeft);
+  _unit->set_movesLeft(movesLeft);
 }
 
 int tile::unitGet_movesLeft(){
-  return _unit.get_movesLeft();
+  return _unit->get_movesLeft();
 }
 
 string tile::unitGet_name(){
-  return _unit.get_name();
+  return _unit->get_name();
 }
 
 //call get/set functions of building
@@ -136,13 +136,13 @@ string tile::buildingGet_name(){
 
 void tile::building_spawnUnit(string uType){
   _unit=_building->spawnUnit(uType);
-  cout<<_unit.get_name()<<endl;
+  cout<<_unit->get_name()<<endl;
   _hasUnit=true;
 }
 
 void tile::turnTick(){
   if(_hasUnit==true){
-  _unit.tickTurn();
+    _unit->tickTurn();
   }
   if(_hasBuilding==true){
   _building->tickTurn();
@@ -152,7 +152,7 @@ void tile::turnTick(){
 int tile::getTileIncome(){
   int income;
   if(_hasUnit==true){
-    //income+=_unit.get_income();
+    //income+=_unit->get_income();
   }
   if(_hasBuilding==true){
     income+=_building->get_buildingIncome();

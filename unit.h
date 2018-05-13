@@ -37,7 +37,7 @@ public:
   void set_movesLeft(int movesLeft);
   int get_attacksLeft();
   void set_attacksLeft(int attacksLeft);
-  void tickTurn();
+  virtual void tickTurn();
   ~unit();
 };
 
