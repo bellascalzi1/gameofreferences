@@ -39,8 +39,7 @@ unit* buildingBarrack::spawnUnit(string uType){    //spawns a new unit
   }
   else if(uType=="light"){
     _hasSpawned=true;
-    unit *temp=new unitLightInfantry();
-    return temp;
+    return new unitLightInfantry();
   }
   else if(uType=="rocket"){
     _hasSpawned=true;

@@ -135,9 +135,13 @@ string tile::buildingGet_name(){
 }
 
 void tile::building_spawnUnit(string uType){
-  _unit=_building->spawnUnit(uType);
-  cout<<_unit->get_name()<<endl;
-  _hasUnit=true;
+  if(_building->get_hasSpawned()==false){
+    _unit=_building->spawnUnit(uType);
+    _hasUnit=true;
+  }
+  else{
+    cout<<"Building out of spawns"<<endl;
+  }
 }
 
 void tile::turnTick(){

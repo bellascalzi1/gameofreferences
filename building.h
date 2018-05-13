@@ -16,6 +16,7 @@ protected:
   int _cost;
   bool _AI;
   int _buildingIncome;
+  bool _hasSpawned;
 public:
   building();
   string get_name();
@@ -28,6 +29,8 @@ public:
   int get_cost();
   void set_AI(bool AI);
   bool get_AI();
+  void set_hasSpawned(bool hasSpawned);
+  bool get_hasSpawned();
   int get_buildingIncome();
   virtual void tickTurn();
   ~building();

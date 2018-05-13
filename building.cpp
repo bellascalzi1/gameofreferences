@@ -55,6 +55,14 @@ void building::tickTurn(){
 
 }
 
+void building::set_hasSpawned(bool hasSpawned){
+  _hasSpawned=hasSpawned;
+}
+
+bool building::get_hasSpawned(){
+  return _hasSpawned;
+}
+
 building::~building(){//defult building deconstrucer
 
 }

@@ -9,7 +9,7 @@
 class buildingSpawner: public building
 {
 protected:
-  bool _hasSpawned;
+  
 public:
   buildingSpawner();
   virtual unit* spawnUnit(string uType)=0;
