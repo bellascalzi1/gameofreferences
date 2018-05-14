@@ -3,3 +3,4 @@
 #include "buildingBarrack.h"
 #include "buildingBase.h"
 #include "buildingVehicleBay.h"
+#include "buildingMine.h"

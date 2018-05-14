@@ -1,4 +1,4 @@
-//defiens main mine building
+//defines main mine building
 #ifndef BUILDINGMINE_H
 #define BUILDINGMINE_H
 
@@ -17,4 +17,4 @@ public:
   ~buildingMine();
 };
 
-#endif //BUILDINGBASE_H
+#endif //BUILDINGMINE_H
