@@ -7,8 +7,8 @@
 
 int width=11;
 int height=11;
-int playerRec=0;
-int AIRec=0;
+int playerRec=100;
+int AIRec=100;
 
 void consoleRenderGrid(int sWidth, int sHight) { //renders the grid around the map in console
 	char temp = '+';
@@ -70,82 +70,81 @@ void consoleRenderFrame(int sWidth, int sHight, vector<vector<tile> >map) { //re
   cout << "" << endl;
 }
 
-bool moveUnit(int Sx, int Sy, int Fx, int Fy, vector<vector<tile> >*map){ //moves unit from one place to another if posible
+int moveUnit(int Sx, int Sy, int Fx, int Fy, vector<vector<tile> >*map){ //moves unit from one place to another if posible
   int dist=abs(Fx-Sx)+abs(Fy-Sy);
   if(map[0][Fx][Fy].get_hasUnit()==true){
-		cout<<"There is already a unit here"<<endl;
-    return false;
+		//already has unit
+    return 1;
   }
 	else if(map[0][Sx][Sy].get_hasUnit()==false){
-		cout<<"No unit selected"<<endl;
-		return false;
+		//no unit to move
+		return 2;
 	}
   else if(map[0][Sx][Sy].unitGet_movesLeft()<dist){
-		cout<<"Out of movement range"<<endl;
-    return false;
+		//out of range
+    return 3;
   }
   else{
     map[0][Fx][Fy].set_unit(map[0][Sx][Sy].get_unit());
     map[0][Sx][Sy].set_hasUnit(false);
     map[0][Fx][Fy].set_hasUnit(true);
 		map[0][Fx][Fy].unitSet_movesLeft(map[0][Fx][Fy].unitGet_movesLeft()-dist);
-		consoleRenderFrame(width, height, *map);
-    return true;
+    return 0;
   }
 }
 
-bool attack(int Ax, int Ay, int Dx, int Dy, vector<vector<tile> >*map){  //attacks unit with another if posible
+int attack(int Ax, int Ay, int Dx, int Dy, vector<vector<tile> >*map){  //attacks unit with another if posible
   int dist=abs(Dx-Ax)+abs(Dy-Ay);
 	if(map[0][Ax][Ay].get_hasUnit()==false){
-		cout<<"No unit selected"<<endl;
-    return false;
+		//no unit
+    return 1;
 	}
 	else if(map[0][Dx][Dy].get_hasUnit()==false or map[0][Dx][Dy].get_hasBuilding()==false){
-		cout<<"No target selected"<<endl;
-		return false;
+		//no target
+		return 2;
 	}
   else if(dist>1){
-		cout<<"Unit out of range"<<endl;
-    return false;
+		//out of range
+    return 3;
   }
 	else{
 		if(map[0][Dx][Dy].get_hasUnit()==true and map[0][Dx][Dy].get_hasBuilding()==true){
 			if(map[0][Dx][Dy].building_AI()==map[0][Ax][Ay].unit_AI()){
-				cout<<"This building is friendly"<<endl;
-				return false;
+				//building is friendly
+				return 4;
 			}
 			else{
 				int dmgDef=map[0][Ax][Ay].unitGet_dmg()-map[0][Dx][Dy].buildingGet_AC();      //damage delt to defender
 				int dmgAtk=round((0.75*map[0][Dx][Dy].unitGet_dmg())-map[0][Ax][Ay].unitGet_AC());      //damage delt to attacker
 				map[0][Dx][Dy].buildingSet_health(map[0][Dx][Dy].buildingGet_health()-dmgDef);
 				map[0][Ax][Ay].unitSet_health(map[0][Ax][Ay].unitGet_health()-dmgAtk);
-				return true;
+				return 0;
 			}
 		}
 		else if(map[0][Dx][Dy].get_hasBuilding()==true){
 			if(map[0][Dx][Dy].building_AI()==map[0][Ax][Ay].unit_AI()){
-				cout<<"This building is friendly"<<endl;
-				return false;
+				//building is frendly
+				return 4;
 			}
 			else{
 				int dmgDef=map[0][Ax][Ay].unitGet_dmg()-map[0][Dx][Dy].buildingGet_AC();      //damage delt to defender
 				//int dmgAtk=round((0.75*map[0][Dx][Dy].unitGet_dmg())-map[0][Ax][Ay].unitGet_AC());      //damage delt to attacker
 				map[0][Dx][Dy].buildingSet_health(map[0][Dx][Dy].buildingGet_health()-dmgDef);
 				//map[0][Ax][Ay].unitSet_health(map[0][Ax][Ay].unitGet_health()-dmgAtk);
-				return true;
+				return 0;
 			}
 		}
 		else{
 			if(map[0][Dx][Dy].unit_AI()==map[0][Ax][Ay].unit_AI()){
-				cout<<"This unit is friendly"<<endl;
-				return false;
+				//unit is friendly
+				return 5;
 			}
 			else{
 				int dmgDef=map[0][Ax][Ay].unitGet_dmg()-map[0][Dx][Dy].unitGet_AC();      //damage delt to defender
 				int dmgAtk=round((0.75*map[0][Dx][Dy].unitGet_dmg())-map[0][Ax][Ay].unitGet_AC());      //damage delt to attacker
 				map[0][Dx][Dy].unitSet_health(map[0][Dx][Dy].unitGet_health()-dmgDef);
 				map[0][Ax][Ay].unitSet_health(map[0][Ax][Ay].unitGet_health()-dmgAtk);
-				return true;
+				return 0;
 			}
 		}
 	}
@@ -189,29 +188,74 @@ void printTileInfo(int x, int y, vector<vector<tile> >*map){  //prints the detai
   }
 }
 
-bool buildBuilding(int x, int y, vector<vector<tile> >*map, string bType){   //creates a new building if posible
-	if(map[0][x+1][y].get_hasBuilding()==true or map[0][x-1][y].get_hasBuilding() or map[0][x][y+1].get_hasBuilding() or map[0][x][y-1].get_hasBuilding()){
-		if(bType=="example"){
-				map[0][x][y].set_hasBuilding(true);
-				map[0][x][y].set_building(new exampleBuilding());
-				consoleRenderFrame(width, height, *map);
-				return true;
-		}
-		else if(bType=="barracks"){
+int createBuilding(int x, int y, vector<vector<tile> >*map, string bType){
+	if(bType=="example"){
 			map[0][x][y].set_hasBuilding(true);
-			map[0][x][y].set_building(new buildingBarrack());
-			consoleRenderFrame(width, height, *map);
-			map[0][x][y].set_isSpawner(true);
-			return true;
+			map[0][x][y].set_building(new exampleBuilding());
+			return 0;
+	}
+	else if(bType=="barracks"){
+		map[0][x][y].set_hasBuilding(true);
+		map[0][x][y].set_building(new buildingBarrack());
+		map[0][x][y].set_isSpawner(true);
+		return 0;
+	}
+	else{
+		//invalid type
+		return 1;
+	}
+}
+
+int buildBuilding(int x, int y, vector<vector<tile> >*map, string bType){   //creates a new building if posible
+	if(x==0){
+		if(map[0][x+1][y].get_hasBuilding()==true or map[0][x][y+1].get_hasBuilding() or map[0][x][y-1].get_hasBuilding()){
+			int temp=createBuilding(x,y,map,bType)
+			return temp;
 		}
 		else{
-			cout<<"Invalid building type"<<endl;
-			return false;
+			//unable to build here
+			return 2;
+		}
+	}
+	else if(x==10){
+		if(map[0][x-1][y].get_hasBuilding() or map[0][x][y+1].get_hasBuilding() or map[0][x][y-1].get_hasBuilding()){
+			int temp=createBuilding(x,y,map,bType)
+			return temp;
+		}
+		else{
+			//unable to build here
+			return 2;
+		}
+	}
+	else if(y==0){
+		if(map[0][x+1][y].get_hasBuilding()==true or map[0][x-1][y].get_hasBuilding() or map[0][x][y+1].get_hasBuilding()){
+			int temp=createBuilding(x,y,map,bType)
+			return temp;
+		}
+		else{
+			//unable to build here
+			return 2;
+		}
+	}
+	else if(y==10){
+		if(map[0][x+1][y].get_hasBuilding()==true or map[0][x-1][y].get_hasBuilding() or map[0][x][y-1].get_hasBuilding()){
+			int temp=createBuilding(x,y,map,bType)
+			return temp;
+		}
+		else{
+			//unable to build here
+			return 2;
 		}
 	}
 	else{
-		cout<<"Unable to build here"<<endl;
-		return false;
+		if(map[0][x+1][y].get_hasBuilding()==true or map[0][x-1][y].get_hasBuilding() or map[0][x][y+1].get_hasBuilding() or map[0][x][y-1].get_hasBuilding()){
+			int temp=createBuilding(x,y,map,bType)
+			return temp;
+		}
+		else{
+			//unable to build here
+			return 2;
+		}
 	}
 }
 
@@ -221,6 +265,21 @@ int convertToASCII(string input_coords) {   //convers a character into int coord
 
 	string input = input_coords;
 	number = int(input[0])-65;
+
+	return number;
+
+}
+
+int convertNumToASCII(string input_coords) {   //convers a character into int coord
+
+	int number;
+	string input = input_coords;
+	if(input.length()==3){
+		number=(int(input[1])-'0'*10)+int(input[1])-'0';
+	}
+	else{
+		number = int(input[1])-'0';
+	}
 
 	return number;
 
@@ -294,10 +353,34 @@ void commandLine(vector<vector<tile> >*map, bool *gameRunning) {  //takes and in
 
 			cout << "What Unit would you like to attack? ";
 			cin >> attacked;
-
-
-			attack(convertToASCII(attacker), attacker[1]-'0', convertToASCII(attacked), attacked[1]-'0', map);
-
+			int x=convertToASCII(attacker);
+			int y=convertNumToASCII(attacker);
+			int x1=convertToASCII(attacked);
+			int y1=convertNumToASCII(attacked);
+			if(x<0 or x>10 or y<0 or y>10 or x1<0 or x1>10 or y1<0 or y1>10){
+				cout<<"Invalid tile"<<endl;
+			}
+			else{
+				int temp = attack(x, y, x1, y1, map);
+				if(temp=1){
+					cout<<"No unit selected"<<endl;
+				}
+				else if(temp=2){
+					cout<<"No target selected"<<endl;
+				}
+				else if(temp=3){
+					cout<<"Unit out of range"<<endl;
+				}
+				else if(temp=4){
+					cout<<"This building is friendly"<<endl;
+				}
+				else if(temp=5){
+					cout<<"This unit is friendly"<<endl;
+				}
+				else {
+					consoleRenderFrame(width, height, *map);
+				}
+			}
 		}
 		else if(input == "move") {
 
@@ -309,9 +392,28 @@ void commandLine(vector<vector<tile> >*map, bool *gameRunning) {  //takes and in
 
 			cout << "Where would you like to move it to?";
 			cin >> new_pos;
-
-			moveUnit(convertToASCII(unit_to_be_moved), unit_to_be_moved[1]-'0', convertToASCII(new_pos), new_pos[1]-'0', map);
-
+			int x=convertToASCII(unit_to_be_moved);
+			int y=convertNumToASCII(unit_to_be_moved);
+			int x1=convertToASCII(new_pos);
+			int y1=convertNumToASCII(new_pos);
+			if(x<0 or x>10 or y<0 or y>10 or x1<0 or x1>10 or y1<0 or y1>10){
+				cout<<"Invalid tile"<<endl;
+			}
+			else{
+				int temp = moveUnit(x, y, x1, y1, map);
+				if(temp=1){
+					cout<<"There is already a unit here"<<endl;
+				}
+				else if(temp=2){
+					cout<<"No unit selected"<<endl;
+				}
+				else if(temp=3){
+					cout<<"Out of movement range"<<endl;
+				}
+				else {
+					consoleRenderFrame(width, height, *map);
+				}
+			}
 		}
 		else if(input == "look") {
 
@@ -335,8 +437,23 @@ void commandLine(vector<vector<tile> >*map, bool *gameRunning) {  //takes and in
 
 			cout << "What would you like to build?";
 			cin >> bType;
-
-			buildBuilding(convertToASCII(tile), tile[1]-'0',map,bType);
+			int x=convertToASCII(tile);
+			int y=convertNumToASCII(tile);
+			if(x<0 or x>10 or y<0 or y>10){
+				cout<<"Invalid tile"<<endl;
+			}
+			else{
+				int temp = buildBuilding(x, y,map,bType);
+				if(temp==1){
+					cout<<"Invalid building type"<<endl;
+				}
+				else if(temp==2){
+					cout<<"Unable to build here"<<endl;
+				}
+				else{
+					consoleRenderFrame(width, height, *map);
+				}
+			}
 
 		}
 		else if(input == "spawn") {
