@@ -2,3 +2,4 @@
 #include "exampleBuilding.h"
 #include "buildingBarrack.h"
 #include "buildingBase.h"
+#include "buildingVehicleBay.h"

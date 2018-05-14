@@ -9,6 +9,7 @@ buildingVehicleBay::buildingVehicleBay(){  //defult constructor
   _icon='V';
   _cost=300;
   _name="Vehicle Bay";
+  _hasSpawned = false;
   _buildingIncome=-15;
   _AI=false;
 }
@@ -20,6 +21,7 @@ buildingVehicleBay::buildingVehicleBay(bool AI){  //constructor with input to se
   _icon='V';
   _cost=300;
   _name="Vehicle Bay";
+  _hasSpawned = false;
   _buildingIncome=-15;
   _AI=AI;
 }
@@ -27,15 +29,15 @@ buildingVehicleBay::buildingVehicleBay(bool AI){  //constructor with input to se
 unit* buildingVehicleBay::spawnUnit(string uType){    //spawns a new vehicle
   if(uType=="destroyer"){
     _hasSpawned=true;
-    return new destroyer();
+    return new unitDestroyer();
   }
   else if(uType=="cruiser"){
     _hasSpawned=true;
-    return new cruiser();
+    return new unitCruiser();
   }
   else if(uType=="shocklauncher"){
     _hasSpawned=true;
-    return new shocklauncher();
+    return new unitShockLauncher();
   }
 }
 
