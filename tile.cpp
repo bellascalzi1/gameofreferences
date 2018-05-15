@@ -164,6 +164,16 @@ int tile::getTileIncome(){
   return income;
 }
 
+void tile::killUnit(){
+  _hasUnit=false;
+  delete _unit;
+}
+
+void tile::killBuilding(){
+  _hasBuilding=false;
+  delete _building;
+}
+
 tile::~tile(){
 
 }

@@ -51,6 +51,8 @@ public:
   void building_spawnUnit(string uType);
   void turnTick();
   int getTileIncome();
+  void killUnit();
+  void killBuilding();
   ~tile();
 };
 

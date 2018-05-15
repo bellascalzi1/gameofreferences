@@ -9,6 +9,7 @@ int width=11;
 int height=11;
 int playerRec=100;
 int AIRec=100;
+bool gameRunning=true;
 
 void consoleRenderGrid(int sWidth, int sHight) { //renders the grid around the map in console
 	char temp = '+';
@@ -108,7 +109,7 @@ int attack(int Ax, int Ay, int Dx, int Dy, vector<vector<tile> >*map){  //attack
     return 3;
   }
 	else{
-		if(map[0][Dx][Dy].get_hasUnit()==true and map[0][Dx][Dy].get_hasBuilding()==true){
+		if(map[0][Dx][Dy].get_hasUnit()==true and map[0][Dx][Dy].get_hasBuilding()==true){ //attacking building with unit
 			if(map[0][Dx][Dy].building_AI()==map[0][Ax][Ay].unit_AI()){
 				//building is friendly
 				return 4;
@@ -118,10 +119,16 @@ int attack(int Ax, int Ay, int Dx, int Dy, vector<vector<tile> >*map){  //attack
 				int dmgAtk=round((0.75*map[0][Dx][Dy].unitGet_dmg())-map[0][Ax][Ay].unitGet_AC());      //damage delt to attacker
 				map[0][Dx][Dy].buildingSet_health(map[0][Dx][Dy].buildingGet_health()-dmgDef);
 				map[0][Ax][Ay].unitSet_health(map[0][Ax][Ay].unitGet_health()-dmgAtk);
+				if(map[0][Dx][Dy].buildingGet_health()<=0){
+					map[0][Dx][Dy].killBuilding();
+				}
+				if(map[0][Ax][Ay].unitGet_health()<=0){
+					map[0][Ax][Ay].killUnit();
+				}
 				return 0;
 			}
 		}
-		else if(map[0][Dx][Dy].get_hasBuilding()==true){
+		else if(map[0][Dx][Dy].get_hasBuilding()==true){   //attacking building
 			if(map[0][Dx][Dy].building_AI()==map[0][Ax][Ay].unit_AI()){
 				//building is frendly
 				return 4;
@@ -131,10 +138,16 @@ int attack(int Ax, int Ay, int Dx, int Dy, vector<vector<tile> >*map){  //attack
 				//int dmgAtk=round((0.75*map[0][Dx][Dy].unitGet_dmg())-map[0][Ax][Ay].unitGet_AC());      //damage delt to attacker
 				map[0][Dx][Dy].buildingSet_health(map[0][Dx][Dy].buildingGet_health()-dmgDef);
 				//map[0][Ax][Ay].unitSet_health(map[0][Ax][Ay].unitGet_health()-dmgAtk);
+				if(map[0][Dx][Dy].buildingGet_health()<=0){
+					map[0][Dx][Dy].killBuilding();
+				}
+				if(map[0][Ax][Ay].unitGet_health()<=0){
+					map[0][Ax][Ay].killUnit();
+				}
 				return 0;
 			}
 		}
-		else{
+		else{ //attacking unit
 			if(map[0][Dx][Dy].unit_AI()==map[0][Ax][Ay].unit_AI()){
 				//unit is friendly
 				return 5;
@@ -144,6 +157,12 @@ int attack(int Ax, int Ay, int Dx, int Dy, vector<vector<tile> >*map){  //attack
 				int dmgAtk=round((0.75*map[0][Dx][Dy].unitGet_dmg())-map[0][Ax][Ay].unitGet_AC());      //damage delt to attacker
 				map[0][Dx][Dy].unitSet_health(map[0][Dx][Dy].unitGet_health()-dmgDef);
 				map[0][Ax][Ay].unitSet_health(map[0][Ax][Ay].unitGet_health()-dmgAtk);
+				if(map[0][Dx][Dy].unitGet_health()<=0){
+					map[0][Dx][Dy].killUnit();
+				}
+				if(map[0][Ax][Ay].unitGet_health()<=0){
+					map[0][Ax][Ay].killUnit();
+				}
 				return 0;
 			}
 		}
@@ -209,7 +228,7 @@ int createBuilding(int x, int y, vector<vector<tile> >*map, string bType){
 int buildBuilding(int x, int y, vector<vector<tile> >*map, string bType){   //creates a new building if posible
 	if(x==0){
 		if(map[0][x+1][y].get_hasBuilding()==true or map[0][x][y+1].get_hasBuilding() or map[0][x][y-1].get_hasBuilding()){
-			int temp=createBuilding(x,y,map,bType)
+			int temp=createBuilding(x,y,map,bType);
 			return temp;
 		}
 		else{
@@ -219,7 +238,7 @@ int buildBuilding(int x, int y, vector<vector<tile> >*map, string bType){   //cr
 	}
 	else if(x==10){
 		if(map[0][x-1][y].get_hasBuilding() or map[0][x][y+1].get_hasBuilding() or map[0][x][y-1].get_hasBuilding()){
-			int temp=createBuilding(x,y,map,bType)
+			int temp=createBuilding(x,y,map,bType);
 			return temp;
 		}
 		else{
@@ -229,7 +248,7 @@ int buildBuilding(int x, int y, vector<vector<tile> >*map, string bType){   //cr
 	}
 	else if(y==0){
 		if(map[0][x+1][y].get_hasBuilding()==true or map[0][x-1][y].get_hasBuilding() or map[0][x][y+1].get_hasBuilding()){
-			int temp=createBuilding(x,y,map,bType)
+			int temp=createBuilding(x,y,map,bType);
 			return temp;
 		}
 		else{
@@ -239,7 +258,7 @@ int buildBuilding(int x, int y, vector<vector<tile> >*map, string bType){   //cr
 	}
 	else if(y==10){
 		if(map[0][x+1][y].get_hasBuilding()==true or map[0][x-1][y].get_hasBuilding() or map[0][x][y-1].get_hasBuilding()){
-			int temp=createBuilding(x,y,map,bType)
+			int temp=createBuilding(x,y,map,bType);
 			return temp;
 		}
 		else{
@@ -249,7 +268,7 @@ int buildBuilding(int x, int y, vector<vector<tile> >*map, string bType){   //cr
 	}
 	else{
 		if(map[0][x+1][y].get_hasBuilding()==true or map[0][x-1][y].get_hasBuilding() or map[0][x][y+1].get_hasBuilding() or map[0][x][y-1].get_hasBuilding()){
-			int temp=createBuilding(x,y,map,bType)
+			int temp=createBuilding(x,y,map,bType);
 			return temp;
 		}
 		else{
@@ -275,7 +294,7 @@ int convertNumToASCII(string input_coords) {   //convers a character into int co
 	int number;
 	string input = input_coords;
 	if(input.length()==3){
-		number=(int(input[1])-'0'*10)+int(input[1])-'0';
+		number=((int(input[1])-'0')*10)+int(input[2])-'0';
 	}
 	else{
 		number = int(input[1])-'0';
@@ -285,15 +304,37 @@ int convertNumToASCII(string input_coords) {   //convers a character into int co
 
 }
 
-void spawnUnit(int x, int y, vector<vector<tile> >*map, string uType){
+int spawnUnit(int x, int y, vector<vector<tile> >*map, string uType){
 	if(map[0][x][y].get_hasUnit()==true){
+		return 1;
 		cout<<"This tile already has a unit in it"<<endl;
 	}
 	else if(map[0][x][y].get_isSpawner()==false){
 		cout<<"This tile cannot spawn units"<<endl;
+		return 2;
 	}
 	else{
-		map[0][x][y].building_spawnUnit(uType);
+		if(map[0][x][y].buildingGet_name()=="Barracks"){
+			if(uType=="light" or uType=="infantry" or uType=="heavy" or uType=="rocket" or uType=="flamethrower"){
+				map[0][x][y].building_spawnUnit(uType);
+				return 0;
+			}
+			else{
+				return 3;
+			}
+		}
+		else if(map[0][x][y].buildingGet_name()=="Vehicle Bay"){
+			if(uType=="destroyer" or uType=="cruiser" or uType=="shocklauncher"){
+				map[0][x][y].building_spawnUnit(uType);
+				return 0;
+			}
+			else{
+				return 3;
+			}
+		}
+		else{
+			return 4;
+		}
 	}
 }
 
@@ -325,7 +366,7 @@ void endTurn(vector<vector<tile> >*map){
 	consoleRenderFrame(width, height, *map);
 }
 
-void commandLine(vector<vector<tile> >*map, bool *gameRunning) {  //takes and interperates players input commands
+void commandLine(vector<vector<tile> >*map) {  //takes and interperates players input commands
 	string input;
 
 	while(input != "end" or "endturn") {
@@ -341,7 +382,7 @@ void commandLine(vector<vector<tile> >*map, bool *gameRunning) {  //takes and in
 		else if(input == "end") {
 			cout << "You have ended the game" << std::endl;
 			cin.ignore();
-			*gameRunning=false;
+			gameRunning=false;
 			break;
 		}
 		else if(input == "attack") {
@@ -401,13 +442,13 @@ void commandLine(vector<vector<tile> >*map, bool *gameRunning) {  //takes and in
 			}
 			else{
 				int temp = moveUnit(x, y, x1, y1, map);
-				if(temp=1){
+				if(temp==1){
 					cout<<"There is already a unit here"<<endl;
 				}
-				else if(temp=2){
+				else if(temp==2){
 					cout<<"No unit selected"<<endl;
 				}
-				else if(temp=3){
+				else if(temp==3){
 					cout<<"Out of movement range"<<endl;
 				}
 				else {
@@ -419,12 +460,16 @@ void commandLine(vector<vector<tile> >*map, bool *gameRunning) {  //takes and in
 
 			string tile;
 
-
 			cout << "Where would you like to look?";
 			cin >> tile;
-
-			printTileInfo(convertToASCII(tile), tile[1]-'0',map);
-
+			int x=convertToASCII(tile);
+			int y=convertNumToASCII(tile);
+			if(x<0 or x>10 or y<0 or y>10){
+				cout<<"Invalid tile"<<endl;
+			}
+			else{
+				printTileInfo(x, y,map);
+			}
 		}
 		else if(input == "build") {
 
@@ -468,8 +513,15 @@ void commandLine(vector<vector<tile> >*map, bool *gameRunning) {  //takes and in
 			cout << "What unit you like to spawn?";
 			cin >> uType;
 
-			spawnUnit(convertToASCII(tile), tile[1]-'0',map,uType);
+			int x=convertToASCII(tile);
+			int y=convertNumToASCII(tile);
+			if(x<0 or x>10 or y<0 or y>10){
+				cout<<"Invalid tile"<<endl;
 			}
+			else{
+				spawnUnit(x, y,map,uType);
+			}
+		}
 		else{
 
 			std::cout << "That is not a valid command" << std::endl;
@@ -493,13 +545,11 @@ int main(){
 	map[width/2][height-1].set_building(new buildingBase());
 	map[width/2][height-1].set_hasBuilding(true);
   consoleRenderFrame(width, height, map);  //renders initial screen
-	bool gameRunning=true;
 	while(gameRunning==true){
-		commandLine(&map,&gameRunning);   //runs console
+		commandLine(&map);   //runs console
 		endTurn(&map);
 		cout<<"Turn over"<<endl;
 	}
-	cout<<playerRec<<":"<<AIRec<<endl;
-  cout<<"done"<<endl;   //testing output to see that game has finished with no errors
+  cout<<"Game over man, Game over!"<<endl;   //testing output to see that game has finished with no errors
   return 0;
 }
