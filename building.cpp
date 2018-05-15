@@ -63,6 +63,10 @@ bool building::get_hasSpawned(){
   return _hasSpawned;
 }
 
+int building::get_priority(){
+  return _priority;
+}
+
 building::~building(){//defult building deconstrucer
 
 }

@@ -12,6 +12,7 @@ unitInfantry::unitInfantry(){  //defult constructor
   _cost=75;
   _attacksLeft=0;
   _movesLeft=0;
+  _priority=6;
   _name="infantry";
 }
 
@@ -25,6 +26,7 @@ unitInfantry::unitInfantry(bool AI){   //constructor with input to set AI owners
   _cost=75;
   _attacksLeft=0;
   _movesLeft=0;
+  _priority=6;
   _name="infantry";
   _AI=AI;
 }

@@ -17,6 +17,7 @@ protected:
   bool _AI;
   int _buildingIncome;
   bool _hasSpawned;
+  int _priority;
 public:
   building();
   string get_name();
@@ -33,6 +34,7 @@ public:
   bool get_hasSpawned();
   int get_buildingIncome();
   virtual void tickTurn();
+  int get_priority();
   ~building();
 };
 

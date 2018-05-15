@@ -11,6 +11,7 @@ unitShockLauncher::unitShockLauncher() { // default constructor
   _cost=500;
   _attacksLeft = 0;
   _movesLeft = 0;
+  _priority=7;
   _name="shocklauncher";
 
 }
@@ -24,6 +25,7 @@ unitShockLauncher::unitShockLauncher(bool AI) { // constructor with input for AI
   _cost=500;
   _attacksLeft = 0;
   _movesLeft = 0;
+  _priority=7;
   _name="shocklauncher";
   _AI = AI;
 }

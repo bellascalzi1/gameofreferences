@@ -11,6 +11,7 @@ buildingMine::buildingMine(){  //defult constructor
   _name="Mine";
   _buildingIncome=150;
   _hasSpawned = false;
+  _priority=10;
   _AI=false;
 }
 
@@ -23,6 +24,7 @@ buildingMine::buildingMine(bool AI){  //constructor with input for AI ownership
   _name="Mine";
   _hasSpawned = false;
   _buildingIncome=150;
+  _priority=10;
   _AI=AI;
 }
 

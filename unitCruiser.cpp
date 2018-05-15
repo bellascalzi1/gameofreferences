@@ -11,6 +11,7 @@ unitCruiser::unitCruiser() { // default constructor
   _cost=300;
   _attacksLeft = 0;
   _movesLeft = 0;
+  _priority=5;
   _name="cruiser";
 
 }
@@ -24,6 +25,7 @@ unitCruiser::unitCruiser(bool AI) { // constructor with input for AI
   _cost=300;
   _attacksLeft = 0;
   _movesLeft = 0;
+  _priority=5;
   _name="cruiser";
   _AI = AI;
 }

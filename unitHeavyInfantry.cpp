@@ -12,6 +12,7 @@ unitHeavyInfantry::unitHeavyInfantry(){  //defult constructor
   _cost=200;
   _attacksLeft=0;
   _movesLeft=0;
+  _priority=8;
   _name="heavy infantry";
 }
 
@@ -24,6 +25,7 @@ unitHeavyInfantry::unitHeavyInfantry(bool AI){  //constructor with input to set 
   _dmg=40;
   _cost=200;
   _attacksLeft=0;
+  _priority=8;
   _name="heavy infantry";
   _AI=AI;
 }

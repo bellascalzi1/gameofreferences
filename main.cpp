@@ -11,6 +11,19 @@ int playerRec=100;
 int AIRec=100;
 bool gameRunning=true;
 
+struct task{
+	int type;
+	int priority;
+	int id;
+};
+
+struct assignment{
+	int type;
+	int score;
+	int id;
+	int unitId;
+};
+
 void consoleRenderGrid(int sWidth, int sHight) { //renders the grid around the map in console
 	char temp = '+';
 	char temp2 = 32;
@@ -29,7 +42,7 @@ void consoleRenderGrid(int sWidth, int sHight) { //renders the grid around the m
 void consoleRenderAlphCoord(int sWidth, int sHight) { //renders the top coords around the map in console
 	char temp = 'A';
 	char temp2 = 32;
-	cout << setw(2) << temp2;
+	//cout << setw(2) << temp2;
 	cout << setw(2) << temp2;
 	for (int j = 0; j < sWidth * 2 + 1; j++) {
 		if (j % 2 == 0) {
@@ -364,13 +377,19 @@ void endTurn(vector<vector<tile> >*map){
     }
   }
 	consoleRenderFrame(width, height, *map);
+	if(map[0][width/2][0].get_hasBuilding()==false){
+		gameRunning=false;
+		cout<<"Winner winner chicken dinner!"<<endl;
+	}
+	else if(map[0][width/2][height-1].get_hasBuilding()==false){
+		gameRunning=false;
+		cout<<"Epic fail: the AI kicked your ass!"<<endl;
+	}
 }
 
 void commandLine(vector<vector<tile> >*map) {  //takes and interperates players input commands
 	string input;
-
 	while(input != "end" or "endturn") {
-
 		cout << "Enter Command: (type end to quit or endturn to end your turn) ";
 		cin >> input;
 
@@ -529,6 +548,90 @@ void commandLine(vector<vector<tile> >*map) {  //takes and interperates players 
 	}
 }
 
+int convertIDRow(int ID){
+	int temp=ID;
+	temp=round(temp/11);
+	return temp;
+}
+
+int convertIDColumn(int ID){
+	return ID-(convertIDRow(ID)*11);
+}
+
+int convertToID(int x, int y){
+	int id=(y*11)+x;
+	return id;
+}
+
+int distID(int id, int id1){
+	int x=convertIDColumn(id);
+	int y=convertIDRow(id);
+	int x1=convertIDColumn(id1);
+	int y1=convertIDRow(id1);
+	int dist=abs(x1-x)+abs(y1-y);
+	return dist;
+}
+
+vector<int> findUnits(int AI,vector<vector<tile> >*map){
+	int count=0;
+	vector<int>units;
+	for(int i=0;i<height;i++){
+    for(int j=0;j<width;j++){
+			if(map[0][i][j].get_hasUnit()==true and map[0][i][j].unit_AI()==AI){
+				count+=1;
+				units.resize(count);
+				units[count-1]=map[0][i][j].get_id();
+			}
+		}
+	}
+	return units;
+}
+
+vector<task> findTasks(vector<vector<tile> >*map){
+	vector<task>tasks;
+	tasks.resize(121);
+	for(int i=0;i<121;i++){
+		int x=convertIDRow(i);
+		int y=convertIDColumn(i);
+		tasks[i].id=i;
+		if(map[0][x][y].get_hasBuilding()==true and map[0][x][y].building_AI()==false){
+			tasks[i].type=1;
+		}
+		else if(map[0][x][y].get_hasUnit()==true and map[0][x][y].unit_AI()==false){
+			tasks[i].type=1;
+		}
+		else if(map[0][x][y].get_hasBuilding()==true and map[0][x][y].building_AI()==true){
+			tasks[i].type=2;
+		}
+		else{
+			tasks[i].type=3;
+		}
+		tasks[i].priority=map[0][x][y].get_priority();
+	}
+	return tasks;
+}
+
+void tacAI(vector<vector<tile> >*map){
+	vector<int>listOfAIUnits=findUnits(true, map);
+	vector<task>tasks=findTasks(map);
+	vector<assignment>assignments;
+	for(int i=0;i<listOfAIUnits.size();i++){
+		for(int j=0;j<tasks.size();j++){
+			int x=convertIDColumn(listOfAIUnits[i]);
+			int y=convertIDRow(listOfAIUnits[i]);
+			if(distID(listOfAIUnits[i], tasks[j].id)<=map[0][x][y].unitGet_movesLeft()){
+				assignments.resize(assignments.size()+1);
+				assignments[assignments.size()-1].id=tasks[j].id;
+				assignments[assignments.size()-1].type=tasks[j].type;
+				assignments[assignments.size()-1].score=tasks[j].priority;
+				assignments[assignments.size()-1].id=listOfAIUnits[i];
+			}
+		}
+	}
+	listOfAIUnits.clear();
+	tasks.clear();
+}
+
 int main(){
   vector<vector<tile> >map;  //sets up the map
   map.resize(width);
@@ -537,7 +640,8 @@ int main(){
   }
   for(int i=0;i<height;i++){
     for(int j=0;j<width;j++){
-      map[j][i]=tile();
+			int id=convertToID(j,i);
+      map[j][i]=tile(id);
     }
   }
 	map[width/2][0].set_building(new buildingBase(true));
@@ -545,6 +649,7 @@ int main(){
 	map[width/2][height-1].set_building(new buildingBase());
 	map[width/2][height-1].set_hasBuilding(true);
   consoleRenderFrame(width, height, map);  //renders initial screen
+	tacAI(&map);
 	while(gameRunning==true){
 		commandLine(&map);   //runs console
 		endTurn(&map);

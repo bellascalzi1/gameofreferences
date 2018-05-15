@@ -16,10 +16,14 @@ protected:
   bool _hasUnit;
   bool _hasBuilding;
   bool _isSpawner;
+  int _id;
   building *_building;
   unit *_unit;
+  int _priority;
 public:
   tile();
+  tile(int id);
+  int get_id();
   void set_unit(unit *newUnit);
   unit* get_unit();
   void set_building(building *newBuilding);
@@ -53,6 +57,7 @@ public:
   int getTileIncome();
   void killUnit();
   void killBuilding();
+  int get_priority();
   ~tile();
 };
 

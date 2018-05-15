@@ -10,6 +10,17 @@ tile::tile(){ //defult constructor
   _isSpawner=false;
 }
 
+tile::tile(int id){ //defult constructor
+  _id=id;
+  _hasUnit=false;
+  _hasBuilding=false;
+  _isSpawner=false;
+}
+
+int tile::get_id(){
+  return _id;
+}
+
 //get/set tile variables
 void tile::set_unit(unit *newUnit){
   _unit=newUnit;
@@ -172,6 +183,37 @@ void tile::killUnit(){
 void tile::killBuilding(){
   _hasBuilding=false;
   delete _building;
+}
+
+int tile::get_priority(){
+  if(_hasUnit==true and _hasBuilding==true){
+    if(_building->get_AI()==true){
+      _priority=_building->get_priority();
+    }
+    else{
+      _priority=_building->get_priority()-(_unit->get_priority()/2);
+    }
+  }
+  else if(_hasUnit==true){
+    if(_unit->get_AI()==true){
+      _priority=-1;
+    }
+    else{
+      _priority=_unit->get_priority();
+    }
+  }
+  else if(_hasBuilding==true){
+    if(_building->get_AI()==true){
+      _priority=_building->get_priority();
+    }
+    else{
+      _priority=_building->get_priority();
+    }
+  }
+  else{
+    _priority=-1;
+  }
+  return _priority;
 }
 
 tile::~tile(){

@@ -76,7 +76,11 @@ bool unit::get_AI(){
 }
 
 void unit::tickTurn(){
- 
+
+}
+
+int unit::get_priority(){
+  return _priority;
 }
 
 unit::~unit(){//defult deconstructor

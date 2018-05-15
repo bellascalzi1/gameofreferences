@@ -11,6 +11,7 @@ unitDestroyer::unitDestroyer() { // default constructor
   _cost=450;
   _attacksLeft = 0;
   _movesLeft = 0;
+  _priority=10;
   _name="destroyer";
 
 }
@@ -24,6 +25,7 @@ unitDestroyer::unitDestroyer(bool AI) { // constructor with input for AI
   _cost=450;
   _attacksLeft = 0;
   _movesLeft = 0;
+  _priority=10;
   _name="destroyer";
   _AI = AI;
 }

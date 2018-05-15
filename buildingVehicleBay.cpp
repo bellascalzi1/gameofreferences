@@ -11,6 +11,7 @@ buildingVehicleBay::buildingVehicleBay(){  //defult constructor
   _name="Vehicle Bay";
   _hasSpawned = false;
   _buildingIncome=-15;
+  _priority=6;
   _AI=false;
 }
 
@@ -23,6 +24,7 @@ buildingVehicleBay::buildingVehicleBay(bool AI){  //constructor with input to se
   _name="Vehicle Bay";
   _hasSpawned = false;
   _buildingIncome=-15;
+  _priority=6;
   _AI=AI;
 }
 

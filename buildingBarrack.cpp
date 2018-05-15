@@ -13,6 +13,7 @@ buildingBarrack::buildingBarrack(){  //defult constructor
   _name="Barracks";
   _buildingIncome=-15;
   _hasSpawned=false;
+  _priority=5;
   _AI=false;
 }
 
@@ -25,6 +26,7 @@ buildingBarrack::buildingBarrack(bool AI){  //constructor with input to set AI o
   _name="Barracks";
   _buildingIncome=-15;
   _hasSpawned=false;
+  _priority=5;
   _AI=AI;
 }
 

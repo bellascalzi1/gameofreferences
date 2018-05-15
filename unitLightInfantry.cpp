@@ -12,6 +12,7 @@ unitLightInfantry::unitLightInfantry(){  //defult constructor
   _cost=40;
   _attacksLeft=0;
   _movesLeft=0;
+  _priority=3;
   _name="light infantry";
 }
 
@@ -25,6 +26,7 @@ unitLightInfantry::unitLightInfantry(bool AI){  //constructor wih input to set A
   _cost=40;
   _attacksLeft=0;
   _movesLeft=0;
+  _priority=3;
   _name="light infantry";
   _AI=AI;
 }

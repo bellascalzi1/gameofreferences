@@ -18,6 +18,7 @@ protected:
   int _attacksLeft;
   int _cost;
   bool _AI;
+  int _priority;
 public:
   unit();
   string get_name();
@@ -38,6 +39,7 @@ public:
   int get_attacksLeft();
   void set_attacksLeft(int attacksLeft);
   virtual void tickTurn();
+  int get_priority();
   ~unit();
 };
 
