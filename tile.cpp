@@ -97,7 +97,12 @@ void tile::unitSet_dmg(int dmg){
 }
 
 int tile::unitGet_dmg(){
+  if(_hasUnit==true){
     return _unit->get_dmg();
+  }
+  else{
+    return 0;
+  }
 }
 
 void tile::unitSet_AC(int AC){
@@ -211,7 +216,7 @@ int tile::get_priority(){
     }
   }
   else{
-    _priority=-1;
+    _priority=0;
   }
   return _priority;
 }

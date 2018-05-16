@@ -591,24 +591,38 @@ vector<task> findTasks(vector<vector<tile> >*map){
 	vector<task>tasks;
 	tasks.resize(121);
 	for(int i=0;i<121;i++){
-		int x=convertIDRow(i);
-		int y=convertIDColumn(i);
+		int x=convertIDColumn(i);
+		int y=convertIDRow(i);
 		tasks[i].id=i;
 		if(map[0][x][y].get_hasBuilding()==true and map[0][x][y].building_AI()==false){
 			tasks[i].type=1;
 		}
 		else if(map[0][x][y].get_hasUnit()==true and map[0][x][y].unit_AI()==false){
-			tasks[i].type=1;
-		}
-		else if(map[0][x][y].get_hasBuilding()==true and map[0][x][y].building_AI()==true){
 			tasks[i].type=2;
 		}
-		else{
+		else if(map[0][x][y].get_hasBuilding()==true and map[0][x][y].building_AI()==true){
 			tasks[i].type=3;
+		}
+		else{
+			tasks[i].type=4;
 		}
 		tasks[i].priority=map[0][x][y].get_priority();
 	}
 	return tasks;
+}
+
+vector<assignment> sorter(vector<assignment>toSort) {
+	int n = toSort.size();
+	for (int i = 0; i < (n-1); i++) {
+		for (int j = 0; j < (n-i-1); j++) {
+			if (toSort[j].score > toSort[j + 1].score) {
+				assignment temp = toSort[j];
+				toSort[j] = toSort[j + 1];
+				toSort[j + 1] = temp;
+			}
+		}
+	}
+	return toSort;
 }
 
 void tacAI(vector<vector<tile> >*map){
@@ -623,13 +637,55 @@ void tacAI(vector<vector<tile> >*map){
 				assignments.resize(assignments.size()+1);
 				assignments[assignments.size()-1].id=tasks[j].id;
 				assignments[assignments.size()-1].type=tasks[j].type;
-				assignments[assignments.size()-1].score=tasks[j].priority;
-				assignments[assignments.size()-1].id=listOfAIUnits[i];
+				int k;
+				if(tasks[j].type==1){
+					int dmgDef=map[0][convertIDColumn(listOfAIUnits[i])][convertIDRow(listOfAIUnits[i])].unitGet_dmg()-map[0][convertIDColumn(tasks[j].id)][convertIDRow(tasks[j].id)].buildingGet_AC();      //damage delt to defender
+					int dmgAtk=round((0.75*map[0][convertIDColumn(tasks[j].id)][convertIDRow(tasks[j].id)].unitGet_dmg())-map[0][convertIDColumn(listOfAIUnits[i])][convertIDRow(listOfAIUnits[i])].unitGet_AC());
+					k=(dmgAtk)/(dmgDef);
+				}
+				else if(tasks[j].type==2){
+					int dmgDef=map[0][convertIDColumn(listOfAIUnits[i])][convertIDRow(listOfAIUnits[i])].unitGet_dmg()-map[0][convertIDColumn(tasks[j].id)][convertIDRow(tasks[j].id)].unitGet_AC();      //damage delt to defender
+					int dmgAtk=round((0.75*map[0][convertIDColumn(tasks[j].id)][convertIDRow(tasks[j].id)].unitGet_dmg())-map[0][convertIDColumn(listOfAIUnits[i])][convertIDRow(listOfAIUnits[i])].unitGet_AC());
+					k=(dmgAtk)/(dmgDef);
+				}
+				else{
+					k=0;
+				}
+				if(tasks[j].type==4){
+					int x=convertIDColumn(tasks[j].id);
+					int y=convertIDRow(tasks[j].id);
+					int sum=0;
+					if(x>0){
+						sum+=tasks[convertToID(x-1,y)].priority;
+					}
+					if(x<11){
+						sum+=tasks[convertToID(x+1,y)].priority;
+					}
+					if(y>0){
+						sum+=tasks[convertToID(x,y-1)].priority;
+					}
+					if(y<10){
+						sum+=tasks[convertToID(x,y+1)].priority;
+					}
+					tasks[j].priority=sum/5;
+				}
+				if(distID(tasks[j].id,listOfAIUnits[i])>0){
+					assignments[assignments.size()-1].score=(tasks[j].priority-(5*k))/distID(tasks[j].id,listOfAIUnits[i]);
+				}
+				else{
+					assignments[assignments.size()-1].score=(tasks[j].priority-(5*k));
+				}
+				assignments[assignments.size()-1].unitId=listOfAIUnits[i];
 			}
 		}
 	}
+	assignments=sorter(assignments);
+	for(int i=0;i<assignments.size();i++){
+		cout<<assignments[i].score<<":"<<assignments[i].type<<":"<<convertIDColumn(assignments[i].id)<<","<<convertIDRow(assignments[i].id)<<endl;
+	}
 	listOfAIUnits.clear();
 	tasks.clear();
+	assignments.clear();
 }
 
 int main(){
@@ -648,13 +704,18 @@ int main(){
 	map[width/2][0].set_hasBuilding(true);
 	map[width/2][height-1].set_building(new buildingBase());
 	map[width/2][height-1].set_hasBuilding(true);
+	map[width/2][height-2].set_unit(new unitLightInfantry(true));
+	map[width/2][height-2].set_hasUnit(true);
   consoleRenderFrame(width, height, map);  //renders initial screen
 	tacAI(&map);
 	while(gameRunning==true){
 		commandLine(&map);   //runs console
+		tacAI(&map);
 		endTurn(&map);
-		cout<<"Turn over"<<endl;
+		if(gameRunning==true){
+			cout<<"Turn over"<<endl;
+		}
 	}
-  cout<<"Game over man, Game over!"<<endl;   //testing output to see that game has finished with no errors
+  cout<<"Game over man, Game over!"<<endl;
   return 0;
 }
