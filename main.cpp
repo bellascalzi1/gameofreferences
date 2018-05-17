@@ -113,7 +113,7 @@ int attack(int Ax, int Ay, int Dx, int Dy, vector<vector<tile> >*map){  //attack
 		//no unit
     return 1;
 	}
-	else if(map[0][Dx][Dy].get_hasUnit()==false or map[0][Dx][Dy].get_hasBuilding()==false){
+	else if(map[0][Dx][Dy].get_hasUnit()==false and map[0][Dx][Dy].get_hasBuilding()==false){
 		//no target
 		return 2;
 	}
@@ -631,7 +631,7 @@ bool doTask(assignment assign, vector<vector<tile> >*map, vector<task>tasks){
 	int Ux=convertIDColumn(assign.unitId);
 	int Uy=convertIDRow(assign.unitId);
 	if(assign.type==1){
-		if(distID(id,unitId)<=1){
+		if(distID(assign.id,assign.unitId)<=1){
 			attack(Ux,Uy,x,y,map);
 			return true;
 		}
@@ -640,15 +640,73 @@ bool doTask(assignment assign, vector<vector<tile> >*map, vector<task>tasks){
 			int dist2;
 			int dist3;
 			int dist4;
-			dist1=abs((x+1)-Ux)+abs((y)-Uy);
+			/*dist1=abs((x+1)-Ux)+abs((y)-Uy);
 			dist2=abs((x-1)-Ux)+abs((y)-Uy);
 			dist3=abs((x)-Ux)+abs((y+1)-Uy);
-			dist4=abs((x)-Ux)+abs((y-1)-Uy);
-			if(dist1>dist2 and){
-
+			dist4=abs((x)-Ux)+abs((y-1)-Uy);*/
+			if(x+1>10){
+				dist1=tasks[convertToID(x+1,y)].priority;
 			}
 			else{
-
+				dist1=-1000;
+			}
+			if(x-1<0){
+				dist2=tasks[convertToID(x-1,y)].priority;
+			}
+			if(y+1>10){
+				dist3=tasks[convertToID(x,y+1)].priority;
+			}
+			else{
+				dist1=-1000;
+			}
+			if(y-1<0){
+				dist4=tasks[convertToID(x,y-1)].priority;
+			}
+			else{
+				dist1=-1000;
+			}
+			if(dist1>=dist2 and dist1>=dist3 and dist1>=dist4){
+				if(map[0][x+1][y].get_hasUnit()==true or map[0][x+1][y].get_hasUnit()==true){
+					return false;
+				}
+				else{
+					moveUnit(Ux,Uy,x+1,y,map);
+					attack(x+1,y,x,y,map);
+					return true;
+				}
+			}
+			else if(dist2>=dist3 and dist2>=dist4 and dist2>=dist1){
+				if(map[0][x-1][y].get_hasUnit()==true or map[0][x-1][y].get_hasBuilding()==true){
+					return false;
+				}
+				else{
+					moveUnit(Ux,Uy,x-1,y,map);
+					attack(x-1,y,x,y,map);
+					return true;
+				}
+			}
+			else if(dist4>=dist1 and dist4>=dist2 and dist4>=dist4){
+				if(map[0][x][y-1].get_hasUnit()==true or map[0][x][y-1].get_hasBuilding()==true){
+					return false;
+				}
+				else{
+					int temp = moveUnit(Ux,Uy,x,y-1,map);
+					attack(x,y-1,x,y,map);
+					return true;
+				}
+			}
+			else if(dist3>=dist1 and dist3>=dist4 and dist3>=dist2){
+				if(map[0][x][y+1].get_hasUnit()==true or map[0][x][y+1].get_hasBuilding()==true){
+					return false;
+				}
+				else{
+				int temp = moveUnit(Ux,Uy,x,y+1,map);
+				attack(x,y+1,x,y,map);
+				return true;
+			}
+			}
+			else{
+				return false;
 			}
 		}
 	}
@@ -718,10 +776,10 @@ void tacAI(vector<vector<tile> >*map){
 		}
 	}
 	assignments=sorter(assignments);
-	/*for(int i=0;i<assignments.size();i++){
+	for(int i=0;i<assignments.size();i++){
 		cout<<assignments[i].score<<":"<<assignments[i].type<<":"<<convertIDColumn(assignments[i].id)<<","<<convertIDRow(assignments[i].id)<<endl;
-	}*/
-
+	}
+	doTask(assignments[0],map,tasks);
 	listOfAIUnits.clear();
 	tasks.clear();
 	assignments.clear();
@@ -743,10 +801,10 @@ int main(){
 	map[width/2][0].set_hasBuilding(true);
 	map[width/2][height-1].set_building(new buildingBase());
 	map[width/2][height-1].set_hasBuilding(true);
-	map[width/2][height-2].set_unit(new unitLightInfantry(true));
-	map[width/2][height-2].set_hasUnit(true);
+	map[width/2][height-3].set_unit(new unitLightInfantry(true));
+	map[width/2][height-3].set_hasUnit(true);
   consoleRenderFrame(width, height, map);  //renders initial screen
-	tacAI(&map);
+	//tacAI(&map);
 	while(gameRunning==true){
 		commandLine(&map);   //runs console
 		tacAI(&map);
