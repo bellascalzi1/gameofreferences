@@ -399,7 +399,7 @@ void commandLine(vector<vector<tile> >*map) {  //takes and interperates players 
 			break;
 		}
 		else if(input == "end") {
-			cout << "You have ended the game" << std::endl;
+			cout << "You have ended the game" << endl;
 			cin.ignore();
 			gameRunning=false;
 			break;
@@ -615,7 +615,7 @@ vector<assignment> sorter(vector<assignment>toSort) {
 	int n = toSort.size();
 	for (int i = 0; i < (n-1); i++) {
 		for (int j = 0; j < (n-i-1); j++) {
-			if (toSort[j].score > toSort[j + 1].score) {
+			if (toSort[j].score < toSort[j + 1].score) {
 				assignment temp = toSort[j];
 				toSort[j] = toSort[j + 1];
 				toSort[j + 1] = temp;
@@ -623,6 +623,44 @@ vector<assignment> sorter(vector<assignment>toSort) {
 		}
 	}
 	return toSort;
+}
+
+bool doTask(assignment assign, vector<vector<tile> >*map, vector<task>tasks){
+	int x=convertIDColumn(assign.id);
+	int y=convertIDRow(assign.id);
+	int Ux=convertIDColumn(assign.unitId);
+	int Uy=convertIDRow(assign.unitId);
+	if(assign.type==1){
+		if(distID(id,unitId)<=1){
+			attack(Ux,Uy,x,y,map);
+			return true;
+		}
+		else{
+			int dist1;
+			int dist2;
+			int dist3;
+			int dist4;
+			dist1=abs((x+1)-Ux)+abs((y)-Uy);
+			dist2=abs((x-1)-Ux)+abs((y)-Uy);
+			dist3=abs((x)-Ux)+abs((y+1)-Uy);
+			dist4=abs((x)-Ux)+abs((y-1)-Uy);
+			if(dist1>dist2 and){
+
+			}
+			else{
+
+			}
+		}
+	}
+	else if(assign.type==2){
+
+	}
+	else if(assign.type==3){
+
+	}
+	else if(assign.type==4){
+
+	}
 }
 
 void tacAI(vector<vector<tile> >*map){
@@ -658,7 +696,7 @@ void tacAI(vector<vector<tile> >*map){
 					if(x>0){
 						sum+=tasks[convertToID(x-1,y)].priority;
 					}
-					if(x<11){
+					if(x<10){
 						sum+=tasks[convertToID(x+1,y)].priority;
 					}
 					if(y>0){
@@ -680,9 +718,10 @@ void tacAI(vector<vector<tile> >*map){
 		}
 	}
 	assignments=sorter(assignments);
-	for(int i=0;i<assignments.size();i++){
+	/*for(int i=0;i<assignments.size();i++){
 		cout<<assignments[i].score<<":"<<assignments[i].type<<":"<<convertIDColumn(assignments[i].id)<<","<<convertIDRow(assignments[i].id)<<endl;
-	}
+	}*/
+
 	listOfAIUnits.clear();
 	tasks.clear();
 	assignments.clear();

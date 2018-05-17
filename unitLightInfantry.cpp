@@ -39,7 +39,6 @@ void unitLightInfantry::tickTurn(){
     }
   }
   _movesLeft=_moveSpeed;
-  cout<<_movesLeft<<"::"<<_moveSpeed<<endl;
   _attacksLeft=1;
 }
 
