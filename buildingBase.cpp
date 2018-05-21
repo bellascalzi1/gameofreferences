@@ -28,9 +28,12 @@ buildingBase::buildingBase(bool AI){  //constructor with input for AI ownership
 
 void buildingBase::tickTurn(){
   if(_health<_baseHealth){
-    _health=round(_baseHealth*1.1);
+    cout<<_health<<endl;
+    _health=_health+round(_baseHealth*0.01);
+    cout<<_health<<endl;
     if(_health>_baseHealth){
       _health=_baseHealth;
+      cout<<_health<<endl;
     }
   }
 }

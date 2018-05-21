@@ -32,7 +32,7 @@ unitHeavyInfantry::unitHeavyInfantry(bool AI){  //constructor with input to set 
 
 void unitHeavyInfantry::tickTurn(){
   if(_health<_baseHealth){
-    _health=round(_baseHealth*1.1);
+    _health=_health+round(_baseHealth*0.02);
     if(_health>_baseHealth){
       _health=_baseHealth;
     }

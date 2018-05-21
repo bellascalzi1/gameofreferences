@@ -157,6 +157,8 @@ int attack(int Ax, int Ay, int Dx, int Dy, vector<vector<tile> >*map){  //attack
 				if(map[0][Ax][Ay].unitGet_health()<=0){
 					map[0][Ax][Ay].killUnit();
 				}
+				cout<<dmgDef<<endl;
+				cout<<map[0][Dx][Dy].buildingGet_health()<<endl;
 				return 0;
 			}
 		}
@@ -422,19 +424,19 @@ void commandLine(vector<vector<tile> >*map) {  //takes and interperates players 
 			}
 			else{
 				int temp = attack(x, y, x1, y1, map);
-				if(temp=1){
+				if(temp==1){
 					cout<<"No unit selected"<<endl;
 				}
-				else if(temp=2){
+				else if(temp==2){
 					cout<<"No target selected"<<endl;
 				}
-				else if(temp=3){
+				else if(temp==3){
 					cout<<"Unit out of range"<<endl;
 				}
-				else if(temp=4){
+				else if(temp==4){
 					cout<<"This building is friendly"<<endl;
 				}
-				else if(temp=5){
+				else if(temp==5){
 					cout<<"This unit is friendly"<<endl;
 				}
 				else {
@@ -632,6 +634,82 @@ bool doTask(assignment assign, vector<vector<tile> >*map, vector<task>tasks){
 	int Uy=convertIDRow(assign.unitId);
 	if(assign.type==1){
 		if(distID(assign.id,assign.unitId)<=1){
+			cout<<attack(Ux,Uy,x,y,map)<<endl;
+			return true;
+		}
+		else{
+			int dist1;
+			int dist2;
+			int dist3;
+			int dist4;
+			if(x+1>10){
+				dist1=tasks[convertToID(x+1,y)].priority;
+			}
+			else{
+				dist1=-1000;
+			}
+			if(x-1<0){
+				dist2=tasks[convertToID(x-1,y)].priority;
+			}
+			if(y+1>10){
+				dist3=tasks[convertToID(x,y+1)].priority;
+			}
+			else{
+				dist1=-1000;
+			}
+			if(y-1<0){
+				dist4=tasks[convertToID(x,y-1)].priority;
+			}
+			else{
+				dist1=-1000;
+			}
+			if(dist1>=dist2 and dist1>=dist3 and dist1>=dist4){
+				if(map[0][x+1][y].get_hasUnit()==true or map[0][x+1][y].get_hasUnit()==true){
+					return false;
+				}
+				else{
+					moveUnit(Ux,Uy,x+1,y,map);
+					cout<<"atk"<<attack(x+1,y,x,y,map)<<endl;
+					return true;
+				}
+			}
+			else if(dist2>=dist3 and dist2>=dist4 and dist2>=dist1){
+				if(map[0][x-1][y].get_hasUnit()==true or map[0][x-1][y].get_hasBuilding()==true){
+					return false;
+				}
+				else{
+					moveUnit(Ux,Uy,x-1,y,map);
+					cout<<"atk"<<attack(x-1,y,x,y,map)<<endl;
+					return true;
+				}
+			}
+			else if(dist4>=dist1 and dist4>=dist2 and dist4>=dist4){
+				if(map[0][x][y-1].get_hasUnit()==true or map[0][x][y-1].get_hasBuilding()==true){
+					return false;
+				}
+				else{
+					int temp = moveUnit(Ux,Uy,x,y-1,map);
+					cout<<"atk"<<attack(x,y-1,x,y,map)<<endl;
+					return true;
+				}
+			}
+			else if(dist3>=dist1 and dist3>=dist4 and dist3>=dist2){
+				if(map[0][x][y+1].get_hasUnit()==true or map[0][x][y+1].get_hasBuilding()==true){
+					return false;
+				}
+				else{
+				int temp = moveUnit(Ux,Uy,x,y+1,map);
+				cout<<"atk"<<attack(x,y+1,x,y,map)<<endl;
+				return true;
+			}
+			}
+			else{
+				return false;
+			}
+		}
+	}
+	else if(assign.type==2){
+		if(distID(assign.id,assign.unitId)<=1){
 			attack(Ux,Uy,x,y,map);
 			return true;
 		}
@@ -640,10 +718,6 @@ bool doTask(assignment assign, vector<vector<tile> >*map, vector<task>tasks){
 			int dist2;
 			int dist3;
 			int dist4;
-			/*dist1=abs((x+1)-Ux)+abs((y)-Uy);
-			dist2=abs((x-1)-Ux)+abs((y)-Uy);
-			dist3=abs((x)-Ux)+abs((y+1)-Uy);
-			dist4=abs((x)-Ux)+abs((y-1)-Uy);*/
 			if(x+1>10){
 				dist1=tasks[convertToID(x+1,y)].priority;
 			}
@@ -710,14 +784,26 @@ bool doTask(assignment assign, vector<vector<tile> >*map, vector<task>tasks){
 			}
 		}
 	}
-	else if(assign.type==2){
-
-	}
 	else if(assign.type==3){
-
+		if(map[0][x][y].get_hasUnit()==true){
+			return false;
+		}
+		else{
+			moveUnit(Ux,Uy,x,y,map);
+			return true;
+		}
 	}
-	else if(assign.type==4){
-
+	else if(assign.type==4 and assign.score>0){
+		if(map[0][x][y].get_hasUnit()==true){
+			return false;
+		}
+		else{
+			moveUnit(Ux,Uy,x,y,map);
+			return true;
+		}
+	}
+	else{
+		return false;
 	}
 }
 
@@ -763,7 +849,7 @@ void tacAI(vector<vector<tile> >*map){
 					if(y<10){
 						sum+=tasks[convertToID(x,y+1)].priority;
 					}
-					tasks[j].priority=sum/5;
+					tasks[j].priority=round(sum/5);
 				}
 				if(distID(tasks[j].id,listOfAIUnits[i])>0){
 					assignments[assignments.size()-1].score=(tasks[j].priority-(5*k))/distID(tasks[j].id,listOfAIUnits[i]);
@@ -777,9 +863,33 @@ void tacAI(vector<vector<tile> >*map){
 	}
 	assignments=sorter(assignments);
 	for(int i=0;i<assignments.size();i++){
-		cout<<assignments[i].score<<":"<<assignments[i].type<<":"<<convertIDColumn(assignments[i].id)<<","<<convertIDRow(assignments[i].id)<<endl;
+		//cout<<assignments[i].score<<":"<<assignments[i].type<<":"<<convertIDColumn(assignments[i].id)<<","<<convertIDRow(assignments[i].id)<<endl;
+		if(assignments[i].score>=1){
+
+		}
+		else{
+			assignments.erase(assignments.begin()+i);
+		}
 	}
-	doTask(assignments[0],map,tasks);
+	for(int i=0;i<assignments.size();i++){
+			cout<<assignments[i].score<<":"<<assignments[i].type<<":"<<convertIDColumn(assignments[i].id)<<","<<convertIDRow(assignments[i].id)<<endl;
+	}
+	while(assignments.size()>0){
+		/*for(int i=0;i<assignments.size();i++){
+			cout<<assignments[i].score<<":"<<assignments[i].type<<":"<<convertIDColumn(assignments[i].id)<<","<<convertIDRow(assignments[i].id)<<endl;
+		}*/
+		if(doTask(assignments[0],map,tasks)==true){
+			int unitId=assignments[0].unitId;
+			for(int i=0;i<assignments.size();i++){
+				if(assignments[i].unitId==unitId){
+					assignments.erase(assignments.begin()+i);
+				}
+			}
+		}
+		else{
+			assignments.erase(assignments.begin()+0);
+		}
+	}
 	listOfAIUnits.clear();
 	tasks.clear();
 	assignments.clear();
@@ -803,6 +913,10 @@ int main(){
 	map[width/2][height-1].set_hasBuilding(true);
 	map[width/2][height-3].set_unit(new unitLightInfantry(true));
 	map[width/2][height-3].set_hasUnit(true);
+	map[6][8].set_unit(new unitLightInfantry(true));
+	map[6][8].set_hasUnit(true);
+	map[9][9].set_unit(new unitLightInfantry(true));
+	map[9][9].set_hasUnit(true);
   consoleRenderFrame(width, height, map);  //renders initial screen
 	//tacAI(&map);
 	while(gameRunning==true){

@@ -56,7 +56,7 @@ unit* buildingBarrack::spawnUnit(string uType){    //spawns a new unit
 void buildingBarrack::tickTurn(){
   _hasSpawned=false;
   if(_health<_baseHealth){
-    _health=round(_baseHealth*1.1);
+    _health=_health+round(_baseHealth*0.02);
     if(_health>_baseHealth){
       _health=_baseHealth;
     }

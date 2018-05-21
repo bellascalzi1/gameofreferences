@@ -30,7 +30,7 @@ buildingMine::buildingMine(bool AI){  //constructor with input for AI ownership
 
 void buildingMine::tickTurn(){
   if(_health<_baseHealth){
-    _health=round(_baseHealth*1.1);
+    _health=_health+round(_baseHealth*0.02);
     if(_health>_baseHealth){
       _health=_baseHealth;
     }
