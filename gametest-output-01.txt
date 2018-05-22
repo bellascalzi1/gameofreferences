@@ -1,0 +1,297 @@
+------------------------------------------------
+       A   B   C   D   E   F   G   H   I   J   K
+   +   +   +   +   +   +   +   +   +   +   +   +
+0    O   O   O   O   O   B   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+1    O   O   I   O   O   B   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+2    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+3    O   O   O   O   H   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+4    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+5    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+6    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+7    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+8    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+9    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+10   O   O   O   O   O   B   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+------------------------------------------------
+Recources: 100
+
+Enter Command: (type end to quit or endturn to end your turn)
+Where would you like to build?
+What would you like to build?
+Unable to build here
+Enter Command: (type end to quit or endturn to end your turn)
+Where would you like to build?
+What would you like to build?
+------------------------------------------------
+       A   B   C   D   E   F   G   H   I   J   K
+   +   +   +   +   +   +   +   +   +   +   +   +
+0    O   O   O   O   O   B   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+1    O   O   I   O   O   B   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+2    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+3    O   O   O   O   H   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+4    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+5    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+6    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+7    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+8    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+9    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+10   O   O   O   O   O   B   B   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+------------------------------------------------
+Recources: 100
+
+Enter Command: (type end to quit or endturn to end your turn)
+Which building would you like to spawn unit at?
+What unit you like to spawn?
+Enter Command: (type end to quit or endturn to end your turn)
+5::5
+------------------------------------------------
+       A   B   C   D   E   F   G   H   I   J   K
+   +   +   +   +   +   +   +   +   +   +   +   +
+0    O   O   O   O   O   B   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+1    O   O   I   O   O   B   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+2    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+3    O   O   O   O   H   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+4    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+5    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+6    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+7    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+8    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+9    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+10   O   O   O   O   O   B   B   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+------------------------------------------------
+Recources: 185
+
+Turn over
+Enter Command: (type end to quit or endturn to end your turn)
+Which Unit would you like to move?
+Where would you like to move it to?
+------------------------------------------------
+       A   B   C   D   E   F   G   H   I   J   K
+   +   +   +   +   +   +   +   +   +   +   +   +
+0    O   O   O   O   O   B   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+1    O   O   I   O   O   B   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+2    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+3    O   O   O   O   H   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+4    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+5    O   O   O   O   O   O   L   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+6    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+7    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+8    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+9    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+10   O   O   O   O   O   B   B   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+------------------------------------------------
+Recources: 185
+
+Enter Command: (type end to quit or endturn to end your turn)
+5::5
+------------------------------------------------
+       A   B   C   D   E   F   G   H   I   J   K
+   +   +   +   +   +   +   +   +   +   +   +   +
+0    O   O   O   O   O   B   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+1    O   O   I   O   O   B   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+2    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+3    O   O   O   O   H   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+4    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+5    O   O   O   O   O   O   L   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+6    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+7    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+8    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+9    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+10   O   O   O   O   O   B   B   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+------------------------------------------------
+Recources: 270
+
+Turn over
+Enter Command: (type end to quit or endturn to end your turn)
+Where would you like to look?
+TILE INFO:
+Tile: E3
+Building present: no
+Unit present: yes
+-Unit name: heavy infantry
+-Unit health: 200
+-Unit AC: 6
+-Unit moves left: 1
+-Unit damage: 40
+-Unit owner: AI
+Enter Command: (type end to quit or endturn to end your turn)
+Which Unit would you like to move?
+Where would you like to move it to?
+------------------------------------------------
+       A   B   C   D   E   F   G   H   I   J   K
+   +   +   +   +   +   +   +   +   +   +   +   +
+0    O   O   O   O   O   B   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+1    O   O   I   O   O   B   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+2    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+3    O   O   O   O   H   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+4    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+5    O   O   O   O   O   L   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+6    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+7    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+8    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+9    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+10   O   O   O   O   O   B   B   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+------------------------------------------------
+Recources: 270
+
+Enter Command: (type end to quit or endturn to end your turn)
+Which Unit would you like to move?
+Where would you like to move it to?
+------------------------------------------------
+       A   B   C   D   E   F   G   H   I   J   K
+   +   +   +   +   +   +   +   +   +   +   +   +
+0    O   O   O   O   O   B   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+1    O   O   I   O   O   B   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+2    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+3    O   O   O   O   H   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+4    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+5    O   O   O   O   L   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+6    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+7    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+8    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+9    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+10   O   O   O   O   O   B   B   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+------------------------------------------------
+Recources: 270
+
+Enter Command: (type end to quit or endturn to end your turn)
+Which Unit would you like to move?
+Where would you like to move it to?
+------------------------------------------------
+       A   B   C   D   E   F   G   H   I   J   K
+   +   +   +   +   +   +   +   +   +   +   +   +
+0    O   O   O   O   O   B   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+1    O   O   I   O   O   B   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+2    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+3    O   O   O   O   H   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+4    O   O   O   O   L   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+5    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+6    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+7    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+8    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+9    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+10   O   O   O   O   O   B   B   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+------------------------------------------------
+Recources: 270
+
+Enter Command: (type end to quit or endturn to end your turn)
+You have ended the game
+5::5
+------------------------------------------------
+       A   B   C   D   E   F   G   H   I   J   K
+   +   +   +   +   +   +   +   +   +   +   +   +
+0    O   O   O   O   O   B   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+1    O   O   I   O   O   B   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+2    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+3    O   O   O   O   H   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+4    O   O   O   O   L   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+5    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+6    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+7    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+8    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+9    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+10   O   O   O   O   O   B   B   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+------------------------------------------------
+Recources: 355
+
+Turn over
+Game over man, Game over!
