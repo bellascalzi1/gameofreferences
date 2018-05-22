@@ -1,0 +1,13 @@
+build
+D5
+barracks
+build
+Z0
+barracks
+build
+G0
+aaaa
+build
+G0
+barracks
+end

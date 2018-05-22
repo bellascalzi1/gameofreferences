@@ -1,0 +1,15 @@
+build
+G10
+barracks
+spawn
+G10
+infantry
+look
+G10
+look
+Z10
+look
+F0
+look
+()&aa sa   jashdash
+end

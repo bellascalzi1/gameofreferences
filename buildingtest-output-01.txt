@@ -1,0 +1,103 @@
+------------------------------------------------
+       A   B   C   D   E   F   G   H   I   J   K
+   +   +   +   +   +   +   +   +   +   +   +   +
+0    O   O   O   O   O   B   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+1    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+2    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+3    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+4    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+5    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+6    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+7    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+8    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+9    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+10   O   O   O   O   O   B   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+------------------------------------------------
+Recources: 100
+
+Enter Command: (type end to quit or endturn to end your turn)
+Where would you like to build?
+What would you like to build?
+Unable to build here
+Enter Command: (type end to quit or endturn to end your turn)
+Where would you like to build?
+What would you like to build?
+Invalid tile
+Enter Command: (type end to quit or endturn to end your turn)
+Where would you like to build?
+What would you like to build?
+Invalid building type
+Enter Command: (type end to quit or endturn to end your turn)
+Where would you like to build?
+What would you like to build?
+------------------------------------------------
+       A   B   C   D   E   F   G   H   I   J   K
+   +   +   +   +   +   +   +   +   +   +   +   +
+0    O   O   O   O   O   B   B   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+1    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+2    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+3    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+4    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+5    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+6    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+7    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+8    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+9    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+10   O   O   O   O   O   B   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+------------------------------------------------
+Recources: 100
+
+Enter Command: (type end to quit or endturn to end your turn)
+You have ended the game
+------------------------------------------------
+       A   B   C   D   E   F   G   H   I   J   K
+   +   +   +   +   +   +   +   +   +   +   +   +
+0    O   O   O   O   O   B   B   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+1    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+2    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+3    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+4    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+5    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+6    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+7    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+8    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+9    O   O   O   O   O   O   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+10   O   O   O   O   O   B   O   O   O   O   O
+   +   +   +   +   +   +   +   +   +   +   +   +
+------------------------------------------------
+Recources: 185
+
+Turn over
+Game over man, Game over!
