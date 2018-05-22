@@ -8,7 +8,7 @@ buildingBarrack::buildingBarrack(){  //defult constructor
   _health=100;
   _baseHealth=100;
   _AC=2;
-  _icon='B';
+  _icon='#';
   _cost=100;
   _name="Barracks";
   _buildingIncome=-15;
@@ -21,7 +21,7 @@ buildingBarrack::buildingBarrack(bool AI){  //constructor with input to set AI o
   _health=100;
   _baseHealth=100;
   _AC=2;
-  _icon='B';
+  _icon='#';
   _cost=100;
   _name="Barracks";
   _buildingIncome=-15;

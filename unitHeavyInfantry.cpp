@@ -14,6 +14,7 @@ unitHeavyInfantry::unitHeavyInfantry(){  //defult constructor
   _movesLeft=0;
   _priority=8;
   _name="heavy infantry";
+  _income=-10;
 }
 
 unitHeavyInfantry::unitHeavyInfantry(bool AI){  //constructor with input to set ai ownwership
@@ -28,6 +29,7 @@ unitHeavyInfantry::unitHeavyInfantry(bool AI){  //constructor with input to set 
   _priority=8;
   _name="heavy infantry";
   _AI=AI;
+  _income=-10;
 }
 
 void unitHeavyInfantry::tickTurn(){

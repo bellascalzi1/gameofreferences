@@ -70,7 +70,7 @@ char tile::get_icon(){
     return _unit->get_icon();
   }
   else{
-    char temp = 'O'; //32; space
+    char temp = 32; //32; space
     return temp;
   }
 }
@@ -172,7 +172,7 @@ void tile::turnTick(){
 int tile::getTileIncome(){
   int income;
   if(_hasUnit==true){
-    //income+=_unit->get_income();
+    income+=_unit->get_income();
   }
   if(_hasBuilding==true){
     income+=_building->get_buildingIncome();
@@ -187,6 +187,7 @@ void tile::killUnit(){
 
 void tile::killBuilding(){
   _hasBuilding=false;
+  _isSpawner=false;
   delete _building;
 }
 

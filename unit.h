@@ -19,6 +19,7 @@ protected:
   int _cost;
   bool _AI;
   int _priority;
+  int _income;
 public:
   unit();
   string get_name();
@@ -32,6 +33,7 @@ public:
   int get_dmg();
   void set_dmg(int dmg);
   int get_cost();
+  int get_income();
   void set_AI(bool AI);
   bool get_AI();
   int get_movesLeft();

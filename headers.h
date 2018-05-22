@@ -4,4 +4,7 @@
 #include <vector>
 #include <cmath>
 #include <iomanip>
+#include <algorithm>
+#include <stdlib.h>
+#include <time.h>
 using namespace std;

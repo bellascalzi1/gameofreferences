@@ -13,6 +13,7 @@ unitCruiser::unitCruiser() { // default constructor
   _movesLeft = 0;
   _priority=5;
   _name="cruiser";
+  _income=-6;
 
 }
 unitCruiser::unitCruiser(bool AI) { // constructor with input for AI
@@ -28,6 +29,7 @@ unitCruiser::unitCruiser(bool AI) { // constructor with input for AI
   _priority=5;
   _name="cruiser";
   _AI = AI;
+  _income=-6;
 }
 
 void unitCruiser::tickTurn(){

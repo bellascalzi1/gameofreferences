@@ -8,7 +8,9 @@
 int width=11;
 int height=11;
 int playerRec=100;
+int playerIncome=0;
 int AIRec=100;
+int AIIncome=0;
 bool gameRunning=true;
 
 struct task{
@@ -23,6 +25,11 @@ struct assignment{
 	int id;
 	int unitId;
 };
+
+int random(int min, int max){
+	int range=1+(max-min);
+	return rand()%range+min;
+}
 
 void consoleRenderGrid(int sWidth, int sHight) { //renders the grid around the map in console
 	char temp = '+';
@@ -222,15 +229,21 @@ void printTileInfo(int x, int y, vector<vector<tile> >*map){  //prints the detai
   }
 }
 
-int createBuilding(int x, int y, vector<vector<tile> >*map, string bType){
-	if(bType=="example"){
+int createBuilding(int x, int y, vector<vector<tile> >*map, string bType, bool AI){
+	if(bType=="mine"){
 			map[0][x][y].set_hasBuilding(true);
-			map[0][x][y].set_building(new exampleBuilding());
+			map[0][x][y].set_building(new buildingMine(AI));
 			return 0;
+	}
+	else if(bType=="vehicleBay"){
+		map[0][x][y].set_hasBuilding(true);
+		map[0][x][y].set_building(new buildingVehicleBay(AI));
+		map[0][x][y].set_isSpawner(true);
+		return 0;
 	}
 	else if(bType=="barracks"){
 		map[0][x][y].set_hasBuilding(true);
-		map[0][x][y].set_building(new buildingBarrack());
+		map[0][x][y].set_building(new buildingBarrack(AI));
 		map[0][x][y].set_isSpawner(true);
 		return 0;
 	}
@@ -240,10 +253,11 @@ int createBuilding(int x, int y, vector<vector<tile> >*map, string bType){
 	}
 }
 
-int buildBuilding(int x, int y, vector<vector<tile> >*map, string bType){   //creates a new building if posible
+int buildBuilding(int x, int y, vector<vector<tile> >*map, string bType, bool AI){   //creates a new building if posible
+	if(map[0][x][y].get_hasBuilding()==true or map[0][x][y].building_AI()!=AI){
 	if(x==0){
-		if(map[0][x+1][y].get_hasBuilding()==true or map[0][x][y+1].get_hasBuilding() or map[0][x][y-1].get_hasBuilding()){
-			int temp=createBuilding(x,y,map,bType);
+		if(map[0][x+1][y].get_hasBuilding()==true or map[0][x][y+1].get_hasBuilding()==true or map[0][x][y-1].get_hasBuilding()==true){
+			int temp=createBuilding(x,y,map,bType,AI);
 			return temp;
 		}
 		else{
@@ -252,8 +266,8 @@ int buildBuilding(int x, int y, vector<vector<tile> >*map, string bType){   //cr
 		}
 	}
 	else if(x==10){
-		if(map[0][x-1][y].get_hasBuilding() or map[0][x][y+1].get_hasBuilding() or map[0][x][y-1].get_hasBuilding()){
-			int temp=createBuilding(x,y,map,bType);
+		if(map[0][x-1][y].get_hasBuilding()==true or map[0][x][y+1].get_hasBuilding()==true or map[0][x][y-1].get_hasBuilding()==true){
+			int temp=createBuilding(x,y,map,bType,AI);
 			return temp;
 		}
 		else{
@@ -262,8 +276,8 @@ int buildBuilding(int x, int y, vector<vector<tile> >*map, string bType){   //cr
 		}
 	}
 	else if(y==0){
-		if(map[0][x+1][y].get_hasBuilding()==true or map[0][x-1][y].get_hasBuilding() or map[0][x][y+1].get_hasBuilding()){
-			int temp=createBuilding(x,y,map,bType);
+		if(map[0][x+1][y].get_hasBuilding()==true==true or map[0][x-1][y].get_hasBuilding()==true or map[0][x][y+1].get_hasBuilding()==true){
+			int temp=createBuilding(x,y,map,bType,AI);
 			return temp;
 		}
 		else{
@@ -272,8 +286,8 @@ int buildBuilding(int x, int y, vector<vector<tile> >*map, string bType){   //cr
 		}
 	}
 	else if(y==10){
-		if(map[0][x+1][y].get_hasBuilding()==true or map[0][x-1][y].get_hasBuilding() or map[0][x][y-1].get_hasBuilding()){
-			int temp=createBuilding(x,y,map,bType);
+		if(map[0][x+1][y].get_hasBuilding()==true or map[0][x-1][y].get_hasBuilding()==true or map[0][x][y-1].get_hasBuilding()==true){
+			int temp=createBuilding(x,y,map,bType,AI);
 			return temp;
 		}
 		else{
@@ -282,14 +296,18 @@ int buildBuilding(int x, int y, vector<vector<tile> >*map, string bType){   //cr
 		}
 	}
 	else{
-		if(map[0][x+1][y].get_hasBuilding()==true or map[0][x-1][y].get_hasBuilding() or map[0][x][y+1].get_hasBuilding() or map[0][x][y-1].get_hasBuilding()){
-			int temp=createBuilding(x,y,map,bType);
+		if(map[0][x+1][y].get_hasBuilding()==true or map[0][x-1][y].get_hasBuilding()==true or map[0][x][y+1].get_hasBuilding()==true or map[0][x][y-1].get_hasBuilding()==true){
+			int temp=createBuilding(x,y,map,bType,AI);
 			return temp;
 		}
 		else{
 			//unable to build here
 			return 2;
 		}
+	}
+	}
+	else{
+		return 2;
 	}
 }
 
@@ -354,14 +372,18 @@ int spawnUnit(int x, int y, vector<vector<tile> >*map, string uType){
 }
 
 void endTurn(vector<vector<tile> >*map){
+	playerIncome=0;
+	AIIncome=0;
 	for(int i=0;i<height;i++){
     for(int j=0;j<width;j++){
 			if(map[0][j][i].get_hasUnit()==true){
 				if(map[0][j][i].unit_AI()==true){
 					AIRec+=map[0][j][i].getTileIncome();
+					AIIncome+=map[0][j][i].getTileIncome();
 				}
 				else{
 					playerRec+=map[0][j][i].getTileIncome();
+					playerIncome+=map[0][j][i].getTileIncome();
 				}
 			}
 			else if(map[0][j][i].get_hasBuilding()==true){
@@ -509,7 +531,7 @@ void commandLine(vector<vector<tile> >*map) {  //takes and interperates players 
 				cout<<"Invalid tile"<<endl;
 			}
 			else{
-				int temp = buildBuilding(x, y,map,bType);
+				int temp = buildBuilding(x, y,map,bType,false);
 				if(temp==1){
 					cout<<"Invalid building type"<<endl;
 				}
@@ -895,7 +917,147 @@ void tacAI(vector<vector<tile> >*map){
 	assignments.clear();
 }
 
+void econAI(double bI, double cI, double bU, double bS, double bR, double cR, vector<vector<tile> >*map){
+	double pI=0;
+	double I=0;
+	double pU=0;
+	double U=0;
+	double pS=0;
+	double S=0;
+	double pR=playerRec;
+	double R=AIRec;
+	int wX[2]={5,5};
+	int wY[2]={0,0};
+	for(int i=0;i<height;i++){
+    for(int j=0;j<width;j++){
+			if(map[0][j][i].get_hasUnit()==true){
+				if(map[0][j][i].unit_AI()==true){
+					I+=map[0][j][i].getTileIncome();
+					U+=1;
+				}
+				else{
+					pI+=map[0][j][i].getTileIncome();
+					pU+=1;
+				}
+			}
+			if(map[0][j][i].get_hasBuilding()==true and map[0][j][i].get_isSpawner()==true){
+				if(map[0][j][i].building_AI()==true){
+					I+=map[0][j][i].getTileIncome();
+					S+=1;
+					if(j<wX[0]){
+						wX[0]=j;
+					}
+					if(j>wX[1]){
+						wX[1]=j;
+					}
+					if(i>wY[1]){
+						wY[1]=i;
+					}
+				}
+				else{
+					pI+=map[0][j][i].getTileIncome();
+					pS+=1;
+				}
+			}
+			else if(map[0][j][i].get_hasBuilding()==true){
+				if(map[0][j][i].building_AI()==true){
+					I+=map[0][j][i].getTileIncome();
+
+				}
+				else{
+					pI+=map[0][j][i].getTileIncome();
+				}
+			}
+		}
+	}
+	wX[0]=max(wX[0]-1,0);
+	wX[1]=min(wX[1]+1,10);
+	wY[1]=min(wY[1]+1,10);
+	cout<<I<<":"<<pI<<":"<<U<<":"<<pU<<":"<<S<<":"<<pS<<":"<<pR<<":"<<R<<endl;
+	double tI=bI+cI*pI;
+	double rI=1.00-round(10*(I/tI))/10.00;
+	double tU=bU+ceil(pU/2)+ceil(U/2);
+	double rU=1.00-round(10*(U/tU))/10.00;
+	double tS=bS+ceil(pS/2)+ceil(S/2);
+	double rS=1.00-round(10*(S/tS))/10.00;
+	double tR=bR+cR*pR;
+	double rR=round(10*(R/tR))/10.00;
+	double RUsable=floor(min(R*rR, R));
+	double temp=rI+rU+rS;
+	rI=max(floor(10*(rI/temp))/10,0.00);
+	rU=max(floor(10*(rU/temp))/10,0.00);
+	rS=max(floor(10*(rS/temp))/10,0.00);
+	double RI=floor(RUsable*rI);
+	double RU=floor(RUsable*rU);
+	double RS=floor(RUsable*rS);
+	cout<<RUsable<<":"<<RI<<":"<<RU<<":"<<RS<<endl;
+	//int t=0;
+	/*while(RI>=100){// and t<100){
+		int x=random(wX[0],wX[1]);
+		int y=random(wY[0],wY[1]);
+		while(map[0][x][y].get_hasBuilding()==true){// and t<100){
+			x=random(wX[0],wX[1]);
+			y=random(wY[0],wY[1]);
+			//t+=1;
+		}
+		while(buildBuilding(x,y,map,"mine",true)!=0){// and t<100){
+			x=random(wX[0],wX[1]);
+			y=random(wY[0],wY[1]);
+			while(map[0][x][y].get_hasBuilding()==true){// and t<100){
+				x=random(wX[0],wX[1]);
+				y=random(wY[0],wY[1]);
+				//t+=1;
+			}
+			//t+=1;
+		}
+		//t+=1;
+		RI-=100;
+		AIRec-=100;
+	}*/
+	//t=0;
+	/*while(RS>=100){// and t<100){
+		int x=random(wX[0],wX[1]);
+		int y=random(wY[0],wY[1]);
+		while(map[0][x][y].get_hasBuilding()==true){// and t<100){
+			x=random(wX[0],wX[1]);
+			y=random(wY[0],wY[1]);
+			//t+=1;
+		}
+		int type=random(0,2);
+		if(type==0 and RS>=150){
+			while(buildBuilding(x,y,map,"vehicleBay",true)!=0){// and t<100){
+				x=random(wX[0],wX[1]);
+				y=random(wY[0],wY[1]);
+				while(map[0][x][y].get_hasBuilding()==true){// and t<100){
+					x=random(wX[0],wX[1]);
+					y=random(wY[0],wY[1]);
+					//t+=1;
+				}
+				//t+=1;
+			}
+			RS-=150;
+			AIRec-=150;
+		}
+		else{
+			while(buildBuilding(x,y,map,"barracks",true)!=0){// and t<100){
+				x=random(wX[0],wX[1]);
+				y=random(wY[0],wY[1]);
+				while(map[0][x][y].get_hasBuilding()==true){// and t<100){
+					x=random(wX[0],wX[1]);
+					y=random(wY[0],wY[1]);
+					//t+=1;
+				}
+				//t+=1;
+			}
+			RS-=100;
+			AIRec-=100;
+		}
+		//t+=1;
+	}*/
+}
+
 int main(){
+	srand(time(NULL));
   vector<vector<tile> >map;  //sets up the map
   map.resize(width);
   for(int i=0;i<width;i++){
@@ -907,6 +1069,13 @@ int main(){
       map[j][i]=tile(id);
     }
   }
+	int bI=random(100,500);
+	double cI=random(0.00,200.00)/100.00;
+	int bU=random(1,5);
+	int bS=random(1,3);
+	int bR=random(100,500);
+	double cR=random(0.00,100.00)/100.00;
+	cout<<bI<<":"<<cI<<":"<<bU<<":"<<bS<<":"<<bR<<":"<<cR<<endl;
 	map[width/2][0].set_building(new buildingBase(true));
 	map[width/2][0].set_hasBuilding(true);
 	map[width/2][height-1].set_building(new buildingBase());
@@ -918,9 +1087,9 @@ int main(){
 	map[9][9].set_unit(new unitLightInfantry(true));
 	map[9][9].set_hasUnit(true);
   consoleRenderFrame(width, height, map);  //renders initial screen
-	//tacAI(&map);
 	while(gameRunning==true){
 		commandLine(&map);   //runs console
+		econAI(bI, cI, bU, bS, bR, cR, &map);
 		tacAI(&map);
 		endTurn(&map);
 		if(gameRunning==true){

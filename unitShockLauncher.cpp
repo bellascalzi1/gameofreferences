@@ -13,6 +13,7 @@ unitShockLauncher::unitShockLauncher() { // default constructor
   _movesLeft = 0;
   _priority=7;
   _name="shocklauncher";
+  _income=-10;
 
 }
 unitShockLauncher::unitShockLauncher(bool AI) { // constructor with input for AI
@@ -28,6 +29,7 @@ unitShockLauncher::unitShockLauncher(bool AI) { // constructor with input for AI
   _priority=7;
   _name="shocklauncher";
   _AI = AI;
+  _income=-10;
 }
 
 void unitShockLauncher::tickTurn(){

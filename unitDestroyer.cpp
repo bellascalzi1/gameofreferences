@@ -13,6 +13,7 @@ unitDestroyer::unitDestroyer() { // default constructor
   _movesLeft = 0;
   _priority=10;
   _name="destroyer";
+  _income=-6;
 
 }
 unitDestroyer::unitDestroyer(bool AI) { // constructor with input for AI
@@ -28,6 +29,7 @@ unitDestroyer::unitDestroyer(bool AI) { // constructor with input for AI
   _priority=10;
   _name="destroyer";
   _AI = AI;
+  _income=-6;
 }
 
 void unitDestroyer::tickTurn(){

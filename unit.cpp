@@ -67,6 +67,10 @@ int unit::get_cost(){
   return _cost;
 }
 
+int unit::get_income(){
+  return _income;
+}
+
 void unit::set_AI(bool AI){
   _AI=AI;
 }

@@ -7,7 +7,7 @@ buildingVehicleBay::buildingVehicleBay(){  //defult constructor
   _baseHealth=80;
   _AC=2;
   _icon='V';
-  _cost=300;
+  _cost=150;
   _name="Vehicle Bay";
   _hasSpawned = false;
   _buildingIncome=-15;
@@ -20,7 +20,7 @@ buildingVehicleBay::buildingVehicleBay(bool AI){  //constructor with input to se
   _baseHealth=80;
   _AC=2;
   _icon='V';
-  _cost=300;
+  _cost=150;
   _name="Vehicle Bay";
   _hasSpawned = false;
   _buildingIncome=-15;

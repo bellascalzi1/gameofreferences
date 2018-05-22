@@ -14,6 +14,7 @@ unitInfantry::unitInfantry(){  //defult constructor
   _movesLeft=0;
   _priority=6;
   _name="infantry";
+  _income=-6;
 }
 
 unitInfantry::unitInfantry(bool AI){   //constructor with input to set AI ownership
@@ -29,6 +30,7 @@ unitInfantry::unitInfantry(bool AI){   //constructor with input to set AI owners
   _priority=6;
   _name="infantry";
   _AI=AI;
+  _income=-6;
 }
 
 void unitInfantry::tickTurn(){
