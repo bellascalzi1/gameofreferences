@@ -4,6 +4,7 @@
 #include "tile.h"
 #include "buildingTypes.h"
 #include "unitTypes.h"
+#include <map>
 
 int width=11;
 int height=11;
@@ -25,6 +26,17 @@ struct assignment{
 	int id;
 	int unitId;
 };
+
+// Assigning Descriptions
+map<string,string> descriptions =
+{
+	{"light", "blah"},
+};
+typedef map<string,string>::iterator it;
+
+//descriptions.insert(make_pair("light","AN infantry unit that is quick on its feet"));
+//descriptions["heavy"] = "An infantry unit that is slow, but can deal a lot of damage";
+
 
 int random(int min, int max){
 	int range=1+(max-min);
@@ -340,7 +352,6 @@ int convertNumToASCII(string input_coords) {   //convers a character into int co
 int spawnUnit(int x, int y, vector<vector<tile> >*map, string uType){
 	if(map[0][x][y].get_hasUnit()==true){
 		return 1;
-		cout<<"This tile already has a unit in it"<<endl;
 	}
 	else if(map[0][x][y].get_isSpawner()==false){
 		cout<<"This tile cannot spawn units"<<endl;
@@ -370,6 +381,18 @@ int spawnUnit(int x, int y, vector<vector<tile> >*map, string uType){
 		}
 	}
 }
+
+void helpFunction() {
+	cout << "Type \"look\" to examine what is on a tile" <<endl;
+	cout << "Type \"move\" to move a unit. How far you can move a unit depends on how many moves it has left" <<endl;
+	cout << "Type\"attack\" to attack a unit. You can only attack units that are adjacent to you" << endl;
+	cout << "Type \"build\" to build a building. You can only build on tiles that are adjacent to a building that you own." << endl;
+	cout << "Type \"spawn\" to spawn a unit. You can only spawn infantry on a barracks, and vehicles on a vehicle bay." << endl;
+}
+
+//void description(string description) {
+//	if(descriptions.find())
+//}
 
 void endTurn(vector<vector<tile> >*map){
 	playerIncome=0;
@@ -427,6 +450,15 @@ void commandLine(vector<vector<tile> >*map) {  //takes and interperates players 
 			cin.ignore();
 			gameRunning=false;
 			break;
+		}
+		else if(input == "help") {
+			helpFunction();
+		}
+		else if(input == "describe") {
+			string to_be_described;
+			cout << "What would you like to know about?" << endl;
+			cin >> to_be_described;
+			//description(to_be_described);
 		}
 		else if(input == "attack") {
 
@@ -562,7 +594,23 @@ void commandLine(vector<vector<tile> >*map) {  //takes and interperates players 
 				cout<<"Invalid tile"<<endl;
 			}
 			else{
-				spawnUnit(x, y,map,uType);
+				int temp = spawnUnit(x,y,map,uType);
+				if(temp == 1) {
+					cout<<"This tile already has a unit in it"<<endl;
+				}
+				else if(temp == 2) {
+
+				}
+				else if(temp == 3) {
+
+				}
+				else if(temp == 4) {
+
+				}
+				else {
+					
+				}
+
 			}
 		}
 		else{
