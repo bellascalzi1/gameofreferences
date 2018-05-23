@@ -27,16 +27,27 @@ struct assignment{
 	int unitId;
 };
 
+<<<<<<< HEAD
 // Assigning Descriptions
 /*map<string,string> descriptions =
+=======
+// Creating Map with all of the descriptions for each building/unit
+map<string,string> descriptions =
+>>>>>>> 7cb2fac2112229ad7fea82b5079996a8b0f70bee
 {
-	{"light", "blah"},
+	{"light", "An infantry unit that is quick on its feet. Stats: Health = 0, AC = 0, Cost = 0, icon = H, Move Speed = 0, damage = 0, income = -10"},
+	{"infantry", "The standard infantry unit. Not the lightest or the most powerful Stats: Health = 0, AC = 0, Cost = 0, icon = H, Move Speed = 0, damage = 0, income = -10"},
+	{"heavy", "An infantry unit that deals a lot of damage, but is slow Stats: Health = 0, AC = 0, Cost = 0, icon = H, Move Speed = 0, damage = 0, income = -10"},
+	{"konamicode", "Present day... Present time... HAHAHAHAHAHAHA"},
+	{"base", "Your main base. Destroy this, and you lose the game. Health = 0, AC = 0, icon = H, Cost = 0, Income = 0"},
+	{"mine", "Mines minerals. Stats: Health = 0, AC = 0, icon = H, Cost = 0, Income = 0"},
+	{"barracks", "Allows for the spawning of infantry units Health = 0, AC = 0, icon = H, Cost = 0, Income = 0"},
+	{"vehicle bay","Allows for the spawning of vehicles Health = 0, AC = 0, icon = H, Cost = 0, Income = 0 "},
+	{"cruiser","A vehicle that is fast, but not very powerful Stats: Health = 0, AC = 0, Cost = 0, icon = H, Move Speed = 0, damage = 0, income = -10"},
+	{"destroyer","A very powerful vehicle Stats: Health = 0, AC = 0, Cost = 0, icon = H, Move Speed = 0, damage = 0, income = -10"},
+	{"shocklauncher", "A vehicle that can deliver a powerful shock from far away Stats: Health = 0, AC = 0, Cost = 0, icon = H, Move Speed = 0, damage = 0, income = -10"}
 };
 typedef map<string,string>::iterator it;*/
-
-//descriptions.insert(make_pair("light","AN infantry unit that is quick on its feet"));
-//descriptions["heavy"] = "An infantry unit that is slow, but can deal a lot of damage";
-
 
 int random(int min, int max){
 	int range=1+(max-min);
@@ -359,7 +370,6 @@ int spawnUnit(int x, int y, vector<vector<tile> >*map, string uType, bool AI){
 		return 1;
 	}
 	else if(map[0][x][y].get_isSpawner()==false){
-		cout<<"This tile cannot spawn units"<<endl;
 		return 2;
 	}
 	else{
@@ -387,7 +397,7 @@ int spawnUnit(int x, int y, vector<vector<tile> >*map, string uType, bool AI){
 	}
 }
 
-void helpFunction() {
+void helpFunction() { // outputs
 	cout << "Type \"look\" to examine what is on a tile" <<endl;
 	cout << "Type \"move\" to move a unit. How far you can move a unit depends on how many moves it has left" <<endl;
 	cout << "Type\"attack\" to attack a unit. You can only attack units that are adjacent to you" << endl;
@@ -395,9 +405,14 @@ void helpFunction() {
 	cout << "Type \"spawn\" to spawn a unit. You can only spawn infantry on a barracks, and vehicles on a vehicle bay." << endl;
 }
 
-//void description(string description) {
-//	if(descriptions.find())
-//}
+void description(string description) {
+	if(descriptions.find(description) == descriptions.end()) {
+		cout << "Invalid Name. Try again" << endl;
+	}
+	else {
+		cout << descriptions.at(description) << endl;
+	}
+}
 
 void endTurn(vector<vector<tile> >*map){
 	playerIncome=0;
@@ -459,11 +474,11 @@ void commandLine(vector<vector<tile> >*map) {  //takes and interperates players 
 		else if(input == "help") {
 			helpFunction();
 		}
-		else if(input == "describe") {
+		else if(input == "about") {
 			string to_be_described;
-			cout << "What would you like to know about?" << endl;
+			cout << "What would you like to know about?";
 			cin >> to_be_described;
-			//description(to_be_described);
+			description(to_be_described);
 		}
 		else if(input == "attack") {
 
@@ -604,19 +619,25 @@ void commandLine(vector<vector<tile> >*map) {  //takes and interperates players 
 					cout<<"This tile already has a unit in it"<<endl;
 				}
 				else if(temp == 2) {
-
+					cout<<"This tile cannot spawn units"<<endl;
 				}
 				else if(temp == 3) {
-
+					cout << "Invalid Unit Type" <<endl;
 				}
 				else if(temp == 4) {
-
+					cout << "Unknown Error" <<endl;
 				}
 				else {
+<<<<<<< HEAD
 
 				}
 
 				spawnUnit(x, y,map,uType,false);
+=======
+					spawnUnit(x,y,map,uType,false);
+				}
+
+>>>>>>> 7cb2fac2112229ad7fea82b5079996a8b0f70bee
 			}
 		}
 		else{
