@@ -3,28 +3,28 @@
 #include "buildingVehicleBay.h"
 
 buildingVehicleBay::buildingVehicleBay(){  //defult constructor
-  _health=80;
-  _baseHealth=80;
-  _AC=2;
+  _health=150;
+  _baseHealth=150;
+  _AC=4;
   _icon='V';
-  _cost=150;
+  _cost=120;
   _name="Vehicle Bay";
   _hasSpawned = false;
-  _buildingIncome=-15;
-  _priority=6;
+  _buildingIncome=-12;
+  _priority=12;
   _AI=false;
 }
 
 buildingVehicleBay::buildingVehicleBay(bool AI){  //constructor with input to set AI ownership
-  _health=80;
-  _baseHealth=80;
-  _AC=2;
+  _health=150;
+  _baseHealth=150;
+  _AC=4;
   _icon='V';
-  _cost=150;
+  _cost=120;
   _name="Vehicle Bay";
   _hasSpawned = false;
-  _buildingIncome=-15;
-  _priority=6;
+  _buildingIncome=-12;
+  _priority=12;
   _AI=AI;
 }
 

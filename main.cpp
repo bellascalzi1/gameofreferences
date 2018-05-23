@@ -13,43 +13,22 @@ int playerIncome=0;
 int AIRec=100;
 int AIIncome=0;
 bool gameRunning=true;
+map<string,string> descriptions; // Creating Map with all of the descriptions for each building/unit
 
-struct task{
+struct task{//defines a task
 	int type;
 	double priority;
 	int id;
 };
 
-struct assignment{
+struct assignment{//desifens an assignment
 	int type;
 	double score;
 	int id;
 	int unitId;
 };
 
-<<<<<<< HEAD
-// Assigning Descriptions
-/*map<string,string> descriptions =
-=======
-// Creating Map with all of the descriptions for each building/unit
-map<string,string> descriptions =
->>>>>>> 7cb2fac2112229ad7fea82b5079996a8b0f70bee
-{
-	{"light", "An infantry unit that is quick on its feet. Stats: Health = 0, AC = 0, Cost = 0, icon = H, Move Speed = 0, damage = 0, income = -10"},
-	{"infantry", "The standard infantry unit. Not the lightest or the most powerful Stats: Health = 0, AC = 0, Cost = 0, icon = H, Move Speed = 0, damage = 0, income = -10"},
-	{"heavy", "An infantry unit that deals a lot of damage, but is slow Stats: Health = 0, AC = 0, Cost = 0, icon = H, Move Speed = 0, damage = 0, income = -10"},
-	{"konamicode", "Present day... Present time... HAHAHAHAHAHAHA"},
-	{"base", "Your main base. Destroy this, and you lose the game. Health = 0, AC = 0, icon = H, Cost = 0, Income = 0"},
-	{"mine", "Mines minerals. Stats: Health = 0, AC = 0, icon = H, Cost = 0, Income = 0"},
-	{"barracks", "Allows for the spawning of infantry units Health = 0, AC = 0, icon = H, Cost = 0, Income = 0"},
-	{"vehicle bay","Allows for the spawning of vehicles Health = 0, AC = 0, icon = H, Cost = 0, Income = 0 "},
-	{"cruiser","A vehicle that is fast, but not very powerful Stats: Health = 0, AC = 0, Cost = 0, icon = H, Move Speed = 0, damage = 0, income = -10"},
-	{"destroyer","A very powerful vehicle Stats: Health = 0, AC = 0, Cost = 0, icon = H, Move Speed = 0, damage = 0, income = -10"},
-	{"shocklauncher", "A vehicle that can deliver a powerful shock from far away Stats: Health = 0, AC = 0, Cost = 0, icon = H, Move Speed = 0, damage = 0, income = -10"}
-};
-typedef map<string,string>::iterator it;*/
-
-int random(int min, int max){
+int random(int min, int max){//outputs a random number between max and min
 	int range=1+(max-min);
 	return rand()%range+min;
 }
@@ -101,7 +80,33 @@ void consoleRenderFrame(int sWidth, int sHight, vector<vector<tile> >map) { //re
 		cout<<temp;
 		}
 		for (int j = 0; j < sWidth; j++) {
-			cout << setw(3)<< map[j][i].get_icon()<<temp;
+			if(map[j][i].get_hasUnit()==true and map[j][i].get_hasBuilding()==true){  //renders icons and colours
+				if(map[j][i].building_AI()==true){
+					cout <<"\033[0;35m" <<setw(3)<< map[j][i].get_icon()<<temp<<"\033[0;37m";
+				}
+				else{
+					cout <<"\033[0;34m"<< setw(3)<< map[j][i].get_icon()<<temp<<"\033[0;37m";
+				}
+			}
+			else if(map[j][i].get_hasUnit()==true){
+				if(map[j][i].unit_AI()==true){
+					cout <<"\033[0;33m"<< setw(3)<< map[j][i].get_icon()<<temp<<"\033[0;37m";
+				}
+				else{
+					cout<<"\033[0;32m" << setw(3)<< map[j][i].get_icon()<<temp<<"\033[0;37m";
+				}
+			}
+			else if(map[j][i].get_hasBuilding()==true){
+				if(map[j][i].building_AI()==true){
+					cout<<"\033[0;33m" << setw(3)<< map[j][i].get_icon()<<temp<<"\033[0;37m";
+				}
+				else{
+					cout<<"\033[0;32m" << setw(3)<< map[j][i].get_icon()<<temp<<"\033[0;37m";
+				}
+			}
+			else{
+				cout << setw(3)<< map[j][i].get_icon()<<temp<<"\033[0;37m";
+			}
 		}
 		cout << "" << endl;
 		consoleRenderGrid(sWidth, sHight);
@@ -114,7 +119,7 @@ void consoleRenderFrame(int sWidth, int sHight, vector<vector<tile> >map) { //re
   cout << "" << endl;
 }
 
-int moveUnit(int Sx, int Sy, int Fx, int Fy, vector<vector<tile> >*map){ //moves unit from one place to another if posible
+int moveUnit(int Sx, int Sy, int Fx, int Fy, vector<vector<tile> >*map, bool AI){ //moves unit from one place to another if posible
   int dist=abs(Fx-Sx)+abs(Fy-Sy);
   if(map[0][Fx][Fy].get_hasUnit()==true){
 		//already has unit
@@ -122,6 +127,10 @@ int moveUnit(int Sx, int Sy, int Fx, int Fy, vector<vector<tile> >*map){ //moves
   }
 	else if(map[0][Sx][Sy].get_hasUnit()==false){
 		//no unit to move
+		return 2;
+	}
+	else if(map[0][Sx][Sy].unit_AI()!=AI){
+		//wrong team
 		return 2;
 	}
   else if(map[0][Sx][Sy].unitGet_movesLeft()<dist){
@@ -137,11 +146,15 @@ int moveUnit(int Sx, int Sy, int Fx, int Fy, vector<vector<tile> >*map){ //moves
   }
 }
 
-int attack(int Ax, int Ay, int Dx, int Dy, vector<vector<tile> >*map){  //attacks unit with another if posible
+int attack(int Ax, int Ay, int Dx, int Dy, vector<vector<tile> >*map, bool AI){  //attacks unit with another if posible
   int dist=abs(Dx-Ax)+abs(Dy-Ay);
 	if(map[0][Ax][Ay].get_hasUnit()==false){
 		//no unit
     return 1;
+	}
+	else if(map[0][Ax][Ay].unit_AI()!=AI){
+		//wrong team
+		return 1;
 	}
 	else if(map[0][Dx][Dy].get_hasUnit()==false and map[0][Dx][Dy].get_hasBuilding()==false){
 		//no target
@@ -252,23 +265,64 @@ void printTileInfo(int x, int y, vector<vector<tile> >*map){  //prints the detai
   }
 }
 
-int createBuilding(int x, int y, vector<vector<tile> >*map, string bType, bool AI){
-	if(bType=="mine"){
+int createBuilding(int x, int y, vector<vector<tile> >*map, string bType, bool AI){//creates a building by calling function in tile
+	if(bType=="mine"){  //creates mine
+		if(AI==false){
+			if(playerRec>=100){
+				map[0][x][y].set_hasBuilding(true);
+				map[0][x][y].set_building(new buildingMine(AI));
+				playerRec-=100;
+				return 0;
+			}
+			else{
+				return 4;
+			}
+		}
+		else{
 			map[0][x][y].set_hasBuilding(true);
 			map[0][x][y].set_building(new buildingMine(AI));
 			return 0;
+		}
 	}
-	else if(bType=="vehicleBay"){
-		map[0][x][y].set_hasBuilding(true);
-		map[0][x][y].set_building(new buildingVehicleBay(AI));
-		map[0][x][y].set_isSpawner(true);
-		return 0;
+	else if(bType=="vehicleBay"){  //creates vbay
+		if(AI==false){
+			if(playerRec>=120){
+				map[0][x][y].set_hasBuilding(true);
+				map[0][x][y].set_building(new buildingVehicleBay(AI));
+				map[0][x][y].set_isSpawner(true);
+				playerRec-=120;
+				return 0;
+			}
+			else{
+				return 4;
+			}
+		}
+		else{
+			map[0][x][y].set_hasBuilding(true);
+			map[0][x][y].set_building(new buildingVehicleBay(AI));
+			map[0][x][y].set_isSpawner(true);
+			return 0;
+		}
 	}
-	else if(bType=="barracks"){
-		map[0][x][y].set_hasBuilding(true);
-		map[0][x][y].set_building(new buildingBarrack(AI));
-		map[0][x][y].set_isSpawner(true);
-		return 0;
+	else if(bType=="barracks"){  //creates barracks
+		if(AI==false){
+			if(playerRec>=100){
+				map[0][x][y].set_hasBuilding(true);
+				map[0][x][y].set_building(new buildingBarrack(AI));
+				map[0][x][y].set_isSpawner(true);
+				playerRec-=100;
+				return 0;
+			}
+			else{
+				return 4;
+			}
+		}
+		else{
+			map[0][x][y].set_hasBuilding(true);
+			map[0][x][y].set_building(new buildingBarrack(AI));
+			map[0][x][y].set_isSpawner(true);
+			return 0;
+		}
 	}
 	else{
 		//invalid type
@@ -365,16 +419,54 @@ int convertNumToASCII(string input_coords) {   //convers a character into int co
 
 }
 
-int spawnUnit(int x, int y, vector<vector<tile> >*map, string uType, bool AI){
+int spawnUnit(int x, int y, vector<vector<tile> >*map, string uType, bool AI){//spawns a unit
 	if(map[0][x][y].get_hasUnit()==true){
+		//already has unit
 		return 1;
 	}
 	else if(map[0][x][y].get_isSpawner()==false){
+		//cannot spawn
 		return 2;
 	}
 	else{
-		if(map[0][x][y].buildingGet_name()=="Barracks" and map[0][x][y].building_AI()==AI){
-			if(uType=="light" or uType=="infantry" or uType=="heavy" or uType=="rocket" or uType=="flamethrower"){
+		if(map[0][x][y].buildingGet_name()=="Barracks" and map[0][x][y].building_AI()==AI){ //checks spawner type
+			if(uType=="light" or uType=="infantry" or uType=="heavy"){ //checks unit type
+				if(AI==true){
+					map[0][x][y].building_spawnUnit(uType,AI);
+					return 0;
+				}
+				else{
+					if(uType=="light"){//uses money
+						if(playerRec>=35){
+							map[0][x][y].building_spawnUnit(uType,AI);
+							playerRec-=35;
+							return 0;
+						}
+						else{
+							return 4;
+						}
+					}
+					else if(uType=="infantry"){
+						if(playerRec>=70){
+							map[0][x][y].building_spawnUnit(uType,AI);
+							playerRec-=70;
+							return 0;
+						}
+						else{
+							return 4;
+						}
+					}
+					else if(uType=="heavy"){
+						if(playerRec>=115){
+							map[0][x][y].building_spawnUnit(uType,AI);
+							playerRec-=115;
+							return 0;
+						}
+						else{
+							return 4;
+						}
+					}
+				}
 				map[0][x][y].building_spawnUnit(uType,AI);
 				return 0;
 			}
@@ -382,10 +474,44 @@ int spawnUnit(int x, int y, vector<vector<tile> >*map, string uType, bool AI){
 				return 3;
 			}
 		}
-		else if(map[0][x][y].buildingGet_name()=="Vehicle Bay" and map[0][x][y].building_AI()==AI){
-			if(uType=="destroyer" or uType=="cruiser" or uType=="shocklauncher"){
-				map[0][x][y].building_spawnUnit(uType,AI);
-				return 0;
+		else if(map[0][x][y].buildingGet_name()=="Vehicle Bay" and map[0][x][y].building_AI()==AI){ //checks spawner type
+			if(uType=="destroyer" or uType=="cruiser" or uType=="shocklauncher"){ //checks unit type
+				if(AI==true){
+					map[0][x][y].building_spawnUnit(uType,AI);
+					return 0;
+				}
+				else{
+					if(uType=="destroyer"){ //uses money
+						if(playerRec>=120){
+							map[0][x][y].building_spawnUnit(uType,AI);
+							playerRec-=120;
+							return 0;
+						}
+						else{
+							return 4;
+						}
+					}
+					else if(uType=="cruiser"){
+						if(playerRec>=100){
+							map[0][x][y].building_spawnUnit(uType,AI);
+							playerRec-=100;
+							return 0;
+						}
+						else{
+							return 4;
+						}
+					}
+					else if(uType=="shocklauncher"){
+						if(playerRec>=80){
+							map[0][x][y].building_spawnUnit(uType,AI);
+							playerRec-=80;
+							return 0;
+						}
+						else{
+							return 4;
+						}
+					}
+				}
 			}
 			else{
 				return 3;
@@ -397,7 +523,7 @@ int spawnUnit(int x, int y, vector<vector<tile> >*map, string uType, bool AI){
 	}
 }
 
-void helpFunction() { // outputs
+void helpFunction() { // outputs help
 	cout << "Type \"look\" to examine what is on a tile" <<endl;
 	cout << "Type \"move\" to move a unit. How far you can move a unit depends on how many moves it has left" <<endl;
 	cout << "Type\"attack\" to attack a unit. You can only attack units that are adjacent to you" << endl;
@@ -405,16 +531,124 @@ void helpFunction() { // outputs
 	cout << "Type \"spawn\" to spawn a unit. You can only spawn infantry on a barracks, and vehicles on a vehicle bay." << endl;
 }
 
-void description(string description) {
-	if(descriptions.find(description) == descriptions.end()) {
-		cout << "Invalid Name. Try again" << endl;
+void description(string description) {//outputs description
+	if(description=="list"){
+		cout<<"light, infantry, heavy, base, mine, barracks, vehicleBay, cruiser, destroyer, shocklauncher"<<endl;
 	}
-	else {
-		cout << descriptions.at(description) << endl;
+	else{
+		if(description=="light"){
+			cout<<"An infantry unit that is quick on its feet. Prepere yourself, ZERG RUSH!"<<endl;
+			cout<<"Stats:"<<endl;
+			cout<<"Health = 50"<<endl;
+			cout<<"AC = 1"<<endl;
+			cout<<"Cost = 40"<<endl;
+			cout<<"icon = L"<<endl;
+			cout<<"Speed = 5"<<endl;
+			cout<<"damage = 10"<<endl;
+			cout<<"spawn command: \"light\""<<endl;
+		}
+		else if(description=="infantry"){
+			cout<<"The standard infantry unit. Not the lightest or the most powerful but always reliable."<<endl;
+			cout<<"Stats:"<<endl;
+			cout<<"Health = 100"<<endl;
+			cout<<"AC = 4"<<endl;
+			cout<<"Cost = 70"<<endl;
+			cout<<"icon = I"<<endl;
+			cout<<"Speed = 3"<<endl;
+			cout<<"damage = 20"<<endl;
+			cout<<"spawn command: \"infantry\""<<endl;
+		}
+		else if(description=="heavy"){
+			cout<<"An infantry unit that deals a lot of damage, but is slow. Heavy infantry are towering hulks of men hailing from the USSR!"<<endl;
+			cout<<"Stats:"<<endl;
+			cout<<"Health = 200"<<endl;
+			cout<<"AC = 6"<<endl;
+			cout<<"Cost = 115"<<endl;
+			cout<<"icon = H"<<endl;
+			cout<<"Speed = 1"<<endl;
+			cout<<"damage = 50"<<endl;
+			cout<<"spawn command: \"heavy\""<<endl;
+		}
+		else if(description=="konamicode"){
+			cout<<"Present day... Present time... HAHAHAHAHAHAHA."<<endl;
+		}
+		else if(description=="base"){
+			cout<<"Your main base. Destroy this, and you lose the game so just don't. Please? (I mean it, just don't even think about it!)"<<endl;
+			cout<<"Stats:"<<endl;
+			cout<<"Health = 400"<<endl;
+			cout<<"AC = 8"<<endl;
+			cout<<"icon = B"<<endl;
+			cout<<"Income = 100"<<endl;
+		}
+		else if(description=="mine"){
+			cout<<"Diggy diggy hole. This building is full of busy dwarves that are getting you recources. What more do you need to know?"<<endl;
+			cout<<"Just remember to bring some jaffa cakes as a peace offering..."<<endl;
+			cout<<"Stats:"<<endl;
+			cout<<"Health = 0"<<endl;
+			cout<<"AC = 0"<<endl;
+			cout<<"Cost = 100"<<endl;
+			cout<<"icon = @"<<endl;
+			cout<<"Income = 150"<<endl;
+			cout<<"build command: \"mine\""<<endl;
+		}
+		if(description=="barracks"){
+			cout<<"Allows for the spawning of infantry units. NO! Don't ask where they come from, you don't want to know..."<<endl;
+			cout<<"Stats:"<<endl;
+			cout<<"Health = 100"<<endl;
+			cout<<"AC = 2"<<endl;
+			cout<<"Cost = 100"<<endl;
+			cout<<"icon = #"<<endl;
+			cout<<"spawn command: \"barracks\""<<endl;
+		}
+		else if(description=="vehicleBay"){
+			cout<<"Allows for the spawning of vehicles. Its a shed, with some vehicles, you get the idea..."<<endl;
+			cout<<"Stats:"<<endl;
+			cout<<"Health = 120"<<endl;
+			cout<<"AC = 4"<<endl;
+			cout<<"Cost = 150"<<endl;
+			cout<<"icon = V"<<endl;
+			cout<<"spawn command: \"vehicleBay\""<<endl;
+		}
+		else if(description=="cruiser"){
+			cout<<"A tough strudy craft woth a few guns. The Yamato is loaded and so am I.. wait, I have an announcement...! I am drunk!"<<endl;
+			cout<<"Stats:"<<endl;
+			cout<<"Health = 250"<<endl;
+			cout<<"AC = 6"<<endl;
+			cout<<"Cost = 100"<<endl;
+			cout<<"icon = C"<<endl;
+			cout<<"Speed = 2"<<endl;
+			cout<<"damage = 20"<<endl;
+			cout<<"spawn command: \"cruiser\""<<endl;
+		}
+		else if(description=="destroyer"){
+			cout<<"A very powerful vehicle. Show me your foes. And I shall destroy them! Burn them to ash! And then, I'll destroy the ash. *evil laugh*"<<endl;
+			cout<<"Stats:"<<endl;
+			cout<<"Health = 50"<<endl;
+			cout<<"AC = 2"<<endl;
+			cout<<"Cost = 120"<<endl;
+			cout<<"icon = D"<<endl;
+			cout<<"Speed = 3"<<endl;
+			cout<<"damage = 100"<<endl;
+			cout<<"spawn command: \"destroyer\""<<endl;
+		}
+		else if(description=="shocklauncher"){
+			cout<<"A vehicle that can deliver a powerful shock (it totally isn't an electric eel loaded into a cannon, why would you think this, what kind of mosters do you think we are?)."<<endl;
+			cout<<"Stats:"<<endl;
+			cout<<"Health = 120"<<endl;
+			cout<<"AC = 3"<<endl;
+			cout<<"Cost = 80"<<endl;
+			cout<<"icon = S"<<endl;
+			cout<<"Speed = 3"<<endl;
+			cout<<"damage = 35"<<endl;
+			cout<<"spawn command: \"shocklauncher\""<<endl;
+		}
+		else{
+			cout<<"invalid type"<<endl;
+		}
 	}
 }
 
-void endTurn(vector<vector<tile> >*map){
+void endTurn(vector<vector<tile> >*map){//resets everything and calculates income
 	playerIncome=0;
 	AIIncome=0;
 	for(int i=0;i<height;i++){
@@ -444,11 +678,11 @@ void endTurn(vector<vector<tile> >*map){
     }
   }
 	consoleRenderFrame(width, height, *map);
-	if(map[0][width/2][0].get_hasBuilding()==false){
+	if(map[0][width/2][0].get_hasBuilding()==false or AIRec<0){  //checks endgame
 		gameRunning=false;
 		cout<<"Winner winner chicken dinner!"<<endl;
 	}
-	else if(map[0][width/2][height-1].get_hasBuilding()==false){
+	else if(map[0][width/2][height-1].get_hasBuilding()==false or playerRec<0){
 		gameRunning=false;
 		cout<<"Epic fail: the AI kicked your ass!"<<endl;
 	}
@@ -460,7 +694,7 @@ void commandLine(vector<vector<tile> >*map) {  //takes and interperates players 
 		cout << "Enter Command: (type end to quit or endturn to end your turn) ";
 		cin >> input;
 
-		if(input == "endTurn") {
+		if(input == "endTurn" or input == "endTurn" ) {
 			//cout << "You have ended the turn" << std::endl;
 			//cin.ignore();
 			break;
@@ -497,7 +731,7 @@ void commandLine(vector<vector<tile> >*map) {  //takes and interperates players 
 				cout<<"Invalid tile"<<endl;
 			}
 			else{
-				int temp = attack(x, y, x1, y1, map);
+				int temp = attack(x, y, x1, y1, map,false);
 				if(temp==1){
 					cout<<"No unit selected"<<endl;
 				}
@@ -536,7 +770,7 @@ void commandLine(vector<vector<tile> >*map) {  //takes and interperates players 
 				cout<<"Invalid tile"<<endl;
 			}
 			else{
-				int temp = moveUnit(x, y, x1, y1, map);
+				int temp = moveUnit(x, y, x1, y1, map, false);
 				if(temp==1){
 					cout<<"There is already a unit here"<<endl;
 				}
@@ -625,44 +859,50 @@ void commandLine(vector<vector<tile> >*map) {  //takes and interperates players 
 					cout << "Invalid Unit Type" <<endl;
 				}
 				else if(temp == 4) {
-					cout << "Unknown Error" <<endl;
+					cout << "Unable to spawn" <<endl;
 				}
 				else {
-<<<<<<< HEAD
 
 				}
-
-				spawnUnit(x, y,map,uType,false);
-=======
-					spawnUnit(x,y,map,uType,false);
-				}
-
->>>>>>> 7cb2fac2112229ad7fea82b5079996a8b0f70bee
 			}
+		}
+		else if(input == "help") {
+			helpFunction();
+		}
+		else if(input == "about") {
+
+			string name;
+
+			cout << "What would you like to know about? (type list for list of available objects)";
+			cin >> name;
+			description(name);
+		}
+		else if(input=="clear"){
+		cout<<"\033[2J\033[1;1H";
 		}
 		else{
 
-			std::cout << "That is not a valid command" << std::endl;
+			cout << "That is not a valid command, type \"help\" for help" << endl;
 		}
 	}
 }
 
-int convertIDRow(int ID){
+int convertIDRow(int ID){//convertd ID to x
 	int temp=ID;
 	temp=round(temp/11);
 	return temp;
 }
 
-int convertIDColumn(int ID){
+int convertIDColumn(int ID){//convertd ID to y
 	return ID-(convertIDRow(ID)*11);
 }
 
-int convertToID(int x, int y){
+int convertToID(int x, int y){//convertd x,y to ID
 	int id=(y*11)+x;
 	return id;
 }
 
-int distID(int id, int id1){
+int distID(int id, int id1){//converts two ids to dist
 	int x=convertIDColumn(id);
 	int y=convertIDRow(id);
 	int x1=convertIDColumn(id1);
@@ -671,7 +911,7 @@ int distID(int id, int id1){
 	return dist;
 }
 
-vector<int> findUnits(int AI,vector<vector<tile> >*map){
+vector<int> findUnits(int AI,vector<vector<tile> >*map){//finds all ai units
 	int count=0;
 	vector<int>units;
 	for(int i=0;i<height;i++){
@@ -686,14 +926,14 @@ vector<int> findUnits(int AI,vector<vector<tile> >*map){
 	return units;
 }
 
-vector<task> findTasks(vector<vector<tile> >*map){
+vector<task> findTasks(vector<vector<tile> >*map){//finds tasks for ai
 	vector<task>tasks;
 	tasks.resize(121);
-	for(int i=0;i<121;i++){
+	for(int i=0;i<121;i++){//chacks each tile
 		int x=convertIDColumn(i);
 		int y=convertIDRow(i);
 		tasks[i].id=i;
-		if(map[0][x][y].get_hasBuilding()==true and map[0][x][y].building_AI()==false){
+		if(map[0][x][y].get_hasBuilding()==true and map[0][x][y].building_AI()==false){//creates task based on whats on tile
 			tasks[i].type=1;
 			tasks[i].priority=map[0][x][y].get_priority();
 		}
@@ -718,7 +958,7 @@ vector<task> findTasks(vector<vector<tile> >*map){
 	return tasks;
 }
 
-vector<assignment> sorter(vector<assignment>toSort) {
+vector<assignment> sorter(vector<assignment>toSort) {//sorts assignemnts by score
 	int n = toSort.size();
 	for (int i = 0; i < (n-1); i++) {
 		for (int j = 0; j < (n-i-1); j++) {
@@ -732,14 +972,14 @@ vector<assignment> sorter(vector<assignment>toSort) {
 	return toSort;
 }
 
-bool doTask(assignment assign, vector<vector<tile> >*map, vector<task>tasks){
+bool doTask(assignment assign, vector<vector<tile> >*map, vector<task>tasks){//does the assignments allocated to each task
 	int x=convertIDColumn(assign.id);
 	int y=convertIDRow(assign.id);
 	int Ux=convertIDColumn(assign.unitId);
 	int Uy=convertIDRow(assign.unitId);
-	if(assign.type==1){
+	if(assign.type==1){//if is attack move to and attack //works out best place to move
 		if(distID(assign.id,assign.unitId)<=1){
-			cout<<attack(Ux,Uy,x,y,map)<<endl;
+			cout<<attack(Ux,Uy,x,y,map,true)<<endl;
 			return true;
 		}
 		else{
@@ -773,8 +1013,8 @@ bool doTask(assignment assign, vector<vector<tile> >*map, vector<task>tasks){
 					return false;
 				}
 				else{
-					moveUnit(Ux,Uy,x+1,y,map);
-					cout<<"atk"<<attack(x+1,y,x,y,map)<<endl;
+					moveUnit(Ux,Uy,x+1,y,map,true);
+					cout<<"atk"<<attack(x+1,y,x,y,map,true)<<endl;
 					return true;
 				}
 			}
@@ -783,7 +1023,7 @@ bool doTask(assignment assign, vector<vector<tile> >*map, vector<task>tasks){
 					return false;
 				}
 				else{
-					moveUnit(Ux,Uy,x-1,y,map);
+					moveUnit(Ux,Uy,x-1,y,map,true);
 					return true;
 				}
 			}
@@ -792,7 +1032,7 @@ bool doTask(assignment assign, vector<vector<tile> >*map, vector<task>tasks){
 					return false;
 				}
 				else{
-					int temp = moveUnit(Ux,Uy,x,y-1,map);
+					int temp = moveUnit(Ux,Uy,x,y-1,map,true);
 					return true;
 				}
 			}
@@ -801,7 +1041,7 @@ bool doTask(assignment assign, vector<vector<tile> >*map, vector<task>tasks){
 					return false;
 				}
 				else{
-				int temp = moveUnit(Ux,Uy,x,y+1,map);
+				int temp = moveUnit(Ux,Uy,x,y+1,map,true);
 				return true;
 			}
 			}
@@ -810,9 +1050,9 @@ bool doTask(assignment assign, vector<vector<tile> >*map, vector<task>tasks){
 			}
 		}
 	}
-	else if(assign.type==2){
+	else if(assign.type==2){//if is attack move to and attack //works out best place to move
 		if(distID(assign.id,assign.unitId)<=1){
-			attack(Ux,Uy,x,y,map);
+			attack(Ux,Uy,x,y,map,true);
 			return true;
 		}
 		else{
@@ -846,8 +1086,8 @@ bool doTask(assignment assign, vector<vector<tile> >*map, vector<task>tasks){
 					return false;
 				}
 				else{
-					moveUnit(Ux,Uy,x+1,y,map);
-					attack(x+1,y,x,y,map);
+					moveUnit(Ux,Uy,x+1,y,map,true);
+					attack(x+1,y,x,y,map,true);
 					return true;
 				}
 			}
@@ -856,8 +1096,8 @@ bool doTask(assignment assign, vector<vector<tile> >*map, vector<task>tasks){
 					return false;
 				}
 				else{
-					moveUnit(Ux,Uy,x-1,y,map);
-					attack(x-1,y,x,y,map);
+					moveUnit(Ux,Uy,x-1,y,map,true);
+					attack(x-1,y,x,y,map,true);
 					return true;
 				}
 			}
@@ -866,8 +1106,8 @@ bool doTask(assignment assign, vector<vector<tile> >*map, vector<task>tasks){
 					return false;
 				}
 				else{
-					int temp = moveUnit(Ux,Uy,x,y-1,map);
-					attack(x,y-1,x,y,map);
+					int temp = moveUnit(Ux,Uy,x,y-1,map,true);
+					attack(x,y-1,x,y,map,true);
 					return true;
 				}
 			}
@@ -876,8 +1116,8 @@ bool doTask(assignment assign, vector<vector<tile> >*map, vector<task>tasks){
 					return false;
 				}
 				else{
-				int temp = moveUnit(Ux,Uy,x,y+1,map);
-				attack(x,y+1,x,y,map);
+				int temp = moveUnit(Ux,Uy,x,y+1,map,true);
+				attack(x,y+1,x,y,map,true);
 				return true;
 			}
 			}
@@ -886,21 +1126,21 @@ bool doTask(assignment assign, vector<vector<tile> >*map, vector<task>tasks){
 			}
 		}
 	}
-	else if(assign.type==3){
+	else if(assign.type==3){//moves unit to defend
 		if(map[0][x][y].get_hasUnit()==true){
 			return false;
 		}
 		else{
-			moveUnit(Ux,Uy,x,y,map);
+			moveUnit(Ux,Uy,x,y,map,true);
 			return true;
 		}
 	}
-	else if(assign.type==4 and assign.score>0){
+	else if(assign.type==4 and assign.score>0){  //moves unit to tile
 		if(map[0][x][y].get_hasUnit()==true){
 			return false;
 		}
 		else{
-			moveUnit(Ux,Uy,x,y,map);
+			moveUnit(Ux,Uy,x,y,map,true);
 			return true;
 		}
 	}
@@ -909,10 +1149,10 @@ bool doTask(assignment assign, vector<vector<tile> >*map, vector<task>tasks){
 	}
 }
 
-void tacAI(vector<vector<tile> >*map){
-	vector<int>listOfAIUnits=findUnits(true, map);
-	vector<task>tasks=findTasks(map);
-	vector<assignment>assignments;
+void tacAI(vector<vector<tile> >*map){//moves all AI units and decides the bast course of action
+	vector<int>listOfAIUnits=findUnits(true, map);//gets units
+	vector<task>tasks=findTasks(map);//gets tasks
+	vector<assignment>assignments;  //sets assignments
 	for(int i=0;i<listOfAIUnits.size();i++){
 		for(int j=0;j<tasks.size();j++){
 			int x=convertIDColumn(listOfAIUnits[i]);
@@ -954,17 +1194,17 @@ void tacAI(vector<vector<tile> >*map){
 					tasks[j].priority=sum/5;
 				}
 				if(distID(tasks[j].id,listOfAIUnits[i])>0){
-					assignments[assignments.size()-1].score=((tasks[j].priority)/distID(tasks[j].id,listOfAIUnits[i]))+(3*y);
+					assignments[assignments.size()-1].score=((tasks[j].priority)/distID(tasks[j].id,listOfAIUnits[i]))+(3.5*y);
 				}
 				else{
-					assignments[assignments.size()-1].score=((tasks[j].priority)-(5*k))+(3*y);
+					assignments[assignments.size()-1].score=((tasks[j].priority)-(5*k))+(3.5*y);
 				}
 				assignments[assignments.size()-1].unitId=listOfAIUnits[i];
 			}
 		}
 	}
-	assignments=sorter(assignments);
-	while(assignments.size()>0){
+	assignments=sorter(assignments);//sorts assignments
+	while(assignments.size()>0){//does assignments
 		if(doTask(assignments[0],map,tasks)==true){
 			int unitId=assignments[0].unitId;
 			assignments.erase(assignments.begin()+0);
@@ -978,13 +1218,13 @@ void tacAI(vector<vector<tile> >*map){
 			assignments.erase(assignments.begin()+0);
 		}
 	}
-	listOfAIUnits.clear();
+	listOfAIUnits.clear();//clears from memory
 	tasks.clear();
 	assignments.clear();
 }
 
 void econAI(double bI, double cI, double bU, double bS, double bR, double cR, vector<vector<tile> >*map){
-	double pI=0;
+	double pI=0;//sets AI peramiters and calculates the ai actions
 	double I=0;
 	double pU=0;
 	double U=0;
@@ -1064,7 +1304,7 @@ void econAI(double bI, double cI, double bU, double bS, double bR, double cR, ve
 	cout<<RUsable<<":"<<RI<<":"<<RU<<":"<<RS<<endl;
 	//build/spawn buildings/units:
 	int t=0;
-	while(RI>=100 and t<100 and AIRec>=100){
+	while(RI>=100 and t<100 and AIRec>=100){//creates mines
 		int x=random(wX[0],wX[1]);
 		int y=random(wY[0],wY[1]);
 		while(map[0][x][y].get_hasBuilding()==true and t<100){
@@ -1089,50 +1329,50 @@ void econAI(double bI, double cI, double bU, double bS, double bR, double cR, ve
 		t+=1;
 	}
 	t=0;
-	while(RU>=100 and t<100 and spawnerId.size()>0){
+	while(RU>=100 and t<100 and spawnerId.size()>0){//spawns units
 		int spawner=random(0,spawnerId.size()-1);
 		int id=spawnerId[spawner];
 		int x=convertIDColumn(id);
 		int y=convertIDRow(id);
 		if(map[0][x][y].buildingGet_name()=="Barracks"){
 			int type=random(1,3);
-			if(type==1 and AIRec>=75){
+			if(type==1 and AIRec>=70){
 				if(spawnUnit(x,y,map,"infantry",true)==0){
-					RU-=75;
-					AIRec-=75;
+					RU-=70;
+					AIRec-=70;
 				}
 			}
-			else if(type==2 and AIRec>=200){
+			else if(type==2 and AIRec>=115){
 				if(spawnUnit(x,y,map,"heavy",true)==0){
-					RU-=200;
-					AIRec-=200;
+					RU-=115;
+					AIRec-=115;
 				}
 			}
-			else if(type==3 and AIRec>=40){
+			else if(type==3 and AIRec>=35){
 				if(spawnUnit(x,y,map,"light",true)==0){
-					RU-=40;
-					AIRec-=40;
+					RU-=35;
+					AIRec-=35;
 				}
 			}
 		}
 		else if(map[0][x][y].buildingGet_name()=="Vehicle Bay"){
 			int type=random(1,3);
-			if(type==1 and AIRec>=450){
+			if(type==1 and AIRec>=120){
 				if(spawnUnit(x,y,map,"destroyer",true)==0){
-					RU-=450;
-					AIRec-=450;
+					RU-=120;
+					AIRec-=120;
 				}
 			}
-			else if(type==2 and AIRec>=300){
+			else if(type==2 and AIRec>=100){
 				if(spawnUnit(x,y,map,"cruiser",true)==0){
-					RU-=300;
-					AIRec-=300;
+					RU-=100;
+					AIRec-=100;
 				}
 			}
-			else if(type==3 and AIRec>=65){
+			else if(type==3 and AIRec>=80){
 				if(spawnUnit(x,y,map,"shocklauncher",true)==0){
-					RU-=65;
-					AIRec-=65;
+					RU-=80;
+					AIRec-=80;
 				}
 			}
 		}
@@ -1140,7 +1380,7 @@ void econAI(double bI, double cI, double bU, double bS, double bR, double cR, ve
 		t+=1;
 	}
 	t=0;
-	while(RS>=100 and t<100 and AIRec>=100){
+	while(RS>=100 and t<100 and AIRec>=100){//spawns spawners
 		int x=random(wX[0],wX[1]);
 		int y=random(wY[0],wY[1]);
 		while(map[0][x][y].get_hasBuilding()==true and t<100){
@@ -1149,7 +1389,7 @@ void econAI(double bI, double cI, double bU, double bS, double bR, double cR, ve
 			t+=1;
 		}
 		int type=random(0,1);
-		if(type==0 and RS>=150 and AIRec>=150){
+		if(type==0 and RS>=120 and AIRec>=120){
 			while(buildBuilding(x,y,map,"vehicleBay",true)!=0 and t<100){
 				x=random(wX[0],wX[1]);
 				y=random(wY[0],wY[1]);
@@ -1161,8 +1401,8 @@ void econAI(double bI, double cI, double bU, double bS, double bR, double cR, ve
 				t+=1;
 			}
 			if(t<100){
-				RI-=150;
-				AIRec-=150;
+				RI-=120;
+				AIRec-=120;
 			}
 		}
 		else{
@@ -1186,7 +1426,8 @@ void econAI(double bI, double cI, double bU, double bS, double bR, double cR, ve
 }
 
 int main(){
-	srand(time(NULL));
+	srand(time(NULL));  //set random seed
+	cout<<"\033[0;40m";
   vector<vector<tile> >map;  //sets up the map
   map.resize(width);
   for(int i=0;i<width;i++){
@@ -1198,23 +1439,22 @@ int main(){
       map[j][i]=tile(id);
     }
   }
-	int bI=random(100,500);
+	int bI=random(100,500);  //set up AI
 	double cI=random(0.00,200.00)/100.00;
 	int bU=random(1,5);
 	int bS=random(1,3);
 	int bR=random(100,500);
 	double cR=random(0.00,100.00)/100.00;
-	cout<<bI<<":"<<cI<<":"<<bU<<":"<<bS<<":"<<bR<<":"<<cR<<endl;
-	map[width/2][0].set_building(new buildingBase(true));
+	map[width/2][0].set_building(new buildingBase(true));  //create bases
 	map[width/2][0].set_hasBuilding(true);
 	map[width/2][height-1].set_building(new buildingBase());
 	map[width/2][height-1].set_hasBuilding(true);
   consoleRenderFrame(width, height, map);  //renders initial screen
 	while(gameRunning==true){
 		commandLine(&map);   //runs console
-		econAI(bI, cI, bU, bS, bR, cR, &map);
+		econAI(bI, cI, bU, bS, bR, cR, &map);   //run AI
 		tacAI(&map);
-		endTurn(&map);
+		endTurn(&map);  //endTurn
 		if(gameRunning==true){
 			cout<<"Turn over"<<endl;
 		}

@@ -9,12 +9,12 @@ unitLightInfantry::unitLightInfantry(){  //defult constructor
   _icon='L';
   _moveSpeed=5;
   _dmg=10;
-  _cost=40;
+  _cost=35;
   _attacksLeft=0;
   _movesLeft=0;
-  _priority=3;
+  _priority=4;
   _name="light infantry";
-  _income=-2;
+  _income=-4;
 }
 
 unitLightInfantry::unitLightInfantry(bool AI){  //constructor wih input to set AI ownership
@@ -24,13 +24,13 @@ unitLightInfantry::unitLightInfantry(bool AI){  //constructor wih input to set A
   _icon='L';
   _moveSpeed=5;
   _dmg=10;
-  _cost=40;
+  _cost=35;
   _attacksLeft=0;
   _movesLeft=0;
-  _priority=3;
+  _priority=4;
   _name="light infantry";
+  _income=-4;
   _AI=AI;
-  _income=-2;
 }
 
 void unitLightInfantry::tickTurn(){

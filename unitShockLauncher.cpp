@@ -2,34 +2,35 @@
 #include "unitShockLauncher.h"
 
 unitShockLauncher::unitShockLauncher() { // default constructor
-  _health=80;
-  _baseHealth = 80;
-  _AC=1;
+  _health=120;
+  _baseHealth = 120;
+  _AC=3;
   _icon='S';
-  _moveSpeed=1;
-  _dmg=30;
-  _cost=65;
+  _moveSpeed=3;
+  _dmg=35;
+  _cost=80;
   _attacksLeft = 0;
   _movesLeft = 0;
-  _priority=7;
+  _priority=8;
   _name="shocklauncher";
-  _income=-10;
+  _income=-8;
 
 }
 unitShockLauncher::unitShockLauncher(bool AI) { // constructor with input for AI
-  _health=80;
-  _baseHealth = 80;
-  _AC=1;
+  _health=120;
+  _baseHealth = 120;
+  _AC=3;
   _icon='S';
-  _moveSpeed=1;
-  _dmg=30;
-  _cost=65;
+  _moveSpeed=3;
+  _dmg=35;
+  _cost=80;
   _attacksLeft = 0;
   _movesLeft = 0;
-  _priority=7;
+  _priority=8;
+  _name="shocklauncher";
+  _income=-8;
   _name="shocklauncher";
   _AI = AI;
-  _income=-10;
 }
 
 void unitShockLauncher::tickTurn(){

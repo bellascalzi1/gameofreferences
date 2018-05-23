@@ -9,9 +9,9 @@ buildingMine::buildingMine(){  //defult constructor
   _icon='@';
   _cost=100;
   _name="Mine";
-  _buildingIncome=150;
+  _buildingIncome=50;
   _hasSpawned = false;
-  _priority=10;
+  _priority=11;
   _AI=false;
 }
 
@@ -23,7 +23,7 @@ buildingMine::buildingMine(bool AI){  //constructor with input for AI ownership
   _cost=0;
   _name="Mine";
   _hasSpawned = false;
-  _buildingIncome=150;
+  _buildingIncome=50;
   _priority=10;
   _AI=AI;
 }
