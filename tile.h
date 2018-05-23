@@ -52,7 +52,7 @@ public:
   void buildingSet_AC(int AC);
   int buildingGet_AC();
   string buildingGet_name();
-  void building_spawnUnit(string uType);
+  void building_spawnUnit(string uType, bool AI);
   void turnTick();
   int getTileIncome();
   void killUnit();

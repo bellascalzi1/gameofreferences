@@ -150,9 +150,9 @@ string tile::buildingGet_name(){
   return _building->get_name();
 }
 
-void tile::building_spawnUnit(string uType){
+void tile::building_spawnUnit(string uType, bool AI){
   if(_building->get_hasSpawned()==false){
-    _unit=_building->spawnUnit(uType);
+    _unit=_building->spawnUnit(uType, AI);
     _hasUnit=true;
   }
   else{

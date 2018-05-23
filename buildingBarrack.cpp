@@ -30,18 +30,18 @@ buildingBarrack::buildingBarrack(bool AI){  //constructor with input to set AI o
   _AI=AI;
 }
 
-unit* buildingBarrack::spawnUnit(string uType){    //spawns a new unit
+unit* buildingBarrack::spawnUnit(string uType, bool AI){    //spawns a new unit
   if(uType=="infantry"){
     _hasSpawned=true;
-    return new unitInfantry();
+    return new unitInfantry(AI);
   }
   else if(uType=="heavy"){
     _hasSpawned=true;
-    return new unitHeavyInfantry();
+    return new unitHeavyInfantry(AI);
   }
   else if(uType=="light"){
     _hasSpawned=true;
-    return new unitLightInfantry();
+    return new unitLightInfantry(AI);
   }
   else if(uType=="rocket"){
     _hasSpawned=true;

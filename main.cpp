@@ -16,13 +16,13 @@ bool gameRunning=true;
 
 struct task{
 	int type;
-	int priority;
+	double priority;
 	int id;
 };
 
 struct assignment{
 	int type;
-	int score;
+	double score;
 	int id;
 	int unitId;
 };
@@ -365,7 +365,7 @@ int spawnUnit(int x, int y, vector<vector<tile> >*map, string uType, bool AI){
 	else{
 		if(map[0][x][y].buildingGet_name()=="Barracks" and map[0][x][y].building_AI()==AI){
 			if(uType=="light" or uType=="infantry" or uType=="heavy" or uType=="rocket" or uType=="flamethrower"){
-				map[0][x][y].building_spawnUnit(uType);
+				map[0][x][y].building_spawnUnit(uType,AI);
 				return 0;
 			}
 			else{
@@ -374,7 +374,7 @@ int spawnUnit(int x, int y, vector<vector<tile> >*map, string uType, bool AI){
 		}
 		else if(map[0][x][y].buildingGet_name()=="Vehicle Bay" and map[0][x][y].building_AI()==AI){
 			if(uType=="destroyer" or uType=="cruiser" or uType=="shocklauncher"){
-				map[0][x][y].building_spawnUnit(uType);
+				map[0][x][y].building_spawnUnit(uType,AI);
 				return 0;
 			}
 			else{
@@ -674,17 +674,25 @@ vector<task> findTasks(vector<vector<tile> >*map){
 		tasks[i].id=i;
 		if(map[0][x][y].get_hasBuilding()==true and map[0][x][y].building_AI()==false){
 			tasks[i].type=1;
-		}
-		else if(map[0][x][y].get_hasUnit()==true and map[0][x][y].unit_AI()==false){
-			tasks[i].type=2;
+			tasks[i].priority=map[0][x][y].get_priority();
 		}
 		else if(map[0][x][y].get_hasBuilding()==true and map[0][x][y].building_AI()==true){
 			tasks[i].type=3;
+			if(map[0][x][y].buildingGet_name()=="Barracks" or map[0][x][y].buildingGet_name()=="Vehicle Bay"){
+				tasks[i].priority=-(map[0][x][y].get_priority()/4);
+			}
+			else{
+				tasks[i].priority=map[0][x][y].get_priority();
+			}
+		}
+		else if(map[0][x][y].get_hasUnit()==true and map[0][x][y].unit_AI()==false){
+			tasks[i].type=2;
+			tasks[i].priority=map[0][x][y].get_priority();
 		}
 		else{
 			tasks[i].type=4;
+			tasks[i].priority=map[0][x][y].get_priority();
 		}
-		tasks[i].priority=map[0][x][y].get_priority();
 	}
 	return tasks;
 }
@@ -755,7 +763,6 @@ bool doTask(assignment assign, vector<vector<tile> >*map, vector<task>tasks){
 				}
 				else{
 					moveUnit(Ux,Uy,x-1,y,map);
-					cout<<"atk"<<attack(x-1,y,x,y,map)<<endl;
 					return true;
 				}
 			}
@@ -765,7 +772,6 @@ bool doTask(assignment assign, vector<vector<tile> >*map, vector<task>tasks){
 				}
 				else{
 					int temp = moveUnit(Ux,Uy,x,y-1,map);
-					cout<<"atk"<<attack(x,y-1,x,y,map)<<endl;
 					return true;
 				}
 			}
@@ -775,7 +781,6 @@ bool doTask(assignment assign, vector<vector<tile> >*map, vector<task>tasks){
 				}
 				else{
 				int temp = moveUnit(Ux,Uy,x,y+1,map);
-				cout<<"atk"<<attack(x,y+1,x,y,map)<<endl;
 				return true;
 			}
 			}
@@ -895,7 +900,7 @@ void tacAI(vector<vector<tile> >*map){
 				assignments.resize(assignments.size()+1);
 				assignments[assignments.size()-1].id=tasks[j].id;
 				assignments[assignments.size()-1].type=tasks[j].type;
-				int k;
+				double k;
 				if(tasks[j].type==1){
 					int dmgDef=map[0][convertIDColumn(listOfAIUnits[i])][convertIDRow(listOfAIUnits[i])].unitGet_dmg()-map[0][convertIDColumn(tasks[j].id)][convertIDRow(tasks[j].id)].buildingGet_AC();      //damage delt to defender
 					int dmgAtk=round((0.75*map[0][convertIDColumn(tasks[j].id)][convertIDRow(tasks[j].id)].unitGet_dmg())-map[0][convertIDColumn(listOfAIUnits[i])][convertIDRow(listOfAIUnits[i])].unitGet_AC());
@@ -912,7 +917,7 @@ void tacAI(vector<vector<tile> >*map){
 				if(tasks[j].type==4){
 					int x=convertIDColumn(tasks[j].id);
 					int y=convertIDRow(tasks[j].id);
-					int sum=0;
+					double sum=0;
 					if(x>0){
 						sum+=tasks[convertToID(x-1,y)].priority;
 					}
@@ -925,38 +930,24 @@ void tacAI(vector<vector<tile> >*map){
 					if(y<10){
 						sum+=tasks[convertToID(x,y+1)].priority;
 					}
-					tasks[j].priority=round(sum/5);
+					tasks[j].priority=sum/5;
 				}
 				if(distID(tasks[j].id,listOfAIUnits[i])>0){
-					assignments[assignments.size()-1].score=(tasks[j].priority-(5*k))/distID(tasks[j].id,listOfAIUnits[i]);
+					assignments[assignments.size()-1].score=((tasks[j].priority)/distID(tasks[j].id,listOfAIUnits[i]))+(3*y);
 				}
 				else{
-					assignments[assignments.size()-1].score=(tasks[j].priority-(5*k));
+					assignments[assignments.size()-1].score=((tasks[j].priority)-(5*k))+(3*y);
 				}
 				assignments[assignments.size()-1].unitId=listOfAIUnits[i];
 			}
 		}
 	}
 	assignments=sorter(assignments);
-	for(int i=0;i<assignments.size();i++){
-		//cout<<assignments[i].score<<":"<<assignments[i].type<<":"<<convertIDColumn(assignments[i].id)<<","<<convertIDRow(assignments[i].id)<<endl;
-		if(assignments[i].score>=1){
-
-		}
-		else{
-			assignments.erase(assignments.begin()+i);
-		}
-	}
-	for(int i=0;i<assignments.size();i++){
-			cout<<assignments[i].score<<":"<<assignments[i].type<<":"<<convertIDColumn(assignments[i].id)<<","<<convertIDRow(assignments[i].id)<<endl;
-	}
 	while(assignments.size()>0){
-		/*for(int i=0;i<assignments.size();i++){
-			cout<<assignments[i].score<<":"<<assignments[i].type<<":"<<convertIDColumn(assignments[i].id)<<","<<convertIDRow(assignments[i].id)<<endl;
-		}*/
 		if(doTask(assignments[0],map,tasks)==true){
 			int unitId=assignments[0].unitId;
-			for(int i=0;i<assignments.size();i++){
+			assignments.erase(assignments.begin()+0);
+			for(int i=1;i<assignments.size();i++){
 				if(assignments[i].unitId==unitId){
 					assignments.erase(assignments.begin()+i);
 				}
@@ -991,7 +982,7 @@ void econAI(double bI, double cI, double bU, double bS, double bR, double cR, ve
 					I+=map[0][j][i].getTileIncome();
 					U+=1;
 				}
-				else{
+				else if(map[0][j][i].unit_AI()==false){
 					pI+=map[0][j][i].getTileIncome();
 					pU+=1;
 				}
@@ -1041,17 +1032,18 @@ void econAI(double bI, double cI, double bU, double bS, double bR, double cR, ve
 	double tR=bR+cR*pR;
 	double rR=min(round(10*(R/tR))/10.00,1.00);
 	double RUsable=floor(min(R*rR, R));
-	double temp=rI+rU+rS;
-	rI=max(floor(10*(rI/temp))/10,0.00);
-	rU=max(floor(10*(rU/temp))/10,0.00);
-	rS=max(floor(10*(rS/temp))/10,0.00);
-	double RI=floor(RUsable*rI);
-	double RU=floor(RUsable*rU);
-	double RS=floor(RUsable*rS);
+	double temp=max(rI+rU+rS,0.10);
+	rI=max(floor(10*(rI/temp))/10,0.10);
+	rU=max(floor(10*(rU/temp))/10,0.10);
+	rS=max(floor(10*(rS/temp))/10,0.10);
+	double RI=min(floor(RUsable*rI),R/(rR*3));
+	double RU=min(floor(RUsable*rU),R/(rR*3));
+	double RS=min(floor(RUsable*rS),R/(rR*3));
+	cout<<rI<<":"<<rU<<":"<<rS<<endl;
 	cout<<RUsable<<":"<<RI<<":"<<RU<<":"<<RS<<endl;
 	//build/spawn buildings/units:
 	int t=0;
-	while(RI>=100 and t<100){
+	while(RI>=100 and t<100 and AIRec>=100){
 		int x=random(wX[0],wX[1]);
 		int y=random(wY[0],wY[1]);
 		while(map[0][x][y].get_hasBuilding()==true and t<100){
@@ -1069,46 +1061,8 @@ void econAI(double bI, double cI, double bU, double bS, double bR, double cR, ve
 			}
 			t+=1;
 		}
-		t+=1;
-		RI-=100;
-		AIRec-=100;
-	}
-	t=0;
-	while(RS>=100 and t<100){
-		int x=random(wX[0],wX[1]);
-		int y=random(wY[0],wY[1]);
-		while(map[0][x][y].get_hasBuilding()==true and t<100){
-			x=random(wX[0],wX[1]);
-			y=random(wY[0],wY[1]);
-			t+=1;
-		}
-		int type=random(0,1);
-		if(type==0 and RS>=150){
-			while(buildBuilding(x,y,map,"vehicleBay",true)!=0 and t<100){
-				x=random(wX[0],wX[1]);
-				y=random(wY[0],wY[1]);
-				while(map[0][x][y].get_hasBuilding()==true and t<100){
-					x=random(wX[0],wX[1]);
-					y=random(wY[0],wY[1]);
-					t+=1;
-				}
-				t+=1;
-			}
-			RS-=150;
-			AIRec-=150;
-		}
-		else{
-			while(buildBuilding(x,y,map,"barracks",true)!=0 and t<100){
-				x=random(wX[0],wX[1]);
-				y=random(wY[0],wY[1]);
-				while(map[0][x][y].get_hasBuilding()==true and t<100){
-					x=random(wX[0],wX[1]);
-					y=random(wY[0],wY[1]);
-					t+=1;
-				}
-				t+=1;
-			}
-			RS-=100;
+		if(t<100){
+			RI-=100;
 			AIRec-=100;
 		}
 		t+=1;
@@ -1164,6 +1118,50 @@ void econAI(double bI, double cI, double bU, double bS, double bR, double cR, ve
 		spawnerId.erase(spawnerId.begin()+spawner);
 		t+=1;
 	}
+	t=0;
+	while(RS>=100 and t<100 and AIRec>=100){
+		int x=random(wX[0],wX[1]);
+		int y=random(wY[0],wY[1]);
+		while(map[0][x][y].get_hasBuilding()==true and t<100){
+			x=random(wX[0],wX[1]);
+			y=random(wY[0],wY[1]);
+			t+=1;
+		}
+		int type=random(0,1);
+		if(type==0 and RS>=150 and AIRec>=150){
+			while(buildBuilding(x,y,map,"vehicleBay",true)!=0 and t<100){
+				x=random(wX[0],wX[1]);
+				y=random(wY[0],wY[1]);
+				while(map[0][x][y].get_hasBuilding()==true and t<100){
+					x=random(wX[0],wX[1]);
+					y=random(wY[0],wY[1]);
+					t+=1;
+				}
+				t+=1;
+			}
+			if(t<100){
+				RI-=150;
+				AIRec-=150;
+			}
+		}
+		else{
+			while(buildBuilding(x,y,map,"barracks",true)!=0 and t<100){
+				x=random(wX[0],wX[1]);
+				y=random(wY[0],wY[1]);
+				while(map[0][x][y].get_hasBuilding()==true and t<100){
+					x=random(wX[0],wX[1]);
+					y=random(wY[0],wY[1]);
+					t+=1;
+				}
+				t+=1;
+			}
+			if(t<100){
+				RI-=100;
+				AIRec-=100;
+			}
+		}
+		t+=1;
+	}
 }
 
 int main(){
@@ -1190,12 +1188,6 @@ int main(){
 	map[width/2][0].set_hasBuilding(true);
 	map[width/2][height-1].set_building(new buildingBase());
 	map[width/2][height-1].set_hasBuilding(true);
-	map[width/2][height-3].set_unit(new unitLightInfantry(true));
-	map[width/2][height-3].set_hasUnit(true);
-	map[6][8].set_unit(new unitLightInfantry(true));
-	map[6][8].set_hasUnit(true);
-	map[9][9].set_unit(new unitLightInfantry(true));
-	map[9][9].set_hasUnit(true);
   consoleRenderFrame(width, height, map);  //renders initial screen
 	while(gameRunning==true){
 		commandLine(&map);   //runs console
