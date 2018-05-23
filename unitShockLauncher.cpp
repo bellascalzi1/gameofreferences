@@ -2,13 +2,13 @@
 #include "unitShockLauncher.h"
 
 unitShockLauncher::unitShockLauncher() { // default constructor
-  _health=50;
-  _baseHealth = 50;
+  _health=80;
+  _baseHealth = 80;
   _AC=1;
   _icon='S';
   _moveSpeed=1;
-  _dmg=16;
-  _cost=500;
+  _dmg=30;
+  _cost=65;
   _attacksLeft = 0;
   _movesLeft = 0;
   _priority=7;
@@ -17,13 +17,13 @@ unitShockLauncher::unitShockLauncher() { // default constructor
 
 }
 unitShockLauncher::unitShockLauncher(bool AI) { // constructor with input for AI
-  _health=50;
-  _baseHealth = 50;
+  _health=80;
+  _baseHealth = 80;
   _AC=1;
   _icon='S';
   _moveSpeed=1;
-  _dmg=16;
-  _cost=500;
+  _dmg=30;
+  _cost=65;
   _attacksLeft = 0;
   _movesLeft = 0;
   _priority=7;

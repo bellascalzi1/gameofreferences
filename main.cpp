@@ -251,10 +251,14 @@ int createBuilding(int x, int y, vector<vector<tile> >*map, string bType, bool A
 		//invalid type
 		return 1;
 	}
+	return 1;
 }
 
 int buildBuilding(int x, int y, vector<vector<tile> >*map, string bType, bool AI){   //creates a new building if posible
-	if(map[0][x][y].get_hasBuilding()==true or map[0][x][y].building_AI()!=AI){
+	if(x<0 or x>10 or y<0 or y>10){
+		return 2;
+	}
+	if(map[0][x][y].get_hasBuilding()==false){
 	if(x==0){
 		if(map[0][x+1][y].get_hasBuilding()==true or map[0][x][y+1].get_hasBuilding()==true or map[0][x][y-1].get_hasBuilding()==true){
 			int temp=createBuilding(x,y,map,bType,AI);
@@ -309,6 +313,7 @@ int buildBuilding(int x, int y, vector<vector<tile> >*map, string bType, bool AI
 	else{
 		return 2;
 	}
+	return 2;
 }
 
 int convertToASCII(string input_coords) {   //convers a character into int coord
@@ -337,7 +342,7 @@ int convertNumToASCII(string input_coords) {   //convers a character into int co
 
 }
 
-int spawnUnit(int x, int y, vector<vector<tile> >*map, string uType){
+int spawnUnit(int x, int y, vector<vector<tile> >*map, string uType, bool AI){
 	if(map[0][x][y].get_hasUnit()==true){
 		return 1;
 		cout<<"This tile already has a unit in it"<<endl;
@@ -347,7 +352,7 @@ int spawnUnit(int x, int y, vector<vector<tile> >*map, string uType){
 		return 2;
 	}
 	else{
-		if(map[0][x][y].buildingGet_name()=="Barracks"){
+		if(map[0][x][y].buildingGet_name()=="Barracks" and map[0][x][y].building_AI()==AI){
 			if(uType=="light" or uType=="infantry" or uType=="heavy" or uType=="rocket" or uType=="flamethrower"){
 				map[0][x][y].building_spawnUnit(uType);
 				return 0;
@@ -356,7 +361,7 @@ int spawnUnit(int x, int y, vector<vector<tile> >*map, string uType){
 				return 3;
 			}
 		}
-		else if(map[0][x][y].buildingGet_name()=="Vehicle Bay"){
+		else if(map[0][x][y].buildingGet_name()=="Vehicle Bay" and map[0][x][y].building_AI()==AI){
 			if(uType=="destroyer" or uType=="cruiser" or uType=="shocklauncher"){
 				map[0][x][y].building_spawnUnit(uType);
 				return 0;
@@ -562,7 +567,7 @@ void commandLine(vector<vector<tile> >*map) {  //takes and interperates players 
 				cout<<"Invalid tile"<<endl;
 			}
 			else{
-				spawnUnit(x, y,map,uType);
+				spawnUnit(x, y,map,uType,false);
 			}
 		}
 		else{
@@ -926,6 +931,8 @@ void econAI(double bI, double cI, double bU, double bS, double bR, double cR, ve
 	double S=0;
 	double pR=playerRec;
 	double R=AIRec;
+	vector<int>spawnerId;
+	spawnerId.resize(0);
 	int wX[2]={5,5};
 	int wY[2]={0,0};
 	for(int i=0;i<height;i++){
@@ -942,6 +949,8 @@ void econAI(double bI, double cI, double bU, double bS, double bR, double cR, ve
 			}
 			if(map[0][j][i].get_hasBuilding()==true and map[0][j][i].get_isSpawner()==true){
 				if(map[0][j][i].building_AI()==true){
+					spawnerId.resize(spawnerId.size()+1);
+					spawnerId[spawnerId.size()-1]=convertToID(j,i);
 					I+=map[0][j][i].getTileIncome();
 					S+=1;
 					if(j<wX[0]){
@@ -991,69 +1000,121 @@ void econAI(double bI, double cI, double bU, double bS, double bR, double cR, ve
 	double RU=floor(RUsable*rU);
 	double RS=floor(RUsable*rS);
 	cout<<RUsable<<":"<<RI<<":"<<RU<<":"<<RS<<endl;
-	//int t=0;
-	/*while(RI>=100){// and t<100){
+	//build/spawn buildings/units:
+	int t=0;
+	while(RI>=100 and t<100){
 		int x=random(wX[0],wX[1]);
 		int y=random(wY[0],wY[1]);
-		while(map[0][x][y].get_hasBuilding()==true){// and t<100){
+		while(map[0][x][y].get_hasBuilding()==true and t<100){
 			x=random(wX[0],wX[1]);
 			y=random(wY[0],wY[1]);
-			//t+=1;
+			t+=1;
 		}
-		while(buildBuilding(x,y,map,"mine",true)!=0){// and t<100){
+		while(buildBuilding(x,y,map,"mine",true)!=0 and t<100){
 			x=random(wX[0],wX[1]);
 			y=random(wY[0],wY[1]);
-			while(map[0][x][y].get_hasBuilding()==true){// and t<100){
+			while(map[0][x][y].get_hasBuilding()==true and t<100){
 				x=random(wX[0],wX[1]);
 				y=random(wY[0],wY[1]);
-				//t+=1;
+				t+=1;
 			}
-			//t+=1;
+			t+=1;
 		}
-		//t+=1;
+		t+=1;
 		RI-=100;
 		AIRec-=100;
-	}*/
-	//t=0;
-	/*while(RS>=100){// and t<100){
+	}
+	t=0;
+	while(RS>=100 and t<100){
 		int x=random(wX[0],wX[1]);
 		int y=random(wY[0],wY[1]);
-		while(map[0][x][y].get_hasBuilding()==true){// and t<100){
+		while(map[0][x][y].get_hasBuilding()==true and t<100){
 			x=random(wX[0],wX[1]);
 			y=random(wY[0],wY[1]);
-			//t+=1;
+			t+=1;
 		}
-		int type=random(0,2);
+		int type=random(0,1);
 		if(type==0 and RS>=150){
-			while(buildBuilding(x,y,map,"vehicleBay",true)!=0){// and t<100){
+			while(buildBuilding(x,y,map,"vehicleBay",true)!=0 and t<100){
 				x=random(wX[0],wX[1]);
 				y=random(wY[0],wY[1]);
-				while(map[0][x][y].get_hasBuilding()==true){// and t<100){
+				while(map[0][x][y].get_hasBuilding()==true and t<100){
 					x=random(wX[0],wX[1]);
 					y=random(wY[0],wY[1]);
-					//t+=1;
+					t+=1;
 				}
-				//t+=1;
+				t+=1;
 			}
 			RS-=150;
 			AIRec-=150;
 		}
 		else{
-			while(buildBuilding(x,y,map,"barracks",true)!=0){// and t<100){
+			while(buildBuilding(x,y,map,"barracks",true)!=0 and t<100){
 				x=random(wX[0],wX[1]);
 				y=random(wY[0],wY[1]);
-				while(map[0][x][y].get_hasBuilding()==true){// and t<100){
+				while(map[0][x][y].get_hasBuilding()==true and t<100){
 					x=random(wX[0],wX[1]);
 					y=random(wY[0],wY[1]);
-					//t+=1;
+					t+=1;
 				}
-				//t+=1;
+				t+=1;
 			}
 			RS-=100;
 			AIRec-=100;
 		}
-		//t+=1;
-	}*/
+		t+=1;
+	}
+	t=0;
+	while(RU>=100 and t<100 and spawnerId.size()>0){
+		int spawner=random(0,spawnerId.size()-1);
+		int id=spawnerId[spawner];
+		int x=convertIDColumn(id);
+		int y=convertIDRow(id);
+		if(map[0][x][y].buildingGet_name()=="Barracks"){
+			int type=random(1,3);
+			if(type==1 and AIRec>=75){
+				if(spawnUnit(x,y,map,"infantry",true)==0){
+					RU-=75;
+					AIRec-=75;
+				}
+			}
+			else if(type==2 and AIRec>=200){
+				if(spawnUnit(x,y,map,"heavy",true)==0){
+					RU-=200;
+					AIRec-=200;
+				}
+			}
+			else if(type==3 and AIRec>=40){
+				if(spawnUnit(x,y,map,"light",true)==0){
+					RU-=40;
+					AIRec-=40;
+				}
+			}
+		}
+		else if(map[0][x][y].buildingGet_name()=="Vehicle Bay"){
+			int type=random(1,3);
+			if(type==1 and AIRec>=450){
+				if(spawnUnit(x,y,map,"destroyer",true)==0){
+					RU-=450;
+					AIRec-=450;
+				}
+			}
+			else if(type==2 and AIRec>=300){
+				if(spawnUnit(x,y,map,"cruiser",true)==0){
+					RU-=300;
+					AIRec-=300;
+				}
+			}
+			else if(type==3 and AIRec>=65){
+				if(spawnUnit(x,y,map,"shocklauncher",true)==0){
+					RU-=65;
+					AIRec-=65;
+				}
+			}
+		}
+		spawnerId.erase(spawnerId.begin()+spawner);
+		t+=1;
+	}
 }
 
 int main(){
