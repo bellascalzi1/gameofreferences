@@ -10,6 +10,10 @@ tile::tile(){ //defult constructor
   _isSpawner=false;
 }
 
+int tile::unitGet_attacksLeft(){
+ return _unit->get_attacksLeft();
+}
+
 tile::tile(int id){ //defult constructor
   _id=id;
   _hasUnit=false;

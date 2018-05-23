@@ -152,6 +152,10 @@ int attack(int Ax, int Ay, int Dx, int Dy, vector<vector<tile> >*map, bool AI){ 
 		//no unit
     return 1;
 	}
+	if(map[0][Ax][Ay].unitGet_attacksLeft()==0){
+		//no unit
+    return 1;
+	}
 	else if(map[0][Ax][Ay].unit_AI()!=AI){
 		//wrong team
 		return 1;
@@ -200,8 +204,6 @@ int attack(int Ax, int Ay, int Dx, int Dy, vector<vector<tile> >*map, bool AI){ 
 				if(map[0][Ax][Ay].unitGet_health()<=0){
 					map[0][Ax][Ay].killUnit();
 				}
-				cout<<dmgDef<<endl;
-				cout<<map[0][Dx][Dy].buildingGet_health()<<endl;
 				return 0;
 			}
 		}
@@ -690,11 +692,11 @@ void endTurn(vector<vector<tile> >*map){//resets everything and calculates incom
 
 void commandLine(vector<vector<tile> >*map) {  //takes and interperates players input commands
 	string input;
-	while(input != "end" or "endturn") {
+	while(input != "end") {
 		cout << "Enter Command: (type end to quit or endturn to end your turn) ";
 		cin >> input;
 
-		if(input == "endTurn" or input == "endTurn" ) {
+		if(input == "endTurn" or input == "endturn" ) {
 			//cout << "You have ended the turn" << std::endl;
 			//cin.ignore();
 			break;
@@ -1283,7 +1285,7 @@ void econAI(double bI, double cI, double bU, double bS, double bR, double cR, ve
 	wX[0]=max(wX[0]-1,0);
 	wX[1]=min(wX[1]+1,10);
 	wY[1]=min(wY[1]+1,10);
-	cout<<I<<":"<<pI<<":"<<U<<":"<<pU<<":"<<S<<":"<<pS<<":"<<pR<<":"<<R<<endl;
+	//cout<<I<<":"<<pI<<":"<<U<<":"<<pU<<":"<<S<<":"<<pS<<":"<<pR<<":"<<R<<endl;
 	double tI=bI+cI*pI;
 	double rI=max(1.00-round(10*(I/tI))/10.00,0.00);
 	double tU=bU+ceil(pU/2)+ceil(U/2);
@@ -1300,8 +1302,8 @@ void econAI(double bI, double cI, double bU, double bS, double bR, double cR, ve
 	double RI=min(floor(RUsable*rI),R/(rR*3));
 	double RU=min(floor(RUsable*rU),R/(rR*3));
 	double RS=min(floor(RUsable*rS),R/(rR*3));
-	cout<<rI<<":"<<rU<<":"<<rS<<endl;
-	cout<<RUsable<<":"<<RI<<":"<<RU<<":"<<RS<<endl;
+	//cout<<rI<<":"<<rU<<":"<<rS<<endl;
+	//cout<<RUsable<<":"<<RI<<":"<<RU<<":"<<RS<<endl;
 	//build/spawn buildings/units:
 	int t=0;
 	while(RI>=100 and t<100 and AIRec>=100){//creates mines

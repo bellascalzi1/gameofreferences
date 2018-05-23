@@ -45,6 +45,7 @@ public:
   int unitGet_AC();
   string unitGet_name();
   int unitGet_movesLeft();
+  int unitGet_attacksLeft();
   void unitSet_movesLeft(int movesLeft);
   bool building_AI();
   void buildingSet_health(int health);
