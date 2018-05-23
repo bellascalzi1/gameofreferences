@@ -3,9 +3,9 @@
 #include "buildingMine.h"
 
 buildingMine::buildingMine(){  //defult constructor
-  _health=450;
-  _baseHealth=450;
-  _AC=8;
+  _health=100;
+  _baseHealth=100;
+  _AC=3;
   _icon='@';
   _cost=100;
   _name="Mine";
@@ -16,9 +16,9 @@ buildingMine::buildingMine(){  //defult constructor
 }
 
 buildingMine::buildingMine(bool AI){  //constructor with input for AI ownership
-  _health=500;
-  _baseHealth=500;
-  _AC=8;
+  _health=100;
+  _baseHealth=100;
+  _AC=3;
   _icon='@';
   _cost=0;
   _name="Mine";

@@ -28,11 +28,11 @@ struct assignment{
 };
 
 // Assigning Descriptions
-map<string,string> descriptions =
+/*map<string,string> descriptions =
 {
 	{"light", "blah"},
 };
-typedef map<string,string>::iterator it;
+typedef map<string,string>::iterator it;*/
 
 //descriptions.insert(make_pair("light","AN infantry unit that is quick on its feet"));
 //descriptions["heavy"] = "An infantry unit that is slow, but can deal a lot of damage";
@@ -599,8 +599,7 @@ void commandLine(vector<vector<tile> >*map) {  //takes and interperates players 
 				cout<<"Invalid tile"<<endl;
 			}
 			else{
-<<<<<<< HEAD
-				int temp = spawnUnit(x,y,map,uType);
+				int temp = spawnUnit(x,y,map,uType,false);
 				if(temp == 1) {
 					cout<<"This tile already has a unit in it"<<endl;
 				}
@@ -614,12 +613,10 @@ void commandLine(vector<vector<tile> >*map) {  //takes and interperates players 
 
 				}
 				else {
-					
+
 				}
 
-=======
 				spawnUnit(x, y,map,uType,false);
->>>>>>> 89803819e64fa32582d8b7ef6b83d4571d9eb0b6
 			}
 		}
 		else{
@@ -1036,13 +1033,13 @@ void econAI(double bI, double cI, double bU, double bS, double bR, double cR, ve
 	wY[1]=min(wY[1]+1,10);
 	cout<<I<<":"<<pI<<":"<<U<<":"<<pU<<":"<<S<<":"<<pS<<":"<<pR<<":"<<R<<endl;
 	double tI=bI+cI*pI;
-	double rI=1.00-round(10*(I/tI))/10.00;
+	double rI=max(1.00-round(10*(I/tI))/10.00,0.00);
 	double tU=bU+ceil(pU/2)+ceil(U/2);
-	double rU=1.00-round(10*(U/tU))/10.00;
+	double rU=max(1.00-round(10*(U/tU))/10.00,0.00);
 	double tS=bS+ceil(pS/2)+ceil(S/2);
-	double rS=1.00-round(10*(S/tS))/10.00;
+	double rS=max(1.00-round(10*(S/tS))/10.00,0.00);
 	double tR=bR+cR*pR;
-	double rR=round(10*(R/tR))/10.00;
+	double rR=min(round(10*(R/tR))/10.00,1.00);
 	double RUsable=floor(min(R*rR, R));
 	double temp=rI+rU+rS;
 	rI=max(floor(10*(rI/temp))/10,0.00);
