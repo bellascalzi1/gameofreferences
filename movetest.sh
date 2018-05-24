@@ -1,2 +1,2 @@
 echo testing move
-./output01 < movetest-input-01.txt | diff - movetest-output-01.txt  -Z
+./output < movetest-input-01.txt > movetest-output-02.txt

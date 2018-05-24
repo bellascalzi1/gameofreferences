@@ -620,7 +620,7 @@ void commandLine(vector<vector<tile> >*map) {  //takes and interperates players 
 					cout << "Invalid Unit Type" <<endl;
 				}
 				else if(temp == 4) {
-					cout << "Unknown Error" <<endl;
+					cout << "That is Your Enemy's Barracks" <<endl;
 				}
 				else {
 					spawnUnit(x,y,map,uType,false);

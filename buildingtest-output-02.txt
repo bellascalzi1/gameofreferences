@@ -1,0 +1,125 @@
+255:0.07:2:2:267:0.22
+------------------------------------------------
+     A   B   C   D   E   F   G   H   I   J   K  
+   +   +   +   +   +   +   +   +   +   +   +   +
+0                        B                     
+   +   +   +   +   +   +   +   +   +   +   +   +
+1                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+2                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+3                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+4                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+5                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+6                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+7                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+8                        L   L                 
+   +   +   +   +   +   +   +   +   +   +   +   +
+9                                        L     
+   +   +   +   +   +   +   +   +   +   +   +   +
+10                       B                     
+   +   +   +   +   +   +   +   +   +   +   +   +
+------------------------------------------------
+Recources: 100
+
+Enter Command: (type end to quit or endturn to end your turn) Where would you like to build?What would you like to build?------------------------------------------------
+     A   B   C   D   E   F   G   H   I   J   K  
+   +   +   +   +   +   +   +   +   +   +   +   +
+0                        B                     
+   +   +   +   +   +   +   +   +   +   +   +   +
+1                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+2                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+3                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+4                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+5                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+6                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+7                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+8                        L   L                 
+   +   +   +   +   +   +   +   +   +   +   +   +
+9                                        L     
+   +   +   +   +   +   +   +   +   +   +   +   +
+10                       B   #                 
+   +   +   +   +   +   +   +   +   +   +   +   +
+------------------------------------------------
+Recources: 100
+
+Enter Command: (type end to quit or endturn to end your turn) Where would you like to build?What would you like to build?Invalid tile
+Enter Command: (type end to quit or endturn to end your turn) Where would you like to build?What would you like to build?Invalid tile
+Enter Command: (type end to quit or endturn to end your turn) Where would you like to build?What would you like to build?Unable to build here
+Enter Command: (type end to quit or endturn to end your turn) Where would you like to build?What would you like to build?Unable to build here
+Enter Command: (type end to quit or endturn to end your turn) Where would you like to build?What would you like to build?Invalid tile
+Enter Command: (type end to quit or endturn to end your turn) Where would you like to build?What would you like to build?Unable to build here
+Enter Command: (type end to quit or endturn to end your turn) Where would you like to build?What would you like to build?Invalid tile
+Enter Command: (type end to quit or endturn to end your turn) Where would you like to build?What would you like to build?------------------------------------------------
+     A   B   C   D   E   F   G   H   I   J   K  
+   +   +   +   +   +   +   +   +   +   +   +   +
+0                        B                     
+   +   +   +   +   +   +   +   +   +   +   +   +
+1                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+2                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+3                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+4                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+5                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+6                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+7                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+8                        L   L                 
+   +   +   +   +   +   +   +   +   +   +   +   +
+9                                        L     
+   +   +   +   +   +   +   +   +   +   +   +   +
+10                   V   B   #                 
+   +   +   +   +   +   +   +   +   +   +   +   +
+------------------------------------------------
+Recources: 100
+
+Enter Command: (type end to quit or endturn to end your turn) You have ended the game
+94:70:3:0:0:2:100:100
+30:9:3:15
+0:4:6,8
+------------------------------------------------
+     A   B   C   D   E   F   G   H   I   J   K  
+   +   +   +   +   +   +   +   +   +   +   +   +
+0                        B                     
+   +   +   +   +   +   +   +   +   +   +   +   +
+1                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+2                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+3                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+4                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+5                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+6                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+7                                              
+   +   +   +   +   +   +   +   +   +   +   +   +
+8                        L   L                 
+   +   +   +   +   +   +   +   +   +   +   +   +
+9                                        L     
+   +   +   +   +   +   +   +   +   +   +   +   +
+10                   V   B   #                 
+   +   +   +   +   +   +   +   +   +   +   +   +
+------------------------------------------------
+Recources: 170
+
+Game over man, Game over!

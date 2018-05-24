@@ -1,2 +1,2 @@
 echo blah
-./output01 < spawntest-input-01.txt | diff - spawntest-output-01.txt -Z
+./output < spawntest-input-01.txt > spawntest-output-02.txt
