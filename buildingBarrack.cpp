@@ -11,9 +11,9 @@ buildingBarrack::buildingBarrack(){  //defult constructor
   _icon='#';
   _cost=100;
   _name="Barracks";
-  _buildingIncome=-15;
+  _buildingIncome=-10;
   _hasSpawned=false;
-  _priority=5;
+  _priority=10;
   _AI=false;
 }
 
@@ -24,32 +24,24 @@ buildingBarrack::buildingBarrack(bool AI){  //constructor with input to set AI o
   _icon='#';
   _cost=100;
   _name="Barracks";
-  _buildingIncome=-15;
+  _buildingIncome=-10;
   _hasSpawned=false;
-  _priority=5;
+  _priority=10;
   _AI=AI;
 }
 
-unit* buildingBarrack::spawnUnit(string uType){    //spawns a new unit
+unit* buildingBarrack::spawnUnit(string uType, bool AI){    //spawns a new unit
   if(uType=="infantry"){
     _hasSpawned=true;
-    return new unitInfantry();
+    return new unitInfantry(AI);
   }
   else if(uType=="heavy"){
     _hasSpawned=true;
-    return new unitHeavyInfantry();
+    return new unitHeavyInfantry(AI);
   }
   else if(uType=="light"){
     _hasSpawned=true;
-    return new unitLightInfantry();
-  }
-  else if(uType=="rocket"){
-    _hasSpawned=true;
-    return new exampleUnit();
-  }
-  else if(uType=="flamethrower"){
-    _hasSpawned=true;
-    return new exampleUnit();
+    return new unitLightInfantry(AI);
   }
 }
 

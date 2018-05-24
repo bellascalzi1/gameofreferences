@@ -3,8 +3,8 @@
 #include "buildingBase.h"
 
 buildingBase::buildingBase(){  //defult constructor
-  _health=500;
-  _baseHealth=500;
+  _health=400;
+  _baseHealth=400;
   _AC=8;
   _icon='B';
   _cost=0;
@@ -15,8 +15,8 @@ buildingBase::buildingBase(){  //defult constructor
 }
 
 buildingBase::buildingBase(bool AI){  //constructor with input for AI ownership
-  _health=500;
-  _baseHealth=500;
+  _health=400;
+  _baseHealth=400;
   _AC=8;
   _icon='B';
   _cost=0;

@@ -8,13 +8,12 @@ unitHeavyInfantry::unitHeavyInfantry(){  //defult constructor
   _AC=6;
   _icon='H';
   _moveSpeed=1;
-  _dmg=40;
-  _cost=200;
+  _dmg=50;
+  _cost=115;
   _attacksLeft=0;
-  _movesLeft=0;
-  _priority=8;
+  _priority=12;
   _name="heavy infantry";
-  _income=-10;
+  _income=-12;
 }
 
 unitHeavyInfantry::unitHeavyInfantry(bool AI){  //constructor with input to set ai ownwership
@@ -23,13 +22,13 @@ unitHeavyInfantry::unitHeavyInfantry(bool AI){  //constructor with input to set 
   _AC=6;
   _icon='H';
   _moveSpeed=1;
-  _dmg=40;
-  _cost=200;
+  _dmg=50;
+  _cost=115;
   _attacksLeft=0;
-  _priority=8;
+  _priority=12;
   _name="heavy infantry";
+  _income=-12;
   _AI=AI;
-  _income=-10;
 }
 
 void unitHeavyInfantry::tickTurn(){

@@ -14,7 +14,7 @@ protected:
 public:
   buildingBarrack();
   buildingBarrack(bool AI);
-  unit* spawnUnit(string uType);
+  unit* spawnUnit(string uType, bool AI);
   void tickTurn();
   ~buildingBarrack();
 };

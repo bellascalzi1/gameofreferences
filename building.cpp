@@ -19,7 +19,7 @@ int building::get_health(){
   return _health;
 }
 
-unit* building::spawnUnit(string uType){
+unit* building::spawnUnit(string uType, bool AI){
   return new unit();
 }
 

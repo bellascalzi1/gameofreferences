@@ -45,6 +45,7 @@ public:
   int unitGet_AC();
   string unitGet_name();
   int unitGet_movesLeft();
+  int unitGet_attacksLeft();
   void unitSet_movesLeft(int movesLeft);
   bool building_AI();
   void buildingSet_health(int health);
@@ -52,7 +53,7 @@ public:
   void buildingSet_AC(int AC);
   int buildingGet_AC();
   string buildingGet_name();
-  void building_spawnUnit(string uType);
+  void building_spawnUnit(string uType, bool AI);
   void turnTick();
   int getTileIncome();
   void killUnit();

@@ -10,6 +10,10 @@ tile::tile(){ //defult constructor
   _isSpawner=false;
 }
 
+int tile::unitGet_attacksLeft(){
+ return _unit->get_attacksLeft();
+}
+
 tile::tile(int id){ //defult constructor
   _id=id;
   _hasUnit=false;
@@ -150,9 +154,9 @@ string tile::buildingGet_name(){
   return _building->get_name();
 }
 
-void tile::building_spawnUnit(string uType){
+void tile::building_spawnUnit(string uType, bool AI){
   if(_building->get_hasSpawned()==false){
-    _unit=_building->spawnUnit(uType);
+    _unit=_building->spawnUnit(uType, AI);
     _hasUnit=true;
   }
   else{

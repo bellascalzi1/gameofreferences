@@ -2,34 +2,34 @@
 #include "unitCruiser.h"
 
 unitCruiser::unitCruiser() { // default constructor
-  _health=50;
-  _baseHealth = 50;
-  _AC=2;
+  _health=250;
+  _baseHealth = 250;
+  _AC=6;
   _icon='C';
-  _moveSpeed=4;
-  _dmg=5;
-  _cost=300;
+  _moveSpeed=2;
+  _dmg=20;
+  _cost=100;
   _attacksLeft = 0;
   _movesLeft = 0;
-  _priority=5;
+  _priority=10;
   _name="cruiser";
-  _income=-6;
+  _income=-10;
 
 }
 unitCruiser::unitCruiser(bool AI) { // constructor with input for AI
-  _health=50;
-  _baseHealth = 50;
-  _AC=2;
+  _health=250;
+  _baseHealth = 250;
+  _AC=6;
   _icon='C';
-  _moveSpeed=4;
-  _dmg=5;
-  _cost=300;
+  _moveSpeed=2;
+  _dmg=20;
+  _cost=100;
   _attacksLeft = 0;
   _movesLeft = 0;
-  _priority=5;
+  _priority=10;
   _name="cruiser";
+  _income=-10;
   _AI = AI;
-  _income=-6;
 }
 
 void unitCruiser::tickTurn(){

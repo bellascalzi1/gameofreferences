@@ -2,34 +2,34 @@
 #include "unitDestroyer.h"
 
 unitDestroyer::unitDestroyer() { // default constructor
-  _health=200;
-  _baseHealth = 200;
-  _AC=5;
+  _health=50;
+  _baseHealth = 50;
+  _AC=2;
   _icon='D';
-  _moveSpeed=1;
-  _dmg=30;
-  _cost=450;
+  _moveSpeed=3;
+  _dmg=100;
+  _cost=120;
   _attacksLeft = 0;
   _movesLeft = 0;
-  _priority=10;
+  _priority=12;
   _name="destroyer";
-  _income=-6;
+  _income=-12;
 
 }
 unitDestroyer::unitDestroyer(bool AI) { // constructor with input for AI
-  _health=200;
-  _baseHealth = 200;
-  _AC=5;
+  _health=50;
+  _baseHealth = 50;
+  _AC=2;
   _icon='D';
-  _moveSpeed=1;
-  _dmg=30;
-  _cost=450;
+  _moveSpeed=3;
+  _dmg=100;
+  _cost=120;
   _attacksLeft = 0;
   _movesLeft = 0;
-  _priority=10;
+  _priority=12;
   _name="destroyer";
+  _income=-12;
   _AI = AI;
-  _income=-6;
 }
 
 void unitDestroyer::tickTurn(){
